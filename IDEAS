@@ -1,0 +1,33 @@
+MVP:
+
+ * collect feeds
+ * send feeds via newsletter
+ * web interface to setup feed collection
+
+Step 2:
+
+ * Lists
+ * Tags
+ * Schedule (timezones!)
+ * Search
+
+Newsletter
+
+ * receive newsletters
+ * process
+ * bundle
+ * categorize
+
+Flipboard as a NL
+
+ * Sharing
+ * Allow non feed pages, readability
+
+Enterprizzzzzyyy:
+
+ * REST-API
+ * Addon-Program
+ * Deployment stuff... Puppet, blah!
+
+TODO
+ * XML-Security (defusedxml)
