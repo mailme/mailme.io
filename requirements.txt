@@ -1,0 +1,22 @@
+# django==1.6
+https://www.djangoproject.com/download/1.6b2/tarball/
+
+# Celery, async frameworks
+celery
+django-celery
+
+# Feeds, REST
+djangorestframework
+feedparser
+html5lib
+requests
+python-dateutil
+lxml
+
+# Stuff
+jinja2
+South
+
+# Deployment
+circus
+chaussette
