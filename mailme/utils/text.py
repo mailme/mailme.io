@@ -21,8 +21,8 @@ def increment_string(s):
         next = str(int(m.group(1)) + 1)
         start, end = m.span(1)
         if start or end:
-            return u'{0}-{1}{2}'.format(
+            return '{0}-{1}{2}'.format(
                 s[:max(end - len(next), start)],
                 next,
                 s[end:])
-    return s + u'-2'
+    return s + '-2'
