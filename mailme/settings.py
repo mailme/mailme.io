@@ -17,6 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mailme.core',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,3 +52,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+MM_REFRESH_EVERY = 3 * 60 * 60 # 3 hours
