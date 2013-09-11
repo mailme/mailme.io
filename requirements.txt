@@ -1,5 +1,5 @@
 # django==1.6
-https://www.djangoproject.com/download/1.6b2/tarball/
+https://www.djangoproject.com/download/1.6b3/tarball/
 
 # Celery, async frameworks
 celery
