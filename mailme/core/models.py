@@ -128,7 +128,7 @@ class Feed(models.Model):
     date_changed = models.DateTimeField(_("date changed"), auto_now=True)
 
     is_active = models.BooleanField(_("is active"), default=True)
-    freq = models.IntegerField(_("frequency"), default=settings.MM_REFRESH_EVERY)
+    freq = models.IntegerField(_("frequency"), default=settings.REFRESH_EVERY)
 
     class Meta:
         ordering = ("id",)
