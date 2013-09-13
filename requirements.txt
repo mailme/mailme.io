@@ -16,7 +16,3 @@ lxml
 # Stuff
 jinja2
 South
-
-# Deployment
-circus
-chaussette
