@@ -97,7 +97,6 @@ def entries_by_date(entries, limit=None):
     :param limit: Limit number of posts.
 
     """
-    print('xxxxxxxxxxxxxxxxxxxxxx', entries)
     now = datetime.now(pytz.utc)
 
     def find_date(entry, counter):
