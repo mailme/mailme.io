@@ -54,3 +54,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MM_REFRESH_EVERY = 3 * 60 * 60 # 3 hours
+MM_POST_LIMIT = 20
+MM_FEED_TIMEOUT = 10
+MM_MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
