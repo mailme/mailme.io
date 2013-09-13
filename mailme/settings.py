@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -53,4 +54,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MM_REFRESH_EVERY = 3 * 60 * 60 # 3 hours
+REFRESH_EVERY = 3 * 60 * 60 # 3 hours
+POST_LIMIT = 20
+FEED_TIMEOUT = 10
+MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
