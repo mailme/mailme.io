@@ -14,6 +14,7 @@ from django.db.models import signals
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from mailme.core.managers import ExtendedManager
 from mailme.utils.dates import naturaldate
 
 
@@ -67,6 +68,8 @@ class Category(models.Model):
     name = models.CharField(_("name"), max_length=128)
     domain = models.CharField(_("domain"),
                               max_length=128, null=True, blank=True)
+
+    objects = ExtendedManager()
 
     class Meta:
         unique_together = ("name", "domain")
@@ -129,6 +132,8 @@ class Feed(models.Model):
 
     is_active = models.BooleanField(_("is active"), default=True)
     freq = models.IntegerField(_("frequency"), default=settings.REFRESH_EVERY)
+
+    objects = ExtendedManager()
 
     class Meta:
         ordering = ("id",)
@@ -216,6 +221,8 @@ class Enclosure(models.Model):
     type = models.CharField(_("type"), max_length=200)
     length = models.PositiveIntegerField(_("length"), default=0)
 
+    objects = ExtendedManager()
+
     class Meta:
         verbose_name = _("enclosure")
         verbose_name_plural = _("enclosures")
@@ -277,6 +284,8 @@ class Post(models.Model):
     date_updated = models.DateTimeField(_("date updated"))
     enclosures = models.ManyToManyField(Enclosure, blank=True)
     categories = models.ManyToManyField(Category)
+
+    objects = ExtendedManager()
 
     class Meta:
         verbose_name = _("post")
