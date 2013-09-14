@@ -1,21 +1,20 @@
-from datetime import datetime
 from uuid import uuid4
+from datetime import datetime
 
+import requests
 from django.test import TestCase
 from django.utils import unittest
 from django.utils.timezone import utc
 
 import pytz
-import requests
-
 from mailme.core.models import (
+    Feed,
+    Post,
     Category,
     Enclosure,
-    Post,
-    Feed,
     FEED_GENERIC_ERROR,
     FEED_TIMEDOUT_ERROR,
-    FEED_NOT_FOUND_ERROR,
+    FEED_NOT_FOUND_ERROR
 )
 from mailme.utils.dates import naturaldate
 

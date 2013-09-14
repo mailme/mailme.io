@@ -10,18 +10,18 @@
     :license: BSD.
 """
 import re
-import lxml.html.clean
-from lxml.html.defs import empty_tags
-from html.entities import name2codepoint
 from xml.sax.saxutils import quoteattr
-from html5lib import HTMLParser, treewalkers, treebuilders
-from html5lib.serializer import HTMLSerializer
-from html5lib.filters import _base as filters_base
-from html5lib.filters.optionaltags import Filter as OptionalTagsFilter
+
 from django.utils.encoding import force_unicode
 
+import lxml.html.clean
+from html5lib import HTMLParser, treewalkers, treebuilders
+from html.entities import name2codepoint
+from lxml.html.defs import empty_tags
+from html5lib.filters import _base as filters_base
 from mailme.utils.text import increment_string
-
+from html5lib.serializer import HTMLSerializer
+from html5lib.filters.optionaltags import Filter as OptionalTagsFilter
 
 _entity_re = re.compile(r'&([^;]+);')
 _strip_re = re.compile(r'<!--.*?-->|<[^>]*>(?s)')

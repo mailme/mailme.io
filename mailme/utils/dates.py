@@ -1,10 +1,11 @@
 import logging
-import pytz
 from datetime import datetime
+
 from django.utils.timezone import utc
+from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 
-from django.utils.translation import ungettext, ugettext as _
-
+import pytz
 
 JUST_NOW = _("just now")
 SECONDS_AGO = (_("%(seconds)d second ago"), _("%(seconds)d seconds ago"))

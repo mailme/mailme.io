@@ -1,28 +1,26 @@
 import time
 import socket
 import logging
-
 from datetime import datetime
 
-import pytz
 import requests
 from requests import codes
-import feedparser
-
 from django.conf import settings
 from django.utils.timezone import utc
 
+import feedparser
+import pytz
+from mailme.core import exc
 from mailme.core.models import (
-    Post,
     Feed,
+    Post,
     Category,
     Enclosure,
+    ACCEPTED_STATUSES,
     FEED_GENERIC_ERROR_TEXT,
     FEED_TIMEDOUT_ERROR_TEXT,
-    FEED_NOT_FOUND_ERROR_TEXT,
-    ACCEPTED_STATUSES,
+    FEED_NOT_FOUND_ERROR_TEXT
 )
-from mailme.core import exc
 
 logger = logging.getLogger(__name__)
 
