@@ -166,7 +166,7 @@ class Feed(models.Model):
 
     def frequencies(self, limit=None, order="-date_updated"):
         posts = self.post_set.values("date_updated").order_by(order)[0:limit]
-        frequiencies = []
+        frequencies = []
         for idx, post in enumerate(posts):
             frequencies.append(
                 posts[idx - 1]['date_updated'] - post['date_updated']
