@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 import requests
 from django.db import models
 from django.conf import settings
-from django.db.models import signals
 from django.utils.timezone import utc
 from django.utils.translation import ugettext_lazy as _
 
@@ -36,9 +35,9 @@ FEED_GENERIC_ERROR_TEXT = _(
     "for mispellings or try again later.")
 
 FEED_ERROR_CHOICES = (
-        (FEED_TIMEDOUT_ERROR, FEED_TIMEDOUT_ERROR_TEXT),
-        (FEED_NOT_FOUND_ERROR, FEED_NOT_FOUND_ERROR_TEXT),
-        (FEED_GENERIC_ERROR, FEED_GENERIC_ERROR_TEXT),
+    (FEED_TIMEDOUT_ERROR, FEED_TIMEDOUT_ERROR_TEXT),
+    (FEED_NOT_FOUND_ERROR, FEED_NOT_FOUND_ERROR_TEXT),
+    (FEED_GENERIC_ERROR, FEED_GENERIC_ERROR_TEXT),
 )
 
 
@@ -115,16 +114,33 @@ class Feed(models.Model):
     feed_url = models.URLField(_("feed URL"), unique=True)
     description = models.TextField(_("description"))
     link = models.URLField(_("link"), max_length=200, blank=True)
-    http_etag = models.CharField(_("E-Tag"),
-                                 editable=False, blank=True,
-                                 null=True, max_length=200)
-    http_last_modified = models.DateTimeField(_("Last-Modified"), null=True,
-                                              editable=False, blank=True)
-    date_last_refresh = models.DateTimeField(_("date of last refresh"),
-                                        null=True, blank=True, editable=False)
+    http_etag = models.CharField(
+        _("E-Tag"),
+        editable=False,
+        blank=True,
+        null=True,
+        max_length=200
+    )
+    http_last_modified = models.DateTimeField(
+        _("Last-Modified"),
+        null=True,
+        editable=False,
+        blank=True
+    )
+    date_last_refresh = models.DateTimeField(
+        _("date of last refresh"),
+        null=True,
+        blank=True,
+        editable=False
+    )
     categories = models.ManyToManyField(Category)
-    last_error = models.CharField(_("last error"), blank=True, default="",
-                                 max_length=32, choices=FEED_ERROR_CHOICES)
+    last_error = models.CharField(
+        _("last error"),
+        blank=True,
+        default="",
+        max_length=32,
+        choices=FEED_ERROR_CHOICES
+    )
     date_created = models.DateTimeField(_("date created"), auto_now_add=True)
     date_changed = models.DateTimeField(_("date changed"), auto_now=True)
 
