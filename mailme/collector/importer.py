@@ -355,11 +355,31 @@ class FeedImporter(object):
 
     def get_enclosures(self, entry):
         """Get and create enclosures for feed."""
-        return [self.create_enclosure(url=enclosure.href,
-                                      length=enclosure.length,
-                                      type=enclosure.type)
-                    for enclosure in getattr(entry, "enclosures", [])
-                        if enclosure and hasattr(enclosure, "length")]
+        enclosures = []
+        # TODO: check if getattr is really needed here :-/
+        for enclosure in getattr(entry, 'enclosures', []):
+            href = getattr(enclosure, 'href', None)
+            type = getattr(enclosure, 'type', None)
+            if href is None or type is None:
+                # Example feed with fully empty enclosures: http://blog.xfce.org/feed/
+                continue
+
+            if enclosure and hasattr(enclosure, 'length'):
+                try:
+                    # Some feeds an empty length instead of an explicit 0
+                    # to determine that they are not capable of determining
+                    # the lengh.
+                    # Spec: When an enclosure's size cannot be determined,
+                    #       a publisher should use a length of 0.
+                    length = int(enclosure.length)
+                except ValueError:
+                    length = 0
+
+                self.create_enclosure(
+                    url=enclosure.href,
+                    length=length,
+                    type=enclosure.type
+                )
 
     def post_fields_parsed(self, entry, feed_obj):
         """Parse post fields."""
