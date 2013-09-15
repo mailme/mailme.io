@@ -3,7 +3,6 @@ from datetime import datetime
 
 import requests
 from django.test import TestCase
-from django.utils import unittest
 from django.utils.timezone import utc
 
 import pytz
@@ -23,7 +22,7 @@ def gen_unique_id():
     return str(uuid4())
 
 
-class TestCategory(unittest.TestCase):
+class TestCategory(TestCase):
 
     def test__str__(self):
         cat = Category(name="foo", domain="bar")
@@ -34,7 +33,7 @@ class TestCategory(unittest.TestCase):
         self.assertIn("foo", str(cat))
 
 
-class TestEnclosure(unittest.TestCase):
+class TestEnclosure(TestCase):
 
     def test__str__(self):
         en = Enclosure(url="requests.codes.//e.com/media/i.jpg",
@@ -44,7 +43,7 @@ class TestEnclosure(unittest.TestCase):
         self.assertIn("376851", str(en))
 
 
-class TestPost(unittest.TestCase):
+class TestPost(TestCase):
 
     def setUp(self):
         self.feed = Feed.objects.create(name="testfeed",
@@ -72,7 +71,7 @@ class TestPost(unittest.TestCase):
         self.assertEqual(post.date_updated_naturaldate, naturaldate(now))
 
 
-class TestFeed(unittest.TestCase):
+class TestFeed(TestCase):
 
     def test__str__(self):
         f = Feed(name="foo", feed_url="requests.codes.//example.com")
