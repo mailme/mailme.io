@@ -54,7 +54,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-REFRESH_EVERY = 3 * 60 * 60 # 3 hours
+# 3 hours
+REFRESH_EVERY = 3 * 60 * 60
 POST_LIMIT = 20
 FEED_TIMEOUT = 10
 MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
