@@ -23,6 +23,7 @@ from mailme.core.models import (
     FEED_TIMEDOUT_ERROR_TEXT,
     FEED_NOT_FOUND_ERROR_TEXT
 )
+from mailme.utils.html import cleanup_html
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ def find_post_content(feed_obj, entry):
         content = entry["content"][0]["value"]
     except (IndexError, KeyError):
         content = entry.get("description") or entry.get("summary") or ""
-    return content
+    return cleanup_html(content)
 
 
 def date_to_datetime(field_name):
