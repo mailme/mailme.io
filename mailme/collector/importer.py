@@ -98,8 +98,7 @@ def entries_by_date(entries, limit=None):
     def find_date(entry, counter):
         """Find the most current date entry tuple."""
 
-        return (entry.get("updated_parsed") or
-                entry.get("published_parsed") or
+        return (entry.get("published_parsed") or
                 entry.get("date_parsed") or
                 now - timedelta(seconds=(counter * 30)))
 
@@ -110,7 +109,6 @@ def entries_by_date(entries, limit=None):
         # because some feed just don't have any valid dates.
         # This will ensure that the posts will be properly ordered
         # later on when put into the database.
-        entry["updated_parsed"] = date.timetuple()
         entry["published_parsed"] = (entry.get("published_parsed")
                                      or date.timetuple())
         sorted_entries.append((date, entry))
@@ -161,7 +159,7 @@ class FeedImporter(object):
     post_field_handlers = {
         "content": find_post_content,
         "date_published": date_to_datetime("published_parsed"),
-        "date_updated": date_to_datetime("updated_parsed"),
+        "date_updated": date_to_datetime("published_parsed"),
         "link": lambda feed_obj, entry: entry.get("link") or feed_obj.feed_url,
         "feed": lambda feed_obj, entry: feed_obj,
         "guid": get_entry_guid,
