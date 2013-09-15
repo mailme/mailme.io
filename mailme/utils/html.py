@@ -12,7 +12,7 @@
 import re
 from xml.sax.saxutils import quoteattr
 
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 
 import lxml.html.clean
 from html5lib import HTMLParser, treewalkers, treebuilders
@@ -109,7 +109,7 @@ def cleanup_html(string, sanitize=True, fragment=True, stream=False,
     """Clean up some html and convert it to HTML."""
     if not string.strip():
         return ''
-    string = force_unicode(string)
+    string = force_text(string)
     if sanitize:
         string = lxml.html.clean.clean_html(string)
     tree = parse_html(string, fragment)
@@ -125,7 +125,7 @@ def cleanup_html(string, sanitize=True, fragment=True, stream=False,
     rv = serializer.serialize(walker, 'utf-8')
     if stream:
         return rv
-    return force_unicode(''.join(rv))
+    return force_text(''.join(rv))
 
 
 class CleanupFilter(filters_base.Filter):
@@ -238,7 +238,7 @@ class CleanupFilter(filters_base.Filter):
                 token['data'] = {}
                 for k, v in list(attrs.items()):
                     # None is the namespace
-                    token['data'][(None, force_unicode(k))] = force_unicode(v)
+                    token['data'][(None, force_text(k))] = force_text(v)
             elif token['type'] == 'EndTag' and token['name'] in self.end_tags:
                 token['name'] = self.end_tags[token['name']]
             yield token
