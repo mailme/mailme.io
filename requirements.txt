@@ -12,6 +12,7 @@ html5lib
 requests
 python-dateutil
 lxml
+pytz==2013d
 
 # Stuff
 jinja2
