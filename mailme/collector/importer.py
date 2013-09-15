@@ -1,12 +1,14 @@
 import time
 import socket
 import logging
-from datetime import datetime
+import hashlib
+from datetime import datetime, timedelta
 
 import requests
 from requests import codes
 from django.conf import settings
 from django.utils.timezone import utc
+from django.utils.encoding import force_text, force_bytes
 
 import feedparser
 import pytz
@@ -60,8 +62,8 @@ def date_to_datetime(field_name):
 
 def generate_guid(entry):
     """Generate missing guid for post entry."""
-    text = "|".join(safe_encode(entry.get(key) or "") for key in GUID_FIELDS)
-    return hashlib.md5(text).hexdigest()
+    text = "|".join(force_text(entry.get(key) or "") for key in GUID_FIELDS)
+    return hashlib.md5(force_bytes(text)).hexdigest()
 
 
 def get_entry_guid(feed_obj, entry):
@@ -73,11 +75,7 @@ def get_entry_guid(feed_obj, entry):
     if "guid" not in entry:
         return generate_guid(entry)
 
-    guid = entry["guid"]
-    try:
-        guid = guid.encode("utf-8").strip()
-    except UnicodeDecodeError:
-        guid = guid.strip()
+    guid = force_text(entry["guid"]).strip()
     return guid
 
 
@@ -113,8 +111,8 @@ def entries_by_date(entries, limit=None):
         # This will ensure that the posts will be properly ordered
         # later on when put into the database.
         entry["updated_parsed"] = date.timetuple()
-        entry["published_parsed"] = entry.get("published_parsed") or \
-                                        date.timetuple()
+        entry["published_parsed"] = (entry.get("published_parsed")
+                                     or date.timetuple())
         sorted_entries.append((date, entry))
 
     sorted_entries.sort(key=lambda key: key[0])
@@ -167,8 +165,7 @@ class FeedImporter(object):
         "link": lambda feed_obj, entry: entry.get("link") or feed_obj.feed_url,
         "feed": lambda feed_obj, entry: feed_obj,
         "guid": get_entry_guid,
-        "title": lambda feed_obj, entry: entry.get("title",
-                                                    "(no title)").strip(),
+        "title": lambda feed_obj, entry: entry.get("title", "(no title)").strip(),
         "author": lambda feed_obj, entry: entry.get("author", "").strip(),
     }
 
@@ -200,7 +197,7 @@ class FeedImporter(object):
                 headers = requests.head(feed_url).headers
                 contentlen = int(headers.get("content-length") or 0)
                 if contentlen > maxlen:
-                    raise exc.FeedCriticalError(unicode(FEED_GENERIC_ERROR_TEXT))
+                    raise exc.FeedCriticalError(FEED_GENERIC_ERROR_TEXT)
 
             feed = feedparser.parse(feed_url,
                                     etag=etag,
@@ -229,7 +226,7 @@ class FeedImporter(object):
                 feed = self.parse_feed(feed_url)
             except socket.timeout:
                 Feed.objects.create(feed_url=feed_url)
-                raise exceptions.TimeoutError(FEED_TIMEDOUT_ERROR_TEXT)
+                raise exc.TimeoutError(FEED_TIMEDOUT_ERROR_TEXT)
             except Exception:
                 feed = {"status": 500}
 
@@ -239,9 +236,9 @@ class FeedImporter(object):
 
             status = feed.get("status", default_status)
             if status == codes.NOT_FOUND:
-                raise exceptions.FeedNotFoundError(FEED_NOT_FOUND_ERROR_TEXT)
+                raise exc.FeedNotFoundError(FEED_NOT_FOUND_ERROR_TEXT)
             if status not in ACCEPTED_STATUSES:
-                raise exceptions.FeedCriticalError(
+                raise exc.FeedCriticalError(
                     FEED_GENERIC_ERROR_TEXT,
                     status=status)
 
@@ -341,7 +338,7 @@ class FeedImporter(object):
         if hasattr(feed, "modified") and feed.modified:
             try:
                 timestamp = time.mktime(feed.modified)
-                modified = datetime.fromtimestamp(timestmap).replace(tzinfo=utc)
+                modified = datetime.fromtimestamp(timestamp).replace(tzinfo=utc)
                 feed_obj.http_last_modified = modified
             except TypeError:
                 pass
@@ -368,7 +365,7 @@ class FeedImporter(object):
     def post_fields_parsed(self, entry, feed_obj):
         """Parse post fields."""
         return dict((key, handler(feed_obj, entry))
-                        for key, handler in self.post_field_handlers.items())
+                        for key, handler in list(self.post_field_handlers.items()))
 
     def import_entry(self, entry, feed_obj):
         """Import feed post entry."""

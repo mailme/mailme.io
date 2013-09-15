@@ -16,7 +16,7 @@ from django.utils.encoding import force_unicode
 
 import lxml.html.clean
 from html5lib import HTMLParser, treewalkers, treebuilders
-from html.entities import name2codepoint
+from .html.entities import name2codepoint
 from lxml.html.defs import empty_tags
 from html5lib.filters import _base as filters_base
 from mailme.utils.text import increment_string
@@ -38,7 +38,7 @@ def _build_html_tag(tag, attrs):
     """Build an HTML opening tag."""
     attrs = ' '.join(iter(
         '%s=%s' % (k, quoteattr(str(v)))
-        for k, v in attrs.items()
+        for k, v in list(attrs.items())
         if v is not None))
 
     return '<%s%s%s>' % (
@@ -140,7 +140,7 @@ class CleanupFilter(filters_base.Filter):
         'strike': ('del', None)
     }
 
-    end_tags = {key: value[0] for key, value in tag_conversions.items()}
+    end_tags = {key: value[0] for key, value in list(tag_conversions.items())}
     end_tags['font'] = 'span'
 
     def __init__(self, source, id_prefix=None, update_anchor_links=False):
@@ -157,7 +157,7 @@ class CleanupFilter(filters_base.Filter):
             result = stream
         else:
             result = list(stream)
-            for target_id, link in deferred_links.items():
+            for target_id, link in list(deferred_links.items()):
                 if target_id in id_map:
                     for idx, (key, value) in enumerate(link['data']):
                         if key == 'href':
@@ -174,8 +174,9 @@ class CleanupFilter(filters_base.Filter):
                 attrs = token.get('data', {})
                 if not isinstance(attrs, dict):
                     attrs = dict(reversed(attrs))
-                # The attributes are namespaced -- we don't care about that, add them back later
-                attrs = {k: v for (_, k), v in attrs.items()}
+                # The attributes are namespaced --
+                #we don't care about that, add them back later
+                attrs = {k: v for (_, k), v in list(attrs.items())}
                 if token['name'] in self.tag_conversions:
                     new_tag, new_style = self.tag_conversions[token['name']]
                     token['name'] = new_tag
@@ -184,8 +185,10 @@ class CleanupFilter(filters_base.Filter):
                         # this could give false positives, but the chance is
                         # quite small that this happens.
                         if new_style not in style:
-                            attrs[(None, 'style')] = (style and style.rstrip(';') +
-                                              '; ' or '') + new_style + ';'
+                            attrs[(None, 'style')] = (
+                                (style and style.rstrip(';') + '; ' or '')
+                                + new_style + ';'
+                            )
 
                 elif token['name'] == 'a' and attrs.get('href', '').startswith('#'):
                     attrs.pop('target', None)
@@ -233,8 +236,9 @@ class CleanupFilter(filters_base.Filter):
                     attrs['id'] = element_id
                     id_map[original_id] = element_id
                 token['data'] = {}
-                for k, v in attrs.items():
-                    token['data'][(None, force_unicode(k))] = force_unicode(v)  # None is the namespace
+                for k, v in list(attrs.items()):
+                    # None is the namespace
+                    token['data'][(None, force_unicode(k))] = force_unicode(v)
             elif token['type'] == 'EndTag' and token['name'] in self.end_tags:
                 token['name'] = self.end_tags[token['name']]
             yield token

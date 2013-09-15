@@ -10,7 +10,7 @@ class ExtendedQuerySet(QuerySet):
         if not created:
             fields = dict(kwargs.pop("defaults", {}))
             fields.update(kwargs)
-            for key, value in fields.iteritems():
+            for key, value in fields.items():
                 setattr(obj, key, value)
             obj.save()
 

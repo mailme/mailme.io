@@ -36,8 +36,10 @@ class TestCategory(TestCase):
 class TestEnclosure(TestCase):
 
     def test__str__(self):
-        en = Enclosure(url="requests.codes.//e.com/media/i.jpg",
-                type="image/jpeg", length=376851)
+        en = Enclosure(
+            url="requests.codes.//e.com/media/i.jpg",
+            type="image/jpeg", length=376851
+        )
         self.assertIn("requests.codes.//e.com/media/i.jpg", str(en))
         self.assertIn("image/jpeg", str(en))
         self.assertIn("376851", str(en))
@@ -46,8 +48,10 @@ class TestEnclosure(TestCase):
 class TestPost(TestCase):
 
     def setUp(self):
-        self.feed = Feed.objects.create(name="testfeed",
-                                        feed_url=gen_unique_id())
+        self.feed = Feed.objects.create(
+            name="testfeed",
+            feed_url=gen_unique_id()
+        )
 
     def test__str__(self):
         post = Post(feed=self.feed, title="foo")
@@ -80,10 +84,14 @@ class TestFeed(TestCase):
 
     def test_error_for_status(self):
         f = Feed(name="foo", feed_url="requests.codes.//example.com")
-        self.assertEqual(f.error_for_status(requests.codes.NOT_FOUND),
-                          FEED_NOT_FOUND_ERROR)
-        self.assertEqual(f.error_for_status(requests.codes.INTERNAL_SERVER_ERROR),
-                          FEED_GENERIC_ERROR)
+        self.assertEqual(
+            f.error_for_status(requests.codes.NOT_FOUND),
+            FEED_NOT_FOUND_ERROR
+        )
+        self.assertEqual(
+            f.error_for_status(requests.codes.INTERNAL_SERVER_ERROR),
+            FEED_GENERIC_ERROR
+        )
         self.assertIsNone(f.error_for_status(requests.codes.OK))
 
     def test_save_generic_error(self):
