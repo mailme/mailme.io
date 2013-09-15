@@ -182,6 +182,9 @@ links = [
 
 
 importer = FeedImporter()
+
+print('Starting import for {} feeds'.format(len(links)))
+
 for link in links:
     feed = importer.import_feed(link)
     print('Imported {}'.format(feed))
