@@ -177,7 +177,8 @@ links = [
     'http://250bpm.com/feed/pages/pagename/blog/category/blog/t/250bpm-blogs/h/http%3A%2F%2Fwww.250bpm.com%2Fblog',
     'http://www.elasticsearch.org/blog/feed/',
     'http://blog.rdio.com/developers/atom.xml',
-    'https://www.twilio.com/blog/feed'
+    'https://www.twilio.com/blog/feed',
+    'http://feeds.mashable.com/Mashable',
 ]
 
 
