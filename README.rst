@@ -2,32 +2,60 @@
 MailMe
 ======
 
-Installation::
+Installation
+------------
 
-    ~# Create your virtualenv (recommended, use virtualenvwrapper)
-    ~# virtualenv env
-    ~# # Clone repository
-    ~# git clone git@github.com:mailme/mailme.git
-    ~# # Activate Environment and install
-    ~# source env/bin/activate
-    ~# pip install -r requirements.txt
-    ~# # run tests
-    ~# python manage.py test
+.. code-block:: bash
 
-Setup the database::
+    $ Create your virtualenv (recommended, use virtualenvwrapper)
+    $ virtualenv env
 
-    ~# python manage.py syncdb --migrate --noinput
+    $ # Clone repository
+    $ git clone git@github.com:mailme/mailme.git
 
-Create a new superuser and create example data::
+    $ # Activate Environment and install
+    $ source env/bin/activate
+    $ pip install -r requirements.txt
 
-    ~# # Create a new super user
-    ~# python manage.py createsuperuser
-    ~# python import.py
+    $ # run tests
+    $ python manage.py test
+
+
+Edit settings
+-------------
+
+Ignore development settings.
+
+.. code-block:: bash
+
+    $ git update-index --assume-unchanged mailme/settings/development.py
+
+This ignores all future changes to your local development settings.
+
+Edit ``mailme/settings/development.py`` and adapt to your environment.
+
+
+Setup the database
+------------------
+
+.. code-block:: bash
+
+    $ python manage.py syncdb --migrate --noinput
+
+
+Superuser & example data
+------------------------
+
+.. code-block:: bash
+
+    $ # Create a new super user
+    $ python manage.py createsuperuser
+    $ python import.py
 
 
 Resources
 ---------
 
 * `Documentation <yu no url>`_
-* `Bug Tracker <http://github.com/mailme/mailme/issues/>`_
-* `Code <http://github.com/mailme/mailme>`_
+* `Bug Tracker <https://trello.com/b/yQfpDGPx/task-board>`_
+* `Code <https://bitbucket.org/fruitywinter/mailme.io>`_
