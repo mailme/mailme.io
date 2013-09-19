@@ -16,12 +16,13 @@ Installation::
 
 Setup the database::
 
-    ~# python manage.py syncdb --migrate
+    ~# python manage.py syncdb --migrate --noinput
 
 Create a new superuser and create example data::
 
     ~# # Create a new super user
     ~# python manage.py createsuperuser
+    ~# python import.py
 
 
 Resources
