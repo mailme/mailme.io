@@ -52,6 +52,14 @@ Superuser & example data
     $ python manage.py createsuperuser
     $ python import.py
 
+Now you can run the webserver and start using the site.
+
+.. code-block::
+
+   $ python manage.py runserver
+
+This starts a local webserver on `localhost:8000 <http://localhost:8000/`_. To view the administration
+interface visit `/admin/ <http://localhost:8000/admin/`_
 
 Resources
 ---------
