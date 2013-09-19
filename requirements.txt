@@ -17,3 +17,6 @@ pytz==2013d
 # Stuff
 jinja2
 South
+
+# Awesome django admin
+django-suit
