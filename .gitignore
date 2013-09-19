@@ -1,0 +1,8 @@
+*.pyc
+.tox
+.coverage
+*.egg*
+*~
+docs/_build
+.vagrant
+mailme/settings/development.py
