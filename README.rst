@@ -11,7 +11,7 @@ Installation
     $ virtualenv env
 
     $ # Clone repository
-    $ git clone git@github.com:mailme/mailme.git
+    $ git clone git@bitbucket.org:mailme/mailme.git
 
     $ # Activate Environment and install
     $ source env/bin/activate
