@@ -142,8 +142,6 @@ class TestFeedImporter(TestCase):
         feed_obj = importer.import_feed(feed, local=True)
         last_post = feed_obj.get_posts()[0]
 
-        time.sleep(1)
-
         feed2 = get_data_filename("buggy_dates.rss")
         feed_obj2 = importer.import_feed(feed2, local=True)
         last_post2 = feed_obj2.get_posts()[0]
@@ -158,8 +156,6 @@ class TestFeedImporter(TestCase):
         feed_obj = importer.import_feed(feed, local=True)
         last_post = feed_obj.get_posts()[0]
 
-        time.sleep(1)
-
         feed2 = get_data_filename("buggy_dates_and_guid.rss")
         feed_obj2 = importer.import_feed(feed2, local=True)
         last_post2 = feed_obj2.get_posts()[0]
@@ -172,7 +168,7 @@ class TestFeedImporter(TestCase):
         class _TimeoutFeedImporter(FeedImporter):
 
             def parse_feed(self, *args, **kwargs):
-                raise socket.timeout(1)
+                raise socket.timeout(.1)
 
         feed2 = "foofoobar.rss"
         with self.assertRaises(TimeoutError):
@@ -184,7 +180,7 @@ class TestFeedImporter(TestCase):
         class _TimeoutFeedImporter(FeedImporter):
 
             def parse_feed(self, *args, **kwargs):
-                raise socket.timeout(1)
+                raise socket.timeout(.1)
 
         importer = FeedImporter(update_on_import=False)
         feed_obj = importer.import_feed(self.feed, local=True, force=True)
