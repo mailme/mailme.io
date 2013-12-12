@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_DIR = os.path.join(BASE_DIR, '..')
 
 SECRET_KEY = 'na2p&yexkp-g83$2m^&b!r+a%nv2ci1!d9vh^a_7h!hv*7&h79'
 
@@ -52,6 +53,10 @@ TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
     'django.contrib.messages.context_processors.messages',
 )
 
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'bower_components'),
+)
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -63,6 +68,8 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # 3 hours
 REFRESH_EVERY = 3 * 60 * 60
