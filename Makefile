@@ -11,10 +11,13 @@ help:
 
 clean: clean-build clean-pyc
 
-devinstall:
-	pip install -e .[tox]
-	pip install -e .[docs]
-	pip install -e .[tests]
+develop:
+	npm install -q
+	pip install -q -e . --use-mirrors
+	pip install -q "file://`pwd`#egg=mailme[tox]" --use-mirrors
+	pip install -q "file://`pwd`#egg=mailme[docs]" --use-mirrors
+	pip install -q "file://`pwd`#egg=mailme[tests]" --use-mirrors
+	bower update
 
 clean-build:
 	rm -fr build/

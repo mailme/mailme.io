@@ -15,7 +15,7 @@ Installation
 
     $ # Activate Environment and install
     $ source env/bin/activate
-    $ make devinstall
+    $ make develop
 
     $ # run tests
     $ python setup.py test
