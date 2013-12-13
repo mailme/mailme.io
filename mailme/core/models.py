@@ -62,9 +62,13 @@ class Category(models.Model):
         The type of category
 
     """
-    name = models.CharField(_("name"), max_length=128)
-    domain = models.CharField(_("domain"),
-                              max_length=128, null=True, blank=True)
+    name = models.CharField(_("name"), max_length=200)
+    domain = models.CharField(
+        _("domain"),
+        max_length=200,
+        null=True,
+        blank=True
+    )
 
     objects = ExtendedManager()
 
@@ -293,7 +297,7 @@ class Post(models.Model):
     link = models.URLField(_("link"), max_length=2048)
     content = models.TextField(_("content"), blank=True)
     guid = models.CharField(_("guid"), max_length=200, blank=True)
-    author = models.CharField(_("author"), max_length=50, blank=True)
+    author = models.CharField(_("author"), max_length=200, blank=True)
     date_published = models.DateField(_("date published"))
     date_updated = models.DateTimeField(_("date updated"))
     enclosures = models.ManyToManyField(Enclosure, blank=True)
