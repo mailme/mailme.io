@@ -265,8 +265,10 @@ class FeedImporter(object):
 
     def get_categories(self, obj):
         """Get and save categories."""
-        return [self.create_category(*cat)
-                    for cat in getattr(obj, "categories", [])]
+        categories = []
+        for category in getattr(obj, 'categories', []):
+            categories.append(self.create_category(*category))
+        return categories
 
     def create_category(self, domain, name):
         """Create new category.
@@ -276,8 +278,9 @@ class FeedImporter(object):
 
         """
         return Category.objects.update_or_create(
-                      name=name.strip(),
-                      domain=domain and domain.strip() or "")
+            name=name.strip(),
+            domain=domain and domain.strip() or ""
+        )
 
     def update_feed(self, feed_obj, feed=None, force=False):
         """Update (refresh) feed.
@@ -342,8 +345,9 @@ class FeedImporter(object):
             except TypeError:
                 pass
 
-        logger.debug("Saving feed object... %s" % (
-                          feed_obj.feed_url))
+        logger.debug(
+            "Saving feed object... %s" % (feed_obj.feed_url)
+        )
 
         feed_obj.save()
         return feed_obj
@@ -375,16 +379,20 @@ class FeedImporter(object):
                 except ValueError:
                     length = 0
 
-                self.create_enclosure(
+                enclosures.append(self.create_enclosure(
                     url=enclosure.href,
                     length=length,
                     type=enclosure.type
-                )
+                ))
+
+        return enclosures
 
     def post_fields_parsed(self, entry, feed_obj):
         """Parse post fields."""
-        return dict((key, handler(feed_obj, entry))
-                        for key, handler in list(self.post_field_handlers.items()))
+        return dict(
+            (key, handler(feed_obj, entry))
+            for key, handler in list(self.post_field_handlers.items())
+        )
 
     def import_entry(self, entry, feed_obj):
         """Import feed post entry."""
