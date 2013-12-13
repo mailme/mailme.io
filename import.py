@@ -195,4 +195,4 @@ for link in links:
     else:
         print('Imported {}'.format(feed))
 
-print(feed)
+print('All feeds imported!')
