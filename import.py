@@ -1,4 +1,5 @@
 from mailme.collector.importer import FeedImporter
+from mailme.core import exc
 
 
 links = [
@@ -187,7 +188,11 @@ importer = FeedImporter()
 print('Starting import for {} feeds'.format(len(links)))
 
 for link in links:
-    feed = importer.import_feed(link)
-    print('Imported {}'.format(feed))
+    try:
+        feed = importer.import_feed(link)
+    except exc.FeedNotFoundError:
+        print('NotFound {}'.format(feed))
+    else:
+        print('Imported {}'.format(feed))
 
 print(feed)
