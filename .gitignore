@@ -7,3 +7,4 @@ docs/_build
 .vagrant
 db.sqlite3
 mailme/settings/development.py
+mailme/collected_static
