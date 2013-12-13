@@ -191,7 +191,7 @@ for link in links:
     try:
         feed = importer.import_feed(link)
     except exc.FeedNotFoundError:
-        print('NotFound {}'.format(feed))
+        print('NotFound {} ({})'.format(link))
     else:
         print('Imported {}'.format(feed))
 
