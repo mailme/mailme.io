@@ -15,10 +15,10 @@ Installation
 
     $ # Activate Environment and install
     $ source env/bin/activate
-    $ pip install -r requirements.txt
+    $ make devinstall
 
     $ # run tests
-    $ python manage.py test
+    $ python setup.py test
 
 
 Edit settings
