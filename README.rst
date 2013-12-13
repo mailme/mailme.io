@@ -58,8 +58,8 @@ Now you can run the webserver and start using the site.
 
    $ python manage.py runserver
 
-This starts a local webserver on `localhost:8000 <http://localhost:8000/`_. To view the administration
-interface visit `/admin/ <http://localhost:8000/admin/`_
+This starts a local webserver on `localhost:8000 <http://localhost:8000/>`_. To view the administration
+interface visit `/admin/ <http://localhost:8000/admin/>`_
 
 Resources
 ---------
