@@ -1,4 +1,4 @@
-include CHANGES README.rst AUTHORS IDEAS LICENSE Makefile Procfile Vagrantfile
+include CHANGES README.rst AUTHORS IDEAS LICENSE Makefile Procfile
 recursive-include tests *
 recursive-include docs *
 recursive-include examples *
@@ -7,4 +7,3 @@ recursive-exclude docs *.pyo
 recursive-exclude tests *.pyc
 recursive-exclude tests *.pyo
 prune docs/_build
-
