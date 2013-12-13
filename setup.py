@@ -32,6 +32,7 @@ install_requires=[
     'pytz==2013d',
     'South',
     'django-suit',
+    'blessings',
 ]
 
 dev_requires = [
