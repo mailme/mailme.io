@@ -1,0 +1,16 @@
+{
+    "name": "mailme",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "ssh://git@bitbucket.org/fruitywinter/mailme.io.git"
+    },
+    "dependencies": {
+        "phantomjs": "1.9.x",
+        "mocha": "1.9.x",
+        "mocha-phantomjs": "3.0.x",
+        "jshint": "0.9.x",
+        "uglify-js": "2.2.4"
+    },
+    "private": true
+}
