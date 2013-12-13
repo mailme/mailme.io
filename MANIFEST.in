@@ -2,8 +2,6 @@ include CHANGES README.rst AUTHORS IDEAS LICENSE Makefile Procfile
 recursive-include tests *
 recursive-include docs *
 recursive-include examples *
-recursive-exclude docs *.pyc
-recursive-exclude docs *.pyo
-recursive-exclude tests *.pyc
-recursive-exclude tests *.pyo
+global-exclude *.pyc
+global-exclode *.pyo
 prune docs/_build
