@@ -1,0 +1,22 @@
+{% load static from staticfiles %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mail Me!{% endblock title %}</title>
+
+    {% block styles %}
+    <link rel="stylesheet" href="{% static "css/app.css" %}">
+    {% endblock styles %}
+
+    {% block js %}
+    <script src="{% static "foundation/js/foundation.min.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+    {% endblock js %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+</body>
+</html>
