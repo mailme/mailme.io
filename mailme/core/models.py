@@ -1,7 +1,9 @@
 #-*- coding: utf-8 -*-
 """
     mailme.core.models
-    ~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~
+
+    Core models.
 """
 import hashlib
 from datetime import datetime, timedelta
@@ -86,7 +88,8 @@ class Category(models.Model):
 
 class Feed(models.Model):
 
-    """An RSS feed
+    """
+    An RSS feed.
 
     .. attribute:: name
 
@@ -113,7 +116,6 @@ class Feed(models.Model):
     .. attribute:: last_error
 
         The last error message (if any).
-
     """
 
     name = models.CharField(_("name"), max_length=200)
@@ -225,7 +227,8 @@ class Feed(models.Model):
 
 class Enclosure(models.Model):
 
-    """Media enclosure for a Post
+    """
+    Media enclosure for a Post.
 
     .. attribute:: url
 
@@ -239,7 +242,6 @@ class Enclosure(models.Model):
 
         The actual content length of the file
         pointed to at :attr:`url`.
-
     """
     url = models.URLField(_("URL"))
     type = models.CharField(_("type"), max_length=200)
@@ -257,7 +259,8 @@ class Enclosure(models.Model):
 
 class Post(models.Model):
 
-    """A Post for an RSS feed
+    """
+    A Post for an RSS feed.
 
     .. attribute:: feed
 
@@ -294,7 +297,6 @@ class Post(models.Model):
     .. attribute:: enclosures
 
         List of media attachments for this post.
-
     """
 
     feed = models.ForeignKey(Feed, null=False, blank=False)

@@ -1,3 +1,10 @@
+#-*- coding: utf-8 -*-
+"""
+    mailme.collector.importer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Importer.
+"""
 import time
 import socket
 import logging
@@ -68,10 +75,10 @@ def generate_guid(entry):
 
 
 def get_entry_guid(feed_obj, entry):
-    """Get the guid for a post.
+    """
+    Get the guid for a post.
 
     If the post doesn't have a guid, a new guid is generated.
-
     """
     if "guid" not in entry:
         return generate_guid(entry)
@@ -88,11 +95,11 @@ def format_date(t):
 
 
 def entries_by_date(entries, limit=None):
-    """Sort the feed entries by date
+    """
+    Sort the feed entries by date.
 
     :param entries: Entries given from :mod:`feedparser``.
     :param limit: Limit number of posts.
-
     """
     now = datetime.now(pytz.utc)
 
@@ -121,7 +128,8 @@ def entries_by_date(entries, limit=None):
 
 class FeedImporter(object):
 
-    """Import/Update feeds.
+    """
+    Import/Update feeds.
 
     :keyword post_limit: See :attr`post_limit`.
     :keyword update_on_import: See :attr:`update_on_import`.
@@ -155,7 +163,6 @@ class FeedImporter(object):
     .. attribute:: parser
 
         The feed parser used. (Default: :mod:`feedparser`.)
-
     """
     update_on_import = True
     post_field_handlers = {
@@ -178,7 +185,8 @@ class FeedImporter(object):
 
     def parse_feed(self, feed_url, etag=None, modified=None, timeout=None,
                    maxlen=None):
-        """Parse feed using feedparser.
+        """
+        Parse feed using feedparser.
 
         :param feed_url: URL to the feed to parse.
 
@@ -186,7 +194,6 @@ class FeedImporter(object):
         :keyword modified: ``Last-Modified`` HTTP header received from last
             parse (if any).
         :keyword timeout: Parser timeout in seconds.
-
         """
         prev_timeout = socket.getdefaulttimeout()
         timeout = timeout or self.timeout
@@ -208,7 +215,8 @@ class FeedImporter(object):
         return feed
 
     def import_feed(self, feed_url, force=None, local=False):
-        """Import feed.
+        """
+        Import feed.
 
         If feed is not seen before it will be created, otherwise
         just updated.
@@ -272,11 +280,11 @@ class FeedImporter(object):
         return categories
 
     def create_category(self, domain, name):
-        """Create new category.
+        """
+        Create new category.
 
         :param domain: The category domain.
         :param name: The name of the category.
-
         """
         return Category.objects.update_or_create(
             name=name.strip(),
@@ -284,7 +292,8 @@ class FeedImporter(object):
         )
 
     def update_feed(self, feed_obj, feed=None, force=False):
-        """Update (refresh) feed.
+        """
+        Update (refresh) feed.
 
         The feed must already exist in the system, if not you have
         to import it using :meth:`import_feed`.
@@ -295,7 +304,6 @@ class FeedImporter(object):
             twice.
         :keyword force: Force refresh of the feed even if it has been
             recently refreshed already.
-
         """
         now = datetime.utcnow().replace(tzinfo=utc)
         already_fresh = (feed_obj.date_last_refresh and

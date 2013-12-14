@@ -5,9 +5,6 @@
 
     This module implements various HTML/XHTML utility functions.  Some parts
     of this module require the lxml and html5lib libraries.
-
-    :copyright: (c) 2013 mailme, see AUTHORS for more details.
-    :license: BSD.
 """
 import re
 from html.entities import name2codepoint
@@ -97,8 +94,9 @@ def striptags(string):
 
 def parse_html(string, fragment=True):
     """
-    Parse a tagsoup into a tree. For cleaning up
-    markup you can use the `cleanup_html` function.
+    Parse a tagsoup into a tree.
+
+    For cleaning up markup you can use the `cleanup_html` function.
     """
     parser = HTMLParser(tree=treebuilders.getTreeBuilder('lxml'))
     return (fragment and parser.parseFragment or parser.parse)(string)
@@ -131,9 +129,7 @@ def cleanup_html(string, sanitize=True, fragment=True, stream=False,
 
 class CleanupFilter(filters_base.Filter):
 
-    """
-    A simple filter that replaces deprecated elements with others.
-    """
+    """A simple filter that replaces deprecated elements with others."""
 
     tag_conversions = {
         'center': ('span', 'text-align: center'),
