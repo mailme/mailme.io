@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'mailme.core',
     'mailme.collector',
     'south',
+    'celery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,3 +77,10 @@ REFRESH_EVERY = 3 * 60 * 60
 POST_LIMIT = 20
 FEED_TIMEOUT = 10
 MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
+
+# Celery
+BROKER_URL = 'memory://'
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
