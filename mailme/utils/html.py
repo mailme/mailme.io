@@ -130,6 +130,7 @@ def cleanup_html(string, sanitize=True, fragment=True, stream=False,
 
 
 class CleanupFilter(filters_base.Filter):
+
     """
     A simple filter that replaces deprecated elements with others.
     """
@@ -176,7 +177,7 @@ class CleanupFilter(filters_base.Filter):
                 if not isinstance(attrs, dict):
                     attrs = dict(reversed(attrs))
                 # The attributes are namespaced --
-                #we don't care about that, add them back later
+                # we don't care about that, add them back later
                 attrs = {k: v for (_, k), v in list(attrs.items())}
                 if token['name'] in self.tag_conversions:
                     new_tag, new_style = self.tag_conversions[token['name']]

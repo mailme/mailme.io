@@ -3,14 +3,12 @@ import os
 import time
 import socket
 import tempfile
-import feedparser
 import pytz
 from requests import codes
 from datetime import datetime
 from django.test import TestCase
-from django.contrib.auth import authenticate
 
-from mailme.collector.importer import FeedImporter, get_entry_guid
+from mailme.collector.importer import FeedImporter
 from mailme.core.exc import FeedCriticalError, TimeoutError, FeedNotFoundError
 from mailme.core.models import (
     Feed,

@@ -51,6 +51,7 @@ def timedelta_seconds(delta):
 
 
 class Category(models.Model):
+
     """Category associated with :class:`Post`` or :class:`Feed`.
 
     .. attribute:: name
@@ -84,6 +85,7 @@ class Category(models.Model):
 
 
 class Feed(models.Model):
+
     """An RSS feed
 
     .. attribute:: name
@@ -222,6 +224,7 @@ class Feed(models.Model):
 
 
 class Enclosure(models.Model):
+
     """Media enclosure for a Post
 
     .. attribute:: url
@@ -253,6 +256,7 @@ class Enclosure(models.Model):
 
 
 class Post(models.Model):
+
     """A Post for an RSS feed
 
     .. attribute:: feed

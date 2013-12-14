@@ -18,6 +18,7 @@ class ExtendedQuerySet(QuerySet):
 
 
 class ExtendedManager(models.Manager):
+
     """Manager supporting :meth:`update_or_create`."""
 
     def get_query_set(self):

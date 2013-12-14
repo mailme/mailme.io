@@ -21,7 +21,7 @@ test_requires = [
     'python-coveralls',
 ]
 
-install_requires=[
+install_requires = [
     'Django>=1.6,<1.7',
     'celery>=3.1',
     'django-celery>=3.1',
@@ -40,6 +40,7 @@ dev_requires = [
     'flake8>=2.0',
 ]
 
+
 class PyTest(TestCommand):
 
     def finalize_options(self):
@@ -48,7 +49,7 @@ class PyTest(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import pytest
         errno = pytest.main(self.test_args)
         sys.exit(errno)

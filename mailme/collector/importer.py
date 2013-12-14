@@ -120,6 +120,7 @@ def entries_by_date(entries, limit=None):
 
 
 class FeedImporter(object):
+
     """Import/Update feeds.
 
     :keyword post_limit: See :attr`post_limit`.
@@ -176,7 +177,7 @@ class FeedImporter(object):
         self.timeout = kwargs.get("timeout", settings.MAILME_FEED_TIMEOUT)
 
     def parse_feed(self, feed_url, etag=None, modified=None, timeout=None,
-            maxlen=None):
+                   maxlen=None):
         """Parse feed using feedparser.
 
         :param feed_url: URL to the feed to parse.
