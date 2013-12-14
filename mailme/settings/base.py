@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'mailme.collector',
     'south',
     'celery',
+    'kombu.transport.django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,6 +59,10 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'bower_components'),
 )
 
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
+)
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -73,14 +78,72 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # 3 hours
-REFRESH_EVERY = 3 * 60 * 60
-POST_LIMIT = 20
-FEED_TIMEOUT = 10
-MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
-
-# Celery
-BROKER_URL = 'memory://'
+MAILME_REFRESH_EVERY = 3 * 60 * 60
+MAILME_POST_LIMIT = 20
+MAILME_FEED_TIMEOUT = 10
+MAILME_MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
+
+# Queue configuration
+from kombu import Queue
+
+BROKER_URL = "django://"
+
+CELERY_ALWAYS_EAGER = True
+CELERY_IGNORE_RESULT = True
+CELERY_SEND_EVENTS = False
+CELERY_RESULT_BACKEND = None
+CELERY_TASK_RESULT_EXPIRES = 1
+CELERY_DISABLE_RATE_LIMITS = True
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "default"
+CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
+CELERY_DEFAULT_ROUTING_KEY = "default"
+CELERY_CREATE_MISSING_QUEUES = True
+CELERY_QUEUES = (
+    Queue('default', routing_key='default'),
+    Queue('celery', routing_key='celery'),
+)
+
+# Disable South in tests as it is sending incorrect create signals
+SOUTH_TESTS_MIGRATE = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'console': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler'
+        },
+        'sentry': {
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+        }
+    },
+    'formatters': {
+        'client_info': {
+            'format': '%(name)s %(levelname)s %(project_slug)s/%(team_slug)s %(message)s'
+        }
+    },
+    'loggers': {
+        '()': {
+            'handlers': ['console', 'sentry'],
+        },
+        'root': {
+            'handlers': ['console', 'sentry'],
+        },
+        'mailme': {
+            'level': 'ERROR',
+            'handlers': ['console', 'sentry'],
+            'propagate': False,
+        },
+        'django.request': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    }
+}

@@ -169,11 +169,11 @@ class FeedImporter(object):
     }
 
     def __init__(self, **kwargs):
-        self.post_limit = kwargs.get("post_limit", settings.POST_LIMIT)
+        self.post_limit = kwargs.get("post_limit", settings.MAILME_POST_LIMIT)
         self.update_on_import = kwargs.get("update_on_import", True)
         self.include_categories = kwargs.get("include_categories", True)
         self.include_enclosures = kwargs.get("include_enclosures", True)
-        self.timeout = kwargs.get("timeout", settings.FEED_TIMEOUT)
+        self.timeout = kwargs.get("timeout", settings.MAILME_FEED_TIMEOUT)
 
     def parse_feed(self, feed_url, etag=None, modified=None, timeout=None,
             maxlen=None):
@@ -299,7 +299,7 @@ class FeedImporter(object):
         now = datetime.utcnow().replace(tzinfo=utc)
         already_fresh = (feed_obj.date_last_refresh and
                          now < feed_obj.date_last_refresh +
-                         settings.MIN_REFRESH_INTERVAL)
+                         settings.MAILME_MIN_REFRESH_INTERVAL)
 
         if already_fresh and not force:
             logger.info(

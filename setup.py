@@ -33,6 +33,7 @@ install_requires=[
     'South',
     'django-suit',
     'blessings',
+    'raven',
 ]
 
 dev_requires = [
