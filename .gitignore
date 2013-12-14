@@ -8,3 +8,5 @@ docs/_build
 db.sqlite3
 mailme/settings/development.py
 mailme/collected_static
+bower_components
+node_modules
