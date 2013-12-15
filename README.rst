@@ -54,12 +54,31 @@ Superuser & example data
 
 Now you can run the webserver and start using the site.
 
-.. code-block::
+.. code-block:: bash
 
    $ python manage.py runserver
 
 This starts a local webserver on `localhost:8000 <http://localhost:8000/>`_. To view the administration
 interface visit `/admin/ <http://localhost:8000/admin/>`_
+
+Run Celery and other services
+-----------------------------
+
+Other services being used:
+
+* Celery, is being used to run [regular] tasks, e.g for feed imports.
+* Compass, is being used to compile our scss files and the foundation framework.
+
+To start all of them (including the runserver):
+
+.. code-block:: bash
+
+   $ foreman start
+
+.. note::
+
+   Please make sure you have the ``foreman`` gem installed.
+
 
 Resources
 ---------
