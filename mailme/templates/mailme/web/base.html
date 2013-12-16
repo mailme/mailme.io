@@ -9,14 +9,15 @@
     {% block styles %}
     <link rel="stylesheet" href="{% static "css/app.css" %}">
     {% endblock styles %}
-
-    {% block js %}
-    <script src="{% static "foundation/js/foundation.min.js" %}"></script>
-    <script src="{% static "js/app.js" %}"></script>
-    {% endblock js %}
 </head>
 <body>
 {% block body %}
 {% endblock %}
+
+{% block body-js %}
+<script type="text/javascript" src="{% static "jquery/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "foundation/js/foundation.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/app.js" %}"></script>
+{% endblock body-js %}
 </body>
 </html>
