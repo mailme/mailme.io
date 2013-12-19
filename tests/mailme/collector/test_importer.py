@@ -281,7 +281,7 @@ class TestFeedImporter(TestCase):
 
     def test_double_post_bug(self):
         """With some feeds, the posts seem to be imported several times."""
-        feed_str = get_data_file("lefigaro.rss")
+        feed_str = get_data_filename("lefigaro.rss")
         imported_feed = self.importer.import_feed(feed_str, local=True,
                                                   force=True)
         post_count = imported_feed.post_set.count()
