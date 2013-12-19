@@ -40,6 +40,10 @@ dev_requires = [
     'flake8>=2.0',
 ]
 
+postgres_requires = [
+    'psycopg2>=2.5.0,<2.6.0',
+]
+
 
 class PyTest(TestCommand):
 
@@ -76,6 +80,7 @@ setup(
         'tox': ['tox'],
         'tests': test_requires,
         'dev': dev_requires,
+        'postgres': install_requires + postgres_requires,
     },
     zip_safe=False,
     classifiers=[
