@@ -11,14 +11,14 @@ def pytest_configure(config):
     if test_db == 'mysql':
         settings.DATABASES['default'].update({
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'mailme',
+            'NAME': 'mailme_test',
             'USER': 'root',
         })
     elif test_db == 'postgres':
         settings.DATABASES['default'].update({
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'USER': 'postgres',
-            'NAME': 'mailme',
+            'NAME': 'mailme_test',
         })
     elif test_db == 'sqlite':
         settings.DATABASES['default'].update({
