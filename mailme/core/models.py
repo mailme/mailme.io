@@ -119,9 +119,9 @@ class Feed(models.Model):
     """
 
     name = models.CharField(_("name"), max_length=200)
-    feed_url = models.URLField(_("feed URL"), unique=True)
+    feed_url = models.URLField(_("feed URL"), max_length=2048, unique=True)
     description = models.TextField(_("description"))
-    link = models.URLField(_("link"), max_length=200, blank=True)
+    link = models.URLField(_("link"), max_length=2048, blank=True)
     http_etag = models.CharField(
         _("E-Tag"),
         editable=False,
@@ -307,7 +307,7 @@ class Post(models.Model):
     content = models.TextField(_("content"), blank=True)
     guid = models.CharField(_("guid"), max_length=2048, blank=True)
     author = models.CharField(_("author"), max_length=200, blank=True)
-    date_published = models.DateField(_("date published"))
+    date_published = models.DateTimeField(_("date published"))
     date_updated = models.DateTimeField(_("date updated"))
     enclosures = models.ManyToManyField(Enclosure, blank=True)
     categories = models.ManyToManyField(Category)

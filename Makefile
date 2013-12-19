@@ -33,7 +33,6 @@ lint:
 	flake8 mailme tests
 
 test-ci:
-	psql -c 'create database mailme_test;' -U postgres
 	$(MAKE) test
 
 test:
