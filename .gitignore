@@ -5,6 +5,7 @@
 *~
 docs/_build
 .vagrant
+.sass-cache
 db.sqlite3
 mailme/settings/development.py
 mailme/collected_static
