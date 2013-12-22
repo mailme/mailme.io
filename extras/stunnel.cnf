@@ -1,7 +1,7 @@
 pid=
 cert=extras/stunnel.pem
 foreground=yes
-debug=7
+debug=5
 sslVersion = SSLv3
 
 [https]
