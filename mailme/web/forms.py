@@ -12,10 +12,7 @@ class RegisterForm(forms.Form):
     )
 
     def clean_email(self):
-        """
-        Validates if the required field `email` contains
-        a non existing mail address.
-        """
+        """Validates if the ``email`` address field is unique."""
         exists = User.objects.filter(email=self.cleaned_data['email']).exists()
         if exists:
             raise forms.ValidationError(mark_safe(
