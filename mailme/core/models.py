@@ -52,6 +52,28 @@ def timedelta_seconds(delta):
     return max(delta.total_seconds(), 0)
 
 
+class SocialAccount(models.Model):
+    provider = models.CharField(max_length=255, choices=(
+        ('google', 'Google'),
+    ))
+    identifier = models.CharField(max_length=255)
+    link = models.CharField(max_length=2048, blank=True)
+    locale = models.CharField(max_length=10, blank=True)
+
+    user = models.ForeignKey('core.User')
+
+
+class User(models.Model):
+
+    # RFC3696/5321 requires max length of 254 characters
+    # the parsing of EmailField should support the RFC completely.
+    # Note: This is the primary email address, a user can have
+    #       multiple addresses through ``SocialAccount``
+    email = models.EmailField(max_length=254)
+
+    verified_email = models.BooleanField(default=False)
+
+
 class Category(models.Model):
 
     """Category associated with :class:`Post`` or :class:`Feed`.
