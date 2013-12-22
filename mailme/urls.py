@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', 'mailme.web.views.index'),
+    url(r'^$', 'mailme.web.views.index', name='web-index'),
 
 )
 
