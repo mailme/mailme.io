@@ -13,6 +13,13 @@ with open('CHANGES') as fobj:
     history.replace('.. :changelog:', '')
 
 
+dependency_links = [
+    # Dummy for source package, 0.5.0 is required so that install_requires
+    # can recognize the correct version.
+    'https://github.com/requests/requests-oauthlib/archive/06a87fc57ec85f096ae38d7ccce01db0b5d46096.zip#egg=requests-oauthlib-0.5.0'
+]
+
+
 test_requires = [
     'coverage',
     'pytest',
@@ -28,6 +35,7 @@ install_requires = [
     'feedparser',
     'html5lib',
     'requests',
+    'requests-oauthlib<=0.5.0',
     'lxml',
     'pytz==2013d',
     'South',
@@ -75,6 +83,7 @@ setup(
     tests_require=test_requires,
     install_requires=install_requires,
     cmdclass={'test': PyTest},
+    dependency_links=dependency_links,
     extras_require={
         'docs': ['sphinx'],
         'tox': ['tox'],
