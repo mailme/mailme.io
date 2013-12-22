@@ -69,7 +69,7 @@ class User(models.Model):
     # the parsing of EmailField should support the RFC completely.
     # Note: This is the primary email address, a user can have
     #       multiple addresses through ``SocialAccount``
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
 
     verified_email = models.BooleanField(default=False)
 
