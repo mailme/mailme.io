@@ -35,7 +35,7 @@ install_requires = [
     'feedparser',
     'html5lib',
     'requests',
-    'requests-oauthlib<=0.5.0',
+    'python-social-auth',
     'lxml',
     'pytz==2013d',
     'South',

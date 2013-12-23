@@ -1,0 +1,40 @@
+{% extends "mailme/web/base.html" %}
+
+{% block body %}
+<form method="post" action="" id="disconnect-form">{% csrf_token %}</form>
+
+<p>You are logged in as {{ user.username }}!</p>
+
+<p>Associated:</p>
+<ul>
+  {% for assoc in backends.associated %}
+    <li>
+      {{ assoc.provider }} (<a href="{% url 'social:disconnect_individual' assoc.provider assoc.id %}?next={% filter urlencode %}{{ request.path }}{% endfilter %}" class="disconnect">Disconnect</a>)
+    </li>
+  {% endfor %}
+</ul>
+
+<p>Associate:</p>
+<ul>
+  {% for name in backends.not_associated %}
+    <li>
+      <a href="{% url 'social:begin' name %}">{{ name }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block body-js %}
+{{ block.super }}
+<script type="text/javascript">
+  $(function () {
+      $(document).on('click', 'a.disconnect', function (e) {
+          e.preventDefault();
+          $('form#disconnect-form')
+              .attr('action', $(this).attr('href'))
+              .submit();
+      });
+  });
+</script>
+{% endblock %}

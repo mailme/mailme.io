@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'south',
     'celery',
     'kombu.transport.django',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,8 @@ DATABASES = {
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 STATICFILES_DIRS = (
@@ -62,6 +65,66 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.persona.PersonaAuth',
+    'social.backends.email.EmailAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+#TODO: Already configured here since I think we're going to customize this
+#      later either way.
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL = 'auth.User'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '853034293084-mdami2i23c9dkqopbhfgopdua81croic.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'zoAfLdVkkFvKV4Bo-EwiQPva'
+
+SOCIAL_AUTH_CREATE_USERS = True
+
+# Auth engines and the settings required for them to be listed
+AUTH_PROVIDERS = {
+    'twitter': ('TWITTER_CONSUMER_KEY', 'TWITTER_CONSUMER_SECRET'),
+    'facebook': ('FACEBOOK_APP_ID', 'FACEBOOK_API_SECRET'),
+    'google': ('GOOGLE_OAUTH2_CLIENT_ID', 'GOOGLE_OAUTH2_CLIENT_SECRET'),
+}
+
+import random
+
+SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth Vader', 'Obi-Wan Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email']
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/done/'
+URL_PATH = ''
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
+SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'mailme.web.views.send_validation'
+SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/email-sent/'
+SOCIAL_AUTH_USERNAME_FORM_HTML = 'username_signup.html'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.mail.mail_validation',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
+
+from django.core.urlresolvers import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('mailme-login-redirect')
 
 LANGUAGE_CODE = 'en-us'
 

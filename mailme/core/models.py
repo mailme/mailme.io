@@ -11,11 +11,12 @@ from datetime import datetime, timedelta
 import requests
 from django.db import models
 from django.conf import settings
-from django.utils.timezone import utc
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from mailme.utils.dates import naturaldate
 from mailme.core.managers import ExtendedManager
+
 
 ACCEPTED_STATUSES = frozenset([requests.codes.OK,
                                requests.codes.FOUND,
@@ -50,28 +51,6 @@ def timedelta_seconds(delta):
 
     """
     return max(delta.total_seconds(), 0)
-
-
-class SocialAccount(models.Model):
-    provider = models.CharField(max_length=255, choices=(
-        ('google', 'Google'),
-    ))
-    identifier = models.CharField(max_length=255)
-    link = models.CharField(max_length=2048, blank=True)
-    locale = models.CharField(max_length=10, blank=True)
-
-    user = models.ForeignKey('core.User')
-
-
-class User(models.Model):
-
-    # RFC3696/5321 requires max length of 254 characters
-    # the parsing of EmailField should support the RFC completely.
-    # Note: This is the primary email address, a user can have
-    #       multiple addresses through ``SocialAccount``
-    email = models.EmailField(max_length=254, unique=True)
-
-    verified_email = models.BooleanField(default=False)
 
 
 class Category(models.Model):
@@ -351,7 +330,12 @@ class Post(models.Model):
     @property
     def date_published_naturaldate(self):
         date = self.date_published
-        as_datetime = datetime(date.year, date.month, date.day, tzinfo=utc)
+        as_datetime = datetime(
+            date.year,
+            date.month,
+            date.day,
+            tzinfo=timezone.utc
+        )
         return str(naturaldate(as_datetime))
 
     @property

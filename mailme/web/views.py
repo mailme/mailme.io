@@ -1,15 +1,51 @@
-from django.shortcuts import render
-from mailme.web.forms import RegisterForm
-from mailme.core.models import User
+from functools import wraps
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 
-def index(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            print("valid")
-    else:
-        form = RegisterForm()
-    return render(request, 'mailme/web/index.html', {
-        'form': form
+def login_required(func):
+    @wraps(func)
+    def wrapped(request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            request.session['_next'] = request.get_full_path()
+            return HttpResponseRedirect(get_login_url())
+        return func(request, *args, **kwargs)
+    return wrapped
+
+
+def home(request):
+    """Home view, displays login mechanism"""
+    return render(request, 'mailme/web/home.html', {
     })
+
+
+@login_required
+def account(request):
+    """Login complete view, displays user data"""
+    return render(request, 'mailme/web/account.html', {
+        'user': request.user,
+    })
+
+
+@login_required
+def login_redirect(request):
+    default = reverse('mailme-home')
+    login_url = request.session.pop('_next', None) or default
+    if '//' in login_url:
+        login_url = default
+    elif login_url.startswith(reverse('mailme-login')):
+        login_url = default
+    return HttpResponseRedirect(login_url)
+
+
+def logout(request):
+    from django.contrib.auth import logout
+
+    logout(request)
+
+    return HttpResponseRedirect(reverse('mailme-home'))
