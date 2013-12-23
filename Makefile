@@ -30,7 +30,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 mailme tests
+	flake8 mailme --ignore='E122,E124,E125,E126,E128,E501,F403' --exclude="**/migrations/**"
 
 test-ci:
 	$(MAKE) test
@@ -47,4 +47,3 @@ docs:
 	sphinx-apidoc -o docs/ mailme
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
-	open docs/_build/html/index.html

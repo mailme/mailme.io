@@ -1,11 +1,6 @@
 from functools import wraps
 from django.shortcuts import render, redirect
-from django.conf import settings
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 
 
 def login_required(func):
@@ -13,7 +8,7 @@ def login_required(func):
     def wrapped(request, *args, **kwargs):
         if not request.user.is_authenticated():
             request.session['_next'] = request.get_full_path()
-            return HttpResponseRedirect(get_login_url())
+            return redirect('mailme-home')
         return func(request, *args, **kwargs)
     return wrapped
 
@@ -40,7 +35,7 @@ def login_redirect(request):
         login_url = default
     elif login_url.startswith(reverse('mailme-login')):
         login_url = default
-    return HttpResponseRedirect(login_url)
+    return redirect(login_url)
 
 
 def logout(request):
@@ -48,4 +43,4 @@ def logout(request):
 
     logout(request)
 
-    return HttpResponseRedirect(reverse('mailme-home'))
+    return redirect('mailme-home')
