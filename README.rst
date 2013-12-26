@@ -89,6 +89,8 @@ To start all of them (including the runserver):
 
    Please make sure you have the ``foreman`` gem installed.
 
+**You can find the SSL version on `port 8443 <https://localhost:8443/>`_**
+
 
 Resources
 ---------
