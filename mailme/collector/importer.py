@@ -369,7 +369,6 @@ class FeedImporter(object):
     def get_enclosures(self, entry):
         """Get and create enclosures for feed."""
         enclosures = []
-        # TODO: check if getattr is really needed here :-/
         for enclosure in getattr(entry, 'enclosures', []):
             href = getattr(enclosure, 'href', None)
             type = getattr(enclosure, 'type', None)
