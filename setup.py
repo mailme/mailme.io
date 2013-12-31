@@ -42,6 +42,8 @@ install_requires = [
     'django-suit',
     'blessings',
     'raven',
+    'nltk',
+    'python-dateutil',
 ]
 
 dev_requires = [
