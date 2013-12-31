@@ -8,7 +8,7 @@ def login_required(func):
     def wrapped(request, *args, **kwargs):
         if not request.user.is_authenticated():
             request.session['_next'] = request.get_full_path()
-            return redirect('mailme-home')
+            return redirect('web:home')
         return func(request, *args, **kwargs)
     return wrapped
 
@@ -29,11 +29,11 @@ def account(request):
 
 @login_required
 def login_redirect(request):
-    default = reverse('mailme-home')
+    default = reverse('web:home')
     login_url = request.session.pop('_next', None) or default
     if '//' in login_url:
         login_url = default
-    elif login_url.startswith(reverse('mailme-login')):
+    elif login_url.startswith(reverse('web:login')):
         login_url = default
     return redirect(login_url)
 
@@ -43,4 +43,4 @@ def logout(request):
 
     logout(request)
 
-    return redirect('mailme-home')
+    return redirect('web:home')

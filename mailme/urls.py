@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^', include='mailme.web.urls', namespace='web'),
+    url(r'^', include('mailme.web.urls', namespace='web')),
     url(r'', include('social.apps.django_app.urls',
         namespace='social')),
 
