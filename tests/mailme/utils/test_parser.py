@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 from django.test import TestCase
 from dateutil.tz import tzoffset
-from dako.parser import parse
+from mailme.utils.nldate import parse
 
 
 class TestStaticParser(TestCase):
