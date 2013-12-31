@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.query import QuerySet
+from django.contrib.auth.models import UserManager as BaseUserManager
 
 
 class ExtendedQuerySet(QuerySet):
@@ -26,3 +27,7 @@ class ExtendedManager(models.Manager):
 
     def update_or_create(self, *args, **kwargs):
         return self.get_query_set().update_or_create(**kwargs)
+
+
+class UserManager(BaseUserManager, ExtendedManager):
+    pass

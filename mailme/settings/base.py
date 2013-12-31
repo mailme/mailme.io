@@ -75,7 +75,7 @@ AUTHENTICATION_BACKENDS = (
 
 #TODO: Already configured here since I think we're going to customize this
 #      later either way.
-SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL = 'auth.User'
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL = 'core.User'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -124,7 +124,7 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 from django.core.urlresolvers import reverse_lazy
-LOGIN_REDIRECT_URL = reverse_lazy('mailme-login-redirect')
+LOGIN_REDIRECT_URL = reverse_lazy('web:login-redirect')
 
 LANGUAGE_CODE = 'en-us'
 
