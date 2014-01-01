@@ -14,9 +14,6 @@ with open('CHANGES') as fobj:
 
 
 dependency_links = [
-    # Dummy for source package, 0.5.0 is required so that install_requires
-    # can recognize the correct version.
-    'https://github.com/requests/requests-oauthlib/archive/06a87fc57ec85f096ae38d7ccce01db0b5d46096.zip#egg=requests-oauthlib-0.5.0'
     'http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz#egg=nltk-3.0a3',
 ]
 
@@ -43,7 +40,7 @@ install_requires = [
     'django-suit',
     'blessings',
     'raven',
-    'nltk>=3.0',
+    'nltk<=3.0a4',
     'python-dateutil',
 ]
 
