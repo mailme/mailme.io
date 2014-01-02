@@ -88,14 +88,14 @@ class User(AbstractBaseUser):
         return reverse_lazy('web:profile', kwargs={'email': self.email})
 
     def get_full_name(self):
-        return self.name
+        return self.title
 
     def get_short_name(self):
         "Returns the short name for the user."
-        return self.name
+        return self.title
 
     def get_display_name(self):
-        return self.name or self.username
+        return self.title or self.username
 
     def get_gravatar(self):
         return get_gravatar(self.email)
@@ -105,16 +105,16 @@ class Category(models.Model):
 
     """Category associated with :class:`Post`` or :class:`Feed`.
 
-    .. attribute:: name
+    .. attribute:: title
 
-        Name of the category.
+        Title of the category.
 
     .. attribute:: domain
 
         The type of category
 
     """
-    name = models.CharField(_("name"), max_length=200)
+    title = models.CharField(_("title"), max_length=200)
     domain = models.CharField(
         _("domain"),
         max_length=200,
@@ -125,14 +125,14 @@ class Category(models.Model):
     objects = ExtendedManager()
 
     class Meta:
-        unique_together = ("name", "domain")
+        unique_together = ("title", "domain")
         verbose_name = _("category")
         verbose_name_plural = _("categories")
 
     def __str__(self):
         if self.domain:
-            return "%s [%s]" % (self.name, self.domain)
-        return "%s" % self.name
+            return "%s [%s]" % (self.title, self.domain)
+        return "%s" % self.title
 
 
 class Feed(models.Model):
@@ -140,9 +140,9 @@ class Feed(models.Model):
     """
     An RSS feed.
 
-    .. attribute:: name
+    .. attribute:: title
 
-        The name of the feed.
+        The title of the feed.
 
     .. attribute:: feed_url
 
@@ -167,7 +167,7 @@ class Feed(models.Model):
         The last error message (if any).
     """
 
-    name = models.TextField(_("name"))
+    title = models.TextField(_("title"))
     feed_url = models.URLField(_("feed URL"), max_length=2048, unique=True)
     # TODO: site_url?
     description = models.TextField(_("description"))
@@ -216,7 +216,7 @@ class Feed(models.Model):
         verbose_name_plural = _("syndication feeds")
 
     def __str__(self):
-        return "%s (%s)" % (self.name, self.feed_url)
+        return "%s (%s)" % (self.title, self.feed_url)
 
     def get_posts(self):
         """Get all :class:`Post`s for this :class:`Feed` in order."""

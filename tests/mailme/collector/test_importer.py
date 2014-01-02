@@ -42,7 +42,7 @@ class TestFeedDuplication(TestCase):
     def assertImportFeed(self, filename, name):
         importer = self.importer
         feed_obj = importer.import_feed(filename, local=True, force=True)
-        self.assertEqual(feed_obj.name, name)
+        self.assertEqual(feed_obj.title, name)
         return feed_obj
 
     def test_does_not_duplicate_posts(self):
@@ -89,7 +89,7 @@ class TestFeedImporter(TestCase):
         feed = self.empty_feed
         importer = self.importer
         feed_obj = importer.import_feed(feed, local=True)
-        self.assertEqual(feed_obj.name, "(no title)")
+        self.assertEqual(feed_obj.title, "(no title)")
         self.assertEqual(feed_obj.get_post_count(), 0, "feed has 0 items")
         self.assertEqual(feed_obj.feed_url, feed, "feed url is filename")
 
@@ -97,7 +97,7 @@ class TestFeedImporter(TestCase):
         feed = self.feed
         importer = self.importer
         feed_obj = importer.import_feed(feed, local=True)
-        self.assertEqual(feed_obj.name, "Lifehacker", "feed title is set")
+        self.assertEqual(feed_obj.title, "Lifehacker", "feed title is set")
         self.assertEqual(feed_obj.get_post_count(), 20, "feed has 20 items")
         self.assertEqual(feed_obj.feed_url, feed, "feed url is filename")
         self.assertTrue(feed_obj.description, "feed has description")
@@ -276,7 +276,7 @@ class TestFeedImporter(TestCase):
         feed = self.feed
         importer = FeedImporter(post_limit=10)
         feed_obj = importer.import_feed(feed, local=True)
-        self.assertEqual(feed_obj.name, "Lifehacker", "feed title is set")
+        self.assertEqual(feed_obj.title, "Lifehacker", "feed title is set")
         self.assertEqual(feed_obj.get_post_count(), 10, "feed has 10 items")
 
     def test_double_post_bug(self):
