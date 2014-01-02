@@ -349,7 +349,7 @@ class Post(models.Model):
     """
 
     feed = models.ForeignKey(Feed, null=False, blank=False)
-    title = models.CharField(_("title"), max_length=200)
+    title = models.TextField(_("title"))
 
     # using 2048 for long URLs
     link = models.URLField(_("link"), max_length=2048)
