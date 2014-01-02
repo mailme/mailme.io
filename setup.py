@@ -37,7 +37,6 @@ install_requires = [
     'python-social-auth',
     'lxml',
     'pytz==2013d',
-    'South',
     'django-suit',
     'blessings',
     'raven',
