@@ -1,6 +1,7 @@
 from mailme.collector.importer import FeedImporter
 from mailme.core import exc
 from blessings import Terminal
+from multiprocessing import Pool
 
 
 links = [
@@ -185,17 +186,25 @@ links = [
 ]
 
 
+def _import_links(*links):
+    for link in links:
+        try:
+            feed = importer.import_feed(link)
+        except exc.FeedNotFoundError:
+            print('{t.red}NotFound{t.normal} {link}'.format(t=term, link=link))
+        else:
+            print('{t.green}Imported{t.normal} {feed}'.format(t=term, feed=feed))
+
+
 importer = FeedImporter()
 term = Terminal()
+pool = Pool(10)
 
 print('Starting import for {} feeds'.format(len(links)))
 
-for link in links:
-    try:
-        feed = importer.import_feed(link)
-    except exc.FeedNotFoundError:
-        print('{t.red}NotFound{t.normal} {link}'.format(t=term, link=link))
-    else:
-        print('{t.green}Imported{t.normal} {feed}'.format(t=term, feed=feed))
+
+pool.map(_import_links, links)
+pool.close()
+pool.join()
 
 print('All feeds imported!')
