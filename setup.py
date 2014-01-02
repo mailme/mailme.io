@@ -42,6 +42,7 @@ install_requires = [
     'raven',
     'nltk<=3.0a4',
     'python-dateutil',
+    'beautifulsoup4',
 ]
 
 dev_requires = [
