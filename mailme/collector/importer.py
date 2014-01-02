@@ -167,8 +167,8 @@ class FeedImporter(object):
     update_on_import = True
     post_field_handlers = {
         "content": find_post_content,
-        "date_published": date_to_datetime("published_parsed"),
-        "date_updated": date_to_datetime("published_parsed"),
+        "published": date_to_datetime("published_parsed"),
+        "updated": date_to_datetime("published_parsed"),
         "link": lambda feed_obj, entry: entry.get("link") or feed_obj.feed_url,
         "feed": lambda feed_obj, entry: feed_obj,
         "guid": get_entry_guid,

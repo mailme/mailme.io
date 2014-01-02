@@ -63,16 +63,16 @@ class TestPost(TestCase):
 
         self.assertNotEqual(p1.auto_guid(), p2.auto_guid())
 
-    def test_date_published_naturaldate(self):
+    def test_published_naturaldate(self):
         now = datetime.now(pytz.utc)
         day = datetime(now.year, now.month, now.day, tzinfo=utc)
-        post = Post(feed=self.feed, title="baz", date_published=now)
-        self.assertEqual(post.date_published_naturaldate, naturaldate(day))
+        post = Post(feed=self.feed, title="baz", published=now)
+        self.assertEqual(post.published_naturaldate, naturaldate(day))
 
-    def test_date_updated_naturaldate(self):
+    def test_updated_naturaldate(self):
         now = datetime.now(pytz.utc)
-        post = Post(feed=self.feed, title="baz", date_updated=now)
-        self.assertEqual(post.date_updated_naturaldate, naturaldate(now))
+        post = Post(feed=self.feed, title="baz", updated=now)
+        self.assertEqual(post.updated_naturaldate, naturaldate(now))
 
 
 class TestFeed(TestCase):

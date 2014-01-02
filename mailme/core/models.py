@@ -167,8 +167,9 @@ class Feed(models.Model):
         The last error message (if any).
     """
 
-    name = models.CharField(_("name"), max_length=200)
+    name = models.TextField(_("name"))
     feed_url = models.URLField(_("feed URL"), max_length=2048, unique=True)
+    # TODO: site_url?
     description = models.TextField(_("description"))
     link = models.URLField(_("link"), max_length=2048, blank=True)
     http_etag = models.CharField(
@@ -219,17 +220,17 @@ class Feed(models.Model):
 
     def get_posts(self):
         """Get all :class:`Post`s for this :class:`Feed` in order."""
-        return self.post_set.order_by('-date_published')
+        return self.post_set.order_by('-published')
 
     def get_post_count(self):
         return self.post_set.count()
 
-    def frequencies(self, limit=None, order="-date_updated"):
-        posts = self.post_set.values("date_updated").order_by(order)[0:limit]
+    def frequencies(self, limit=None, order="-updated"):
+        posts = self.post_set.values("updated").order_by(order)[0:limit]
         frequencies = []
         for idx, post in enumerate(posts):
             frequencies.append(
-                posts[idx - 1]['date_updated'] - post['date_updated']
+                posts[idx - 1]['updated'] - post['updated']
             )
         return frequencies
 
@@ -335,11 +336,11 @@ class Post(models.Model):
 
         Name of this posts author.
 
-    .. attribute:: date_published
+    .. attribute:: published
 
         The date this post was published.
 
-    .. attribute:: date_updated
+    .. attribute:: updated
 
         The date this post was last changed/updated.
 
@@ -354,10 +355,12 @@ class Post(models.Model):
     # using 2048 for long URLs
     link = models.URLField(_("link"), max_length=2048)
     content = models.TextField(_("content"), blank=True)
+    # TODO: Save `summary` separate.
     guid = models.CharField(_("guid"), max_length=2048, blank=True)
-    author = models.CharField(_("author"), max_length=200, blank=True)
-    date_published = models.DateTimeField(_("date published"))
-    date_updated = models.DateTimeField(_("date updated"))
+    author = models.TextField(_("author"), blank=True)
+    published = models.DateTimeField(_("date published"), default=timezone.now)
+    updated = models.DateTimeField(_("date updated"), default=timezone.now)
+
     enclosures = models.ManyToManyField(Enclosure, blank=True)
     categories = models.ManyToManyField(Category)
 
@@ -376,8 +379,8 @@ class Post(models.Model):
         return "%s" % self.title
 
     @property
-    def date_published_naturaldate(self):
-        date = self.date_published
+    def published_naturaldate(self):
+        date = self.published
         as_datetime = datetime(
             date.year,
             date.month,
@@ -387,5 +390,5 @@ class Post(models.Model):
         return str(naturaldate(as_datetime))
 
     @property
-    def date_updated_naturaldate(self):
-        return str(naturaldate(self.date_updated))
+    def updated_naturaldate(self):
+        return str(naturaldate(self.updated))

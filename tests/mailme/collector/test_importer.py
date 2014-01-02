@@ -106,7 +106,7 @@ class TestFeedImporter(TestCase):
         first_post = posts[0]
         self.assertEqual(first_post.guid, "Lifehacker-5147831")
         fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-        self.assertEqual(first_post.date_updated,
+        self.assertEqual(first_post.updated,
                          datetime(2009, 2, 6, 4, 30, 0, 0,
                                   tzinfo=pytz.timezone('US/Pacific')).astimezone(
                              pytz.utc))
@@ -145,7 +145,7 @@ class TestFeedImporter(TestCase):
         last_post2 = feed_obj2.get_posts()[0]
 
         # if the post is updated, we should see a different datetime
-        self.assertEqual(last_post.date_updated, last_post2.date_updated)
+        self.assertEqual(last_post.updated, last_post2.updated)
 
     def test_missing_date_and_guid_feed(self):
         """Try to reproduce the constant date update bug."""
@@ -159,7 +159,7 @@ class TestFeedImporter(TestCase):
         last_post2 = feed_obj2.get_posts()[0]
 
         # if the post is updated, we should see a different datetime
-        self.assertEqual(last_post.date_updated, last_post2.date_updated)
+        self.assertEqual(last_post.updated, last_post2.updated)
 
     def test_socket_timeout(self):
 
