@@ -257,10 +257,10 @@ class FeedImporter(object):
                 if feed_url != feed.href:
                     return self.import_feed(feed.href, force=force)
 
-            feed_name = feed.channel.get("title", "(no title)").strip()
+            feed_title = feed.channel.get("title", "(no title)").strip()
 
             feed_obj = Feed.objects.update_or_create(feed_url=feed_url, **{
-                'name': feed_name,
+                'title': feed_title,
                 'description': feed.channel.get('description', '')
             })
 
@@ -279,15 +279,15 @@ class FeedImporter(object):
             categories.append(self.create_category(*category))
         return categories
 
-    def create_category(self, domain, name):
+    def create_category(self, domain, title):
         """
         Create new category.
 
         :param domain: The category domain.
-        :param name: The name of the category.
+        :param title: The title of the category.
         """
         return Category.objects.update_or_create(
-            name=name.strip(),
+            title=title.strip(),
             domain=domain and domain.strip() or ""
         )
 

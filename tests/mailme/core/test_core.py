@@ -25,11 +25,11 @@ def gen_unique_id():
 class TestCategory(TestCase):
 
     def test__str__(self):
-        cat = Category(name="foo", domain="bar")
+        cat = Category(title="foo", domain="bar")
         self.assertIn("foo", str(cat))
         self.assertIn("bar", str(cat))
 
-        cat = Category(name="foo")
+        cat = Category(title="foo")
         self.assertIn("foo", str(cat))
 
 
@@ -49,7 +49,7 @@ class TestPost(TestCase):
 
     def setUp(self):
         self.feed = Feed.objects.create(
-            name="testfeed",
+            title="testfeed",
             feed_url=gen_unique_id()
         )
 
@@ -78,12 +78,12 @@ class TestPost(TestCase):
 class TestFeed(TestCase):
 
     def test__str__(self):
-        f = Feed(name="foo", feed_url="requests.codes.//example.com")
+        f = Feed(title="foo", feed_url="requests.codes.//example.com")
         self.assertIn("foo", str(f))
         self.assertIn("(requests.codes.//example.com)", str(f))
 
     def test_error_for_status(self):
-        f = Feed(name="foo", feed_url="requests.codes.//example.com")
+        f = Feed(title="foo", feed_url="requests.codes.//example.com")
         self.assertEqual(
             f.error_for_status(requests.codes.NOT_FOUND),
             FEED_NOT_FOUND_ERROR
@@ -95,21 +95,21 @@ class TestFeed(TestCase):
         self.assertIsNone(f.error_for_status(requests.codes.OK))
 
     def test_save_generic_error(self):
-        f = Feed(name="foo1", feed_url="requests.codes.//example.com/t1.rss")
+        f = Feed(title="foo1", feed_url="requests.codes.//example.com/t1.rss")
         f.save_generic_error()
 
         indb = Feed.objects.get(feed_url="requests.codes.//example.com/t1.rss")
         self.assertEqual(indb.last_error, FEED_GENERIC_ERROR)
 
     def test_set_error_status(self):
-        f = Feed(name="foo3", feed_url="requests.codes.//example.com/t3.rss")
+        f = Feed(title="foo3", feed_url="requests.codes.//example.com/t3.rss")
         f.set_error_status(requests.codes.INTERNAL_SERVER_ERROR)
 
         indb = Feed.objects.get(feed_url="requests.codes.//example.com/t3.rss")
         self.assertEqual(indb.last_error, FEED_GENERIC_ERROR)
 
     def test_save_timeout_error(self):
-        f = Feed(name="foo2", feed_url="requests.codes.//example.com/t2.rss")
+        f = Feed(title="foo2", feed_url="requests.codes.//example.com/t2.rss")
         f.save_timeout_error()
 
         indb = Feed.objects.get(feed_url="requests.codes.//example.com/t2.rss")
@@ -117,6 +117,6 @@ class TestFeed(TestCase):
 
     def test_date_last_refresh_naturaldate(self):
         now = datetime.now(pytz.utc)
-        f = Feed(name="foo2", feed_url="requests.codes.//example.com/t2.rss",
+        f = Feed(title="foo2", feed_url="requests.codes.//example.com/t2.rss",
                  date_last_refresh=now)
         self.assertEqual(f.date_last_refresh_naturaldate, naturaldate(now))
