@@ -28,6 +28,7 @@ test_requires = [
 
 install_requires = [
     'Django>=1.6,<1.7',
+    'south>=0.8.4',
     'celery>=3.1',
     'django-celery>=3.1',
     'feedparser',
