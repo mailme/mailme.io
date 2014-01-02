@@ -181,6 +181,7 @@ links = [
     'http://blog.rdio.com/developers/atom.xml',
     'https://www.twilio.com/blog/feed',
     'http://feeds.mashable.com/Mashable',
+    'http://planet.ubuntuusers.de/blogs/export/opml/',
 ]
 
 
