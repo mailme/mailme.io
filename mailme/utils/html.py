@@ -5,6 +5,9 @@
 
     This module implements various HTML/XHTML utility functions.  Some parts
     of this module require the lxml and html5lib libraries.
+
+
+    TODO: Make this library less cryptic.
 """
 import re
 from html.entities import name2codepoint
