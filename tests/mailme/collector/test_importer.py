@@ -170,7 +170,7 @@ class TestFeedImporter(TestCase):
 
         feed2 = "foofoobar.rss"
         with self.assertRaises(TimeoutError):
-                _TimeoutFeedImporter().import_feed(feed2, local=True)
+            _TimeoutFeedImporter().import_feed(feed2, local=True)
         self.assertTrue(Feed.objects.get(feed_url=feed2))
 
     def test_update_feed_socket_timeout(self):
@@ -236,7 +236,7 @@ class TestFeedImporter(TestCase):
 
         feed2 = "foo1foo2bar3.rss"
         with self.assertRaises(FeedCriticalError):
-                _RaisingFeedImporter().import_feed(feed2, local=True)
+            _RaisingFeedImporter().import_feed(feed2, local=True)
         with self.assertRaises(Feed.DoesNotExist):
             Feed.objects.get(feed_url=feed2)
 

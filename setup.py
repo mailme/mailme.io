@@ -26,6 +26,7 @@ test_requires = [
     'python-coveralls',
 ]
 
+
 install_requires = [
     'Django>=1.6,<1.7',
     'south>=0.8.4',
@@ -45,9 +46,11 @@ install_requires = [
     'beautifulsoup4',
 ]
 
+
 dev_requires = [
     'flake8>=2.0',
 ]
+
 
 postgres_requires = [
     'psycopg2>=2.5.0,<2.6.0',
