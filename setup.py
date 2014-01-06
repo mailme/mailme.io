@@ -49,6 +49,7 @@ install_requires = [
 
 dev_requires = [
     'flake8>=2.0',
+    'fig',
 ]
 
 
@@ -74,7 +75,7 @@ class PyTest(TestCommand):
 setup(
     name='mailme',
     version='0.1.0',
-    description='subscribe your live!',
+    description='subscribe your life!',
     long_description=readme + '\n\n' + history,
     author='Christopher Grebs',
     author_email='cg@webshox.org',
