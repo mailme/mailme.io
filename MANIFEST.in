@@ -3,5 +3,5 @@ recursive-include tests *
 recursive-include docs *
 recursive-include examples *
 global-exclude *.pyc
-global-exclode *.pyo
+global-exclude *.pyo
 prune docs/_build
