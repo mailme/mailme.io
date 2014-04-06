@@ -12,7 +12,6 @@ from mailme.collector.importer import FeedImporter
 from mailme.core.exc import FeedCriticalError, TimeoutError, FeedNotFoundError
 from mailme.core.models import (
     Feed,
-    Post,
     FEED_NOT_FOUND_ERROR,
     FEED_GENERIC_ERROR,
     FEED_TIMEDOUT_ERROR
@@ -36,8 +35,8 @@ class TestFeedDuplication(TestCase):
 
     def setUp(self):
         self.importer = FeedImporter()
-        self.feeds = list(map(get_data_filename, ["t%d.xml" % i
-                                                  for i in reversed(list(range(1, 6)))]))
+        self.feeds = list(map(get_data_filename,
+            ["t%d.xml" % i for i in reversed(list(range(1, 6)))]))
 
     def assertImportFeed(self, filename, name):
         importer = self.importer
@@ -54,7 +53,7 @@ class TestFeedDuplication(TestCase):
                     with open(spool, "w") as w:
                         w.write(r.read())
                 return self.assertImportFeed(spool,
-                                             "Saturday Morning Breakfast Cereal (updated daily)")
+                    "Saturday Morning Breakfast Cereal (updated daily)")
             finally:
                 os.unlink(spool)
 
@@ -105,7 +104,6 @@ class TestFeedImporter(TestCase):
         posts = feed_obj.get_posts()
         first_post = posts[0]
         self.assertEqual(first_post.guid, "Lifehacker-5147831")
-        fmt = '%Y-%m-%d %H:%M:%S %Z%z'
         self.assertEqual(first_post.updated,
                          datetime(2009, 2, 6, 4, 30, 0, 0,
                                   tzinfo=pytz.timezone('US/Pacific')).astimezone(

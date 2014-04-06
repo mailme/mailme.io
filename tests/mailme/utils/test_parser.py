@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 from django.test import TestCase
 from dateutil.tz import tzoffset
@@ -57,9 +57,6 @@ class TestStaticParser(TestCase):
                          datetime(2003, 10, 5, 0, 0))
         self.assertEqual(parse('10/5/2006 at 2pm', default=self.default),
                          datetime(2006, 10, 5, 14, 0))
-
-#+5     5 days from now: 21 Dec 2011
-# results = Tickle.parse('every Wednesday starting June 1st until Dec 15th')
 
 
 class TestRecursionParser(TestCase):
@@ -156,18 +153,6 @@ class TestRecursionParser(TestCase):
                 datetime(2011, 5, 19, 0, 0)
             ]
         )
-
-
-# TODO: write tests for them, taken from todoist
-#ev 7   every 7 day in a month
-#ev 7 may       every 7th may
-#ev 3 days      every 3 days
-#ev 13/5        every 13th may
-#Advanced recurring dates
-#You write      It will compute to
-#every last day or ev lday      every last day of the month
-#every 2nd monday       Every second monday in a month
-#ev other day starting 2. nov   every other day starting 2. nov
 
 
 class DateUtilCompatibilityParserTest(TestCase):
@@ -750,14 +735,14 @@ class DateUtilCompatibilityParserTest(TestCase):
         # every hour, every minute, every second, and every weekday, using
         # a delta of more or less 1 year, 1 month, 1 day, 1 minute and
         # 1 second.
-        delta = timedelta(days=365+31+1, seconds=1+60+60*60)
+        delta = timedelta(days=365 + 31 + 1, seconds=1 + 60 + 60 * 60)
         dt = datetime(1900, 1, 1, 0, 0, 0, 0)
         for i in range(200):
             self.assertEqual(parse(dt.ctime()), dt)
             dt += delta
 
     def testIncreasingISOFormat(self):
-        delta = timedelta(days=365+31+1, seconds=1+60+60*60)
+        delta = timedelta(days=365 + 31 + 1, seconds=1 + 60 + 60 * 60)
         dt = datetime(1900, 1, 1, 0, 0, 0, 0)
         for i in range(200):
             self.assertEqual(parse(dt.isoformat()), dt)
@@ -773,10 +758,13 @@ class DateUtilCompatibilityParserTest(TestCase):
     def testMicrosecondPrecisionErrorReturns(self):
         # One more precision issue, discovered by Eric Brown.  This should
         # be the last one, as we're no longer using floating points.
-        for ms in [100001, 100000, 99999, 99998,
-                    10001,  10000,  9999,  9998,
-                     1001,   1000,   999,   998,
-                      101,    100,    99,    98]:
+        data = [
+            100001, 100000, 99999, 99998,
+            10001, 10000, 9999, 9998,
+            1001, 1000, 999, 998,
+            101, 100, 99, 98
+        ]
+        for ms in data:
             dt = datetime(2008, 2, 27, 21, 26, 1, ms)
             self.assertEquals(parse(dt.isoformat()), dt)
 
