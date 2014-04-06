@@ -1,5 +1,4 @@
 #-*- coding: utf-8 -*-
-import nltk
 import re
 import sys
 import collections
@@ -8,6 +7,7 @@ import logging
 from datetime import datetime, date, time
 from dateutil import parser, rrule
 from dateutil.relativedelta import relativedelta
+from textblob.packages import nltk
 
 days = "(mon|tue|wed|thu|fri|sat|sun|weekday|wday)"
 months = "(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)"

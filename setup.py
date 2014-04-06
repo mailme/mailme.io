@@ -13,11 +13,6 @@ with open('CHANGES') as fobj:
     history.replace('.. :changelog:', '')
 
 
-dependency_links = [
-    'http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz#egg=nltk-3.0a3',
-]
-
-
 test_requires = [
     'coverage',
     'pytest',
@@ -41,7 +36,7 @@ install_requires = [
     'django-suit',
     'blessings',
     'raven',
-    'nltk<=3.0a4',
+    'textblob',
     'python-dateutil',
     'beautifulsoup4',
 ]
@@ -87,7 +82,6 @@ setup(
     tests_require=test_requires,
     install_requires=install_requires,
     cmdclass={'test': PyTest},
-    dependency_links=dependency_links,
     extras_require={
         'docs': ['sphinx'],
         'tox': ['tox'],
@@ -97,6 +91,7 @@ setup(
     },
     zip_safe=False,
     classifiers=[
+        '__DO NOT UPLOAD__',
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'Framework :: Django',
