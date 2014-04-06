@@ -1,8 +1,19 @@
 {
   "name": "mailme",
   "version": "0.1.0",
-  "private": "true",
+  "private": true,
   "dependencies": {
     "foundation": "zurb/bower-foundation"
-  }
+  },
+  "authors": [
+    "Christopher Grebs <cg@webshox.org>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
