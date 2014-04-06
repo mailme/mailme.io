@@ -18,6 +18,7 @@ develop:
 	pip install "file://`pwd`#egg=mailme[docs]"
 	pip install "file://`pwd`#egg=mailme[tests]"
 	bower update
+	gem install -g Gemfile
 
 clean-build:
 	rm -fr build/
