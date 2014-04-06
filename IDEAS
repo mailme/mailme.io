@@ -1,33 +1,125 @@
-MVP:
+# MVP #
 
- * collect feeds
- * send feeds via newsletter
- * web interface to setup feed collection
+* collect feeds
+* send feeds via newsletter
+* web interface to setup feed collection
 
-Step 2:
+# Step 2 #
 
- * Lists
- * Tags
- * Schedule (timezones!)
- * Search
+* Lists
+* Tags
+* Schedule (timezones!)
+* Search
 
-Newsletter
+# Newsletter #
 
- * receive newsletters
- * process
- * bundle
- * categorize
+* receive newsletters
+* process
+* bundle
+* categorize
 
-Flipboard as a NL
+# Flipboard as a NL #
 
- * Sharing
- * Allow non feed pages, readability
+* Sharing
+* Allow non feed pages, readability
 
-Enterprizzzzzyyy:
+# Enterprizzzzzyyy #
 
- * REST-API
- * Addon-Program
- * Deployment stuff... Puppet, blah!
+* REST-API
+* Addon-Program
+* Deployment stuff... Puppet, blah!
 
-TODO
- * XML-Security (defusedxml)
+# New #
+
+* News from RSS/NL
+* Flipboard like for NL
+* Externe Newsletter verwalten
+* Twitter article! [http://readableapp.net/](http://readableapp.net/)
+* in eigener sache kolumne: e.g. userumfrage über kommende features
+* Browser Extensions/Bookmarkelt "subscribe with mailme"
+* Get most popular articles only (Mashable, Google, Facebook, Twitter APIs)
+* Entry Summaries, wie einst bei summly
+* Send to instapaper/readability/tasktool xyz/ phone/forward to xyz
+
+# Linkdump #
+* http://www.mailgun.com/ - email delivery, auch guter inbound support
+* http://sendgrid.com/
+* http://www.fastbill.com/automatic/
+* http://tinyletter.com
+* http://chimpfeedr.com
+* http://mailchimp.com/features/rss-to-email/
+* https://stripe.com/global - Stripe Global (Deutschland in Beta, Chris hat Zugang)
+* https://www.braintreepayments.com/ (Deutschland bereits live)
+* https://www.dwolla.com/
+* https://www.intercom.io/
+* https://www.sendwithus.com
+* https://github.com/MojoJolo/textteaser - TextTeaser is an automatic summarization algorithm that combines the power of natural language processing and machine learning to produce good results.
+* http://clipped.me/
+* http://leanstack.io/optimizely (A/B Testing)
+* http://www.campaignmonitor.com/features/
+* https://podio.com/
+* http://customer.io/
+* https://mixpanel.com
+* http://balsamiq.com/
+* http://www.geckoboard.com/ - Monitoring
+* https://metrics.librato.com/ - monitoring, alerts, etc
+* http://www.desk.com/ - Customersupport
+* https://www.statuspage.io - Statuspage
+* https://idonethis.com/ - wenn wir mal groß sind :)
+* http://embed.ly/ - page extraction
+* postmarkapp.com - auch geiler email sende service (und günstig)
+* https://twist.io/ on-call für später mal :)
+  -> aber auch Kostenüberwachung usw, fand ich sehr interessant.
+* https://litmus.com/
+
+## Devlinks ##
+* https://github.com/benubois/html-pipeline
+* https://github.com/atmos/camo
+
+## Integrate with other RSS services ##
+Ungelesene Einträge per Mail senden
+
+ * Gruppiert (irgendwie…)
+ * Hübsch
+ * Einträge als gelesen markieren im feed-reader
+
+Services (Ideen):
+
+ * Feedbin.me
+ * feedreader.com
+ * newsblur.com
+ * feedafever.com
+ * Feedly.com
+ * theoldreader.com
+
+## Integration mit Linkspeicher, "Read Later" Diensten ##
+Persönliche Beichte: Ich (Chris) lese 99,999% der "lese ich später" Seiten nicht, vermutlich nie da ich mir die Zeit nicht nehme diese durch zu gehen.
+
+Idee:
+
+ * Die Links sind meist aus Feeds, meist von Seiten die man mal überflogen hat
+ * Regelmäßig die Einträge in die normalen "Newsletter" unterzumischen erhöht vielleicht lese-rate
+ * https://delicious.com/
+ * Evernote
+ * getpocket
+
+## Content-Newsletter anbieten ##
+* Neues auf Rdio
+* Neues auf Spotify
+* Amazonkram den du unbedingt kaufen musst!
+* Vielleicht auch automatisch affiliate links einbauen bei Integration von anderen Feeds (rechtl. okay?)
+
+Unsorted List:
+
+Ebay, hackernews, indeed (jobsearch), linkedin, meetup.com, pinterest, 500px, photobucket, pagerduty (alerts), rotten tomatoes, imdb, themoviedb, tumblr, vimeo, Wetterkrams, twitter
+
+## Bootstrap your day ##
+Bootstrap your day!
+
+* Overview of calendar events today
+* Tasks today (Evernote, Todoist, Google Calendar)
+* Flights?
+* Traffic information (google-directions)
+* Learn a new word each day! (Babel?, dict.cc?)
+* Edit the card description.
+
