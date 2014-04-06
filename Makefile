@@ -12,11 +12,11 @@ help:
 clean: clean-build clean-pyc
 
 develop:
-	npm install -q
-	pip install -q -e . --use-mirrors
-	pip install -q "file://`pwd`#egg=mailme[tox]" --use-mirrors
-	pip install -q "file://`pwd`#egg=mailme[docs]" --use-mirrors
-	pip install -q "file://`pwd`#egg=mailme[tests]" --use-mirrors
+	npm install
+	pip install -e . --allow-all-external
+	pip install "file://`pwd`#egg=mailme[tox]"
+	pip install "file://`pwd`#egg=mailme[docs]"
+	pip install "file://`pwd`#egg=mailme[tests]"
 	bower update
 
 clean-build:
