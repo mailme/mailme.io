@@ -130,8 +130,8 @@ links = [
     'http://www.davidrevoy.com/feed.php?atom',
     'http://feeds.feedburner.com/erbenux/ErfahrungsberichteLinuxPlanet',
     'http://www.freiszene.de/backend.php?op=all',
-    'https://code.djangoproject.com/timeline?changeset=on&max=50&authors=&daysback=90&format=rss',
-    'https://code.djangoproject.com/timeline?ticket=on&milestone=on&changeset=on&wiki=on&max=50&authors=&daysback=90&format=rss',
+    'https://code.djangoproject.com/timeline?changeset=on&max=50&authors=&daysback=90&format=rss',  # noqa
+    'https://code.djangoproject.com/timeline?ticket=on&milestone=on&changeset=on&wiki=on&max=50&authors=&daysback=90&format=rss',  # noqa
     'http://www.hoerspiel-labor.de/rss.html',
     'http://www.hoerspielprojekt.de/?feed=atom',
     'http://feeds2.feedburner.com/LifeIsATechnicalGame?format=xml',
@@ -177,7 +177,7 @@ links = [
     'http://techualization.blogspot.com/feeds/posts/default',
     'http://googleblog.blogspot.com/feeds/posts/default',
     'http://skipperkongen.dk/feed/',
-    'http://250bpm.com/feed/pages/pagename/blog/category/blog/t/250bpm-blogs/h/http%3A%2F%2Fwww.250bpm.com%2Fblog',
+    'http://250bpm.com/feed/pages/pagename/blog/category/blog/t/250bpm-blogs/h/http%3A%2F%2Fwww.250bpm.com%2Fblog',  # noqa
     'http://www.elasticsearch.org/blog/feed/',
     'http://blog.rdio.com/developers/atom.xml',
     'https://www.twilio.com/blog/feed',

@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
     mailme.core.finder
     ~~~~~~~~~~~~~~~~~~
@@ -14,6 +14,15 @@ import logging
 import requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+
+
+FEED_MIME_TYPES = [
+    'application/rss+xml',
+    'text/xml',
+    'application/atom+xml',
+    'application/x.atom+xml',
+    'application/x-atom+xml'
+]
 
 
 def coerce_url(url):
@@ -48,7 +57,9 @@ class FeedFinder(object):
         data = text.lower()
         if data.count('<html'):
             return False
-        return data.count('<rss')+data.count('<rdf')+data.count('<feed')
+        return (data.count('<rss')
+               + data.count('<rdf')
+               + data.count('<feed'))
 
     def is_feed(self, url):
         text = self.get_feed(url)
@@ -85,11 +96,7 @@ def find_feeds(url, check_all=True, user_agent=None):
     tree = BeautifulSoup(text)
     links = []
     for link in tree.find_all('link'):
-        if link.get('type') in ['application/rss+xml',
-                                'text/xml',
-                                'application/atom+xml',
-                                'application/x.atom+xml',
-                                'application/x-atom+xml']:
+        if link.get('type') in FEED_MIME_TYPES:
             links.append(urljoin(url, link.get('href', '')))
 
     # Check the detected links.
@@ -127,8 +134,8 @@ def find_feeds(url, check_all=True, user_agent=None):
     # Guessing potential URLs.
     fns = ['atom.xml', 'index.atom', 'index.rdf', 'rss.xml', 'index.xml',
            'index.rss']
-    urls += [link for link in [urljoin(url, f) for f in fns]
-                  if finder.is_feed(link)]
+    absolute_fns = [urljoin(url, f) for f in fns]
+    urls += [link for link in absolute_fns if finder.is_feed(link)]
     return sort_urls(urls)
 
 

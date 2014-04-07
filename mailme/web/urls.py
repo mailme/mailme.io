@@ -1,7 +1,4 @@
-from django.contrib import admin
-from django.conf import settings
-from django.conf.urls import url, include, patterns
-from django.conf.urls.static import static
+from django.conf.urls import url, patterns
 
 
 urlpatterns = patterns('mailme.web.views',

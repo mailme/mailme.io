@@ -1,6 +1,6 @@
 import os
 from datetime import timedelta
-from django.conf.global_settings import *
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = os.path.join(BASE_DIR, '..')
@@ -73,14 +73,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-#TODO: Already configured here since I think we're going to customize this
-#      later either way.
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL = 'core.User'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '853034293084-mdami2i23c9dkqopbhfgopdua81croic.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '853034293084-mdami2i23c9dkqopbhfgopdua81croic.apps.googleusercontent.com'  # noqa
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'zoAfLdVkkFvKV4Bo-EwiQPva'
 
 SOCIAL_AUTH_CREATE_USERS = True
@@ -94,7 +92,7 @@ AUTH_PROVIDERS = {
 
 import random
 
-SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth Vader', 'Obi-Wan Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
+SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth Vader', 'Obi-Wan Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])  # noqa
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email']
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = False

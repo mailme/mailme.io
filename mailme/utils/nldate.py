@@ -1,10 +1,5 @@
-#-*- coding: utf-8 -*-
-import re
-import sys
-import collections
-import calendar
-import logging
-from datetime import datetime, date, time
+# -*- coding: utf-8 -*-
+from datetime import datetime
 from dateutil import parser, rrule
 from dateutil.relativedelta import relativedelta
 from textblob.packages import nltk
@@ -44,7 +39,6 @@ WEEKDAYS = {
 def join_tags(tags):
     result = []
     buffer = []
-    args = {}
     for item in tags:
         if item[1] == 'join':
             buffer.append(item[0])
@@ -85,14 +79,14 @@ def parse(string, *args, **kwargs):
                                   'daily': rrule.DAILY,
                                   'weekly': rrule.WEEKLY,
                                   'yearly': rrule.YEARLY}[value]
-            if not 'dtstart' in rrule_args:
+            if 'dtstart' not in rrule_args:
                 rrule_args['dtstart'] = today
         elif recur and type == 'dmy':
             rrule_args['freq'] = {'day': rrule.DAILY,
                                   'month': rrule.MONTHLY,
                                   'week': rrule.WEEKLY,
                                   'year': rrule.YEARLY}[value]
-            if not 'dtstart' in rrule_args:
+            if 'dtstart' not in rrule_args:
                 rrule_args['dtstart'] = today
         elif type == 'day' and not next()[1] == 'detail':
             if recur:
@@ -132,7 +126,7 @@ def parse(string, *args, **kwargs):
                        'yes': today + relativedelta(days=-1),
                        'tom': today + relativedelta(days=+1),
                        'ton': datetime(now[0], now[1], now[2], 22, now[4],
-                                           now[5])}
+                                       now[5])}
             if not any(x for x in result if x[1] == 'start') and recur:
                 rrule_args['dtstart'] = matcher[value[:3]]
             else:
@@ -153,7 +147,7 @@ def parse(string, *args, **kwargs):
             values.append(value)
 
     if recur:
-        if not 'dtstart' in rrule_args:
+        if 'dtstart' not in rrule_args:
             if orig_today:
                 rrule_args['dtstart'] = orig_today
             else:
