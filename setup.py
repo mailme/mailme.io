@@ -34,7 +34,7 @@ install_requires = [
     'requests',
     'python-social-auth',
     'lxml',
-    'pytz==2013d',
+    'pytz==2014.2',
     'django-suit',
     'blessings',
     'raven',
