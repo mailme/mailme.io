@@ -25,7 +25,7 @@ def get_gravatar(email, secure=False, rating='g', size=80, default='mm'):
 
     url = SECURE_BASE_URL if secure else BASE_URL
 
-    options = {'s': size, 'r': rating, 'd': default}
+    options = (('s', size), ('r', rating), ('d', default))
     url += email_hash(email) + '?' + urlencode(options)
     return url
 
