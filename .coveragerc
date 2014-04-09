@@ -1,5 +1,9 @@
 [run]
 branch = True
-omit = tests/*
 source = mailme/
 include = mailme/*
+omit =
+    mailme/settings/*settings.py
+    mailme/urls.py
+    mailme/wsgi.py
+    *migrations*
