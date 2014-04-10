@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = os.path.join(BASE_DIR, '..')
@@ -21,13 +22,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'south',
+
+    'social.apps.django_app.default',
+
+    'celery',
+    'kombu.transport.django',
+
     'mailme',
     'mailme.core',
     'mailme.collector',
-    'south',
-    'celery',
-    'kombu.transport.django',
-    'social.apps.django_app.default',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -38,11 +44,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mailme.core.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'mailme.urls'
 
 WSGI_APPLICATION = 'mailme.wsgi.application'
+
+AUTH_USER_MODEL = 'core.User'
 
 DATABASES = {
     'default': {
@@ -68,61 +77,49 @@ TEMPLATE_DIRS = (
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
-    'social.backends.persona.PersonaAuth',
-    'social.backends.email.EmailAuth',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.username.UsernameAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL = 'core.User'
+LOGIN_URL = reverse_lazy('core:index')
+LOGIN_ERROR_URL = reverse_lazy('core:index')
+LOGIN_REDIRECT_URL = reverse_lazy('core:index')
 
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '853034293084-mdami2i23c9dkqopbhfgopdua81croic.apps.googleusercontent.com'  # noqa
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'zoAfLdVkkFvKV4Bo-EwiQPva'
-
-SOCIAL_AUTH_CREATE_USERS = True
-
-# Auth engines and the settings required for them to be listed
-AUTH_PROVIDERS = {
-    'twitter': ('TWITTER_CONSUMER_KEY', 'TWITTER_CONSUMER_SECRET'),
-    'facebook': ('FACEBOOK_APP_ID', 'FACEBOOK_API_SECRET'),
-    'google': ('GOOGLE_OAUTH2_CLIENT_ID', 'GOOGLE_OAUTH2_CLIENT_SECRET'),
-}
-
-import random
-
-SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth Vader', 'Obi-Wan Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])  # noqa
-SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email']
-SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
-
-
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/done/'
-URL_PATH = ''
-SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
-SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
-SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'mailme.web.views.send_validation'
-SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/email-sent/'
-SOCIAL_AUTH_USERNAME_FORM_HTML = 'username_signup.html'
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_SANITIZE_REDIRECTS = True
+SOCIAL_AUTH_USER_FIELDS = ('username', 'email', 'password')
+SOCIAL_AUTH_REQUIRED_USER_FIELDS = ('username', 'email')
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = SOCIAL_AUTH_REQUIRED_USER_FIELDS
 
 SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
+    'mailme.core.pipeline.unique_login',
+    'mailme.cores.pipeline.conditional_social_details',
     'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.mail.mail_validation',
+    'mailme.core.pipeline.require_user_details',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details'
+    'mailme.core.pipeline.email_verification',
 )
 
-from django.core.urlresolvers import reverse_lazy
-LOGIN_REDIRECT_URL = reverse_lazy('web:login-redirect')
+SOCIAL_AUTH_USERNAME_FORM_URL = reverse_lazy('core:index')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+SOCIAL_AUTH_TWITTER_KEY = ''
+SOCIAL_AUTH_TWITTER_SECRET = ''
+
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -148,65 +145,100 @@ MAILME_POST_LIMIT = 20
 MAILME_FEED_TIMEOUT = 10
 MAILME_MIN_REFRESH_INTERVAL = timedelta(seconds=60 * 20)
 
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json']
-
-# Queue configuration
+# Celery / Queue configuration
 from kombu import Queue
 
 BROKER_URL = "django://"
 
+# Per default process all celery tasks in-process.
 CELERY_ALWAYS_EAGER = True
-CELERY_IGNORE_RESULT = True
-CELERY_SEND_EVENTS = False
-CELERY_RESULT_BACKEND = None
-CELERY_TASK_RESULT_EXPIRES = 1
-CELERY_DISABLE_RATE_LIMITS = True
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+
+# Only accept JSON. This will be the default in Celery 3.2
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+
+# Explicitly set default queue and exchange types. This is only useuseful for
+# RabbitMQ but still good to have as a general rule.
 CELERY_DEFAULT_QUEUE = "default"
 CELERY_DEFAULT_EXCHANGE = "default"
 CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
 CELERY_DEFAULT_ROUTING_KEY = "default"
 CELERY_CREATE_MISSING_QUEUES = True
+
+# Track started tasks. This adds a new STARTED state once a task
+# is started by the celery worker.
+CELERY_TRACK_STARTED = True
+
 CELERY_QUEUES = (
     Queue('default', routing_key='default'),
     Queue('celery', routing_key='celery'),
 )
 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERYBEAT_MAX_LOOP_INTERVAL = 3600
+CELERY_DISABLE_RATE_LIMITS = True
+
+# Make our `LOGGING` configuration the only truth and don't let celery
+# overwrite it.
+CELERYD_HIJACK_ROOT_LOGGER = False
+
 # Disable South in tests as it is sending incorrect create signals
 SOUTH_TESTS_MIGRATE = True
+
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
         'console': {
-            'level': 'WARNING',
-            'class': 'logging.StreamHandler'
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         },
         'sentry': {
+            'level': 'WARNING',
             'class': 'raven.contrib.django.handlers.SentryHandler',
+            'formatter': 'simple'
         }
     },
     'formatters': {
-        'client_info': {
-            'format': '%(name)s %(levelname)s %(project_slug)s/%(team_slug)s %(message)s'
-        }
+        'verbose': {
+            'format':
+                '[%(asctime)s] %(levelname)s:%(name)s %(funcName)s\n %(message)s',  # noqa
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
     },
     'loggers': {
-        '()': {
-            'handlers': ['console', 'sentry'],
-        },
+        # This is the root logger that catches everything, if there's no other
+        # match on the logger name. If we want custom logging handing for our
+        # code vs. third-party code, define loggers for each module/app
+        # that's using standard python logging.
         'root': {
-            'handlers': ['console', 'sentry'],
+            'level': 'INFO',
+            'handlers': ['console'],
         },
-        'mailme': {
-            'level': 'ERROR',
-            'handlers': ['console', 'sentry'],
+        'celery': {
+            'level': 'INFO',
+            'handlers': ['console'],
             'propagate': False,
         },
-        'django.request': {
-            'level': 'ERROR',
+        'mailme': {
+            'level': 'INFO',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'django': {
+            'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,
         },

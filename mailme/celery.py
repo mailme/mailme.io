@@ -8,7 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.settings.development")
 
 from django.conf import settings
 
-app = Celery('mailme')
+celery = Celery('mailme')
 
-app.config_from_object('django.conf:settings')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+celery.config_from_object('django.conf:settings')
+celery.autodiscover_tasks(lambda: settings.INSTALLED_APPS)

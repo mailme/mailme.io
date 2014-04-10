@@ -1,0 +1,24 @@
+{% extends 'contents/base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+        <form action="{{ request.build_absolute_uri }}" method="post">
+                {% csrf_token %}
+
+                {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                {% endfor %}
+
+                <p>{% trans 'To complete your registration, please check and update the following fields.' %}</p>
+                {{ form.username }}
+                {{ form.email }}
+
+                {% trans 'Complete' as label_submit %}
+                <div class="formfield-submit">
+                        <button type="submit">
+                                {{ label|default:_('submit') }}
+                        </button>
+                </div>
+        </form>
+{% endblock %}
