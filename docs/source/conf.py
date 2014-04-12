@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
-
+import os
 import pkg_resources
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.settings.development")
+
+
+try:
+    import sphinx_rtd_theme
+except ImportError:
+    sphinx_rtd_theme = None
+
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -24,7 +33,11 @@ exclude_patterns = []
 
 pygments_style = 'sphinx'
 
-html_theme = 'default'
+if sphinx_rtd_theme:
+    html_theme = "sphinx_rtd_theme"
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+else:
+    html_theme = "default"
 
 html_static_path = ['_static']
 

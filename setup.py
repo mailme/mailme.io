@@ -49,6 +49,10 @@ dev_requires = [
     'ipdb'
 ]
 
+docs_requires = [
+    'sphinx',
+    'sphinx_rtd_theme'
+]
 
 postgres_requires = [
     'psycopg2>=2.5.0,<2.6.0',
@@ -86,7 +90,7 @@ setup(
     install_requires=install_requires,
     cmdclass={'test': PyTest},
     extras_require={
-        'docs': ['sphinx'],
+        'docs': docs_requires,
         'tox': ['tox'],
         'tests': test_requires,
         'dev': dev_requires,
