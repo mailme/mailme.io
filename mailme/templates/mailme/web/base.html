@@ -12,13 +12,13 @@
     {% endblock styles %}
 </head>
 <body>
-{% block body %}
-{% endblock %}
+{% block content %}
+{% endblock content %}
 
-{% block body-js %}
+{% block content-js %}
 <script type="text/javascript" src="{% static "jquery/jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "foundation/js/foundation.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/app.js" %}"></script>
-{% endblock body-js %}
+{% endblock content-js %}
 </body>
 </html>

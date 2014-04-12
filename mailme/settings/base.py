@@ -79,13 +79,14 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'social.backends.twitter.TwitterOAuth',
     'social.backends.facebook.FacebookOAuth2',
+    'social.backends.github.GithubOAuth2',
     'social.backends.username.UsernameAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = reverse_lazy('core:index')
-LOGIN_ERROR_URL = reverse_lazy('core:index')
-LOGIN_REDIRECT_URL = reverse_lazy('core:index')
+LOGIN_URL = reverse_lazy('web:index')
+LOGIN_ERROR_URL = reverse_lazy('web:index')
+LOGIN_REDIRECT_URL = reverse_lazy('web:index')
 
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
@@ -98,7 +99,7 @@ SOCIAL_AUTH_PROTECTED_USER_FIELDS = SOCIAL_AUTH_REQUIRED_USER_FIELDS
 
 SOCIAL_AUTH_PIPELINE = (
     'mailme.core.pipeline.unique_login',
-    'mailme.cores.pipeline.conditional_social_details',
+    'mailme.core.pipeline.conditional_social_details',
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.social_user',
     'mailme.core.pipeline.require_user_details',
@@ -108,7 +109,7 @@ SOCIAL_AUTH_PIPELINE = (
     'mailme.core.pipeline.email_verification',
 )
 
-SOCIAL_AUTH_USERNAME_FORM_URL = reverse_lazy('core:index')
+SOCIAL_AUTH_USERNAME_FORM_URL = reverse_lazy('web:index')
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
@@ -119,6 +120,9 @@ SOCIAL_AUTH_TWITTER_SECRET = ''
 SOCIAL_AUTH_FACEBOOK_KEY = ''
 SOCIAL_AUTH_FACEBOOK_SECRET = ''
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_GITHUB_KEY = ''
+SOCIAL_AUTH_GITHUB_SECRET = ''
 
 
 LANGUAGE_CODE = 'en-us'
@@ -244,3 +248,5 @@ LOGGING = {
         },
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

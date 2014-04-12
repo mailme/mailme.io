@@ -1,6 +1,6 @@
 {% extends "mailme/web/base.html" %}
 
-{% block body %}
+{% block content %}
 <form method="post" action="" id="disconnect-form">{% csrf_token %}</form>
 
 <p>You are logged in as {{ user.username }}!</p>
@@ -23,9 +23,9 @@
   {% endfor %}
 </ul>
 
-{% endblock %}
+{% endblock content %}
 
-{% block body-js %}
+{% block content-js %}
 {{ block.super }}
 <script type="text/javascript">
   $(function () {
@@ -37,4 +37,4 @@
       });
   });
 </script>
-{% endblock %}
+{% endblock content-js %}

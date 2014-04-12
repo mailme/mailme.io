@@ -11,14 +11,11 @@ from datetime import datetime, timedelta
 import requests
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
+from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    PermissionsMixin,
-    UserManager as AuthUserManager
-)
+from django.contrib.auth.models import AbstractBaseUser
 from social.apps.django_app.default.models import Code
 
 from mailme.utils.dates import naturaldate
@@ -68,7 +65,7 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(_('Superuser'), default=False)
     is_staff = models.BooleanField(_('Staff'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
-    is_organization = models.BooleanField(_('Organization'))
+    is_organization = models.BooleanField(_('Organization'), default=False)
     profile_url = models.URLField(
         _('Profile'),
         blank=True,
@@ -103,7 +100,7 @@ class User(AbstractBaseUser):
                               **kwargs)
 
     def get_absolute_url(self):
-        return reverse_lazy('web:profile', kwargs={'email': self.email})
+        return reverse('web:profile', kwargs={'email': self.email})
 
     def get_full_name(self):
         return self.title
@@ -133,7 +130,7 @@ class User(AbstractBaseUser):
             'user': self
         }
 
-        body = render_to_string('emails/verification_email.txt', ctx)
+        body = render_to_string('mailme/emails/verification_email.txt', ctx)
 
         self.send_mail(ugettext(u'Verify your account'), body)
 

@@ -1,19 +1,15 @@
 from django.contrib import auth, messages
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
-from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView
 from django.views.generic.edit import FormView
 
 from social.apps.django_app.default.models import Code
 from social.apps.django_app.utils import load_strategy
 from social.apps.django_app.views import complete
 
-from mailme.core.mixins import LoginRequiredMixin
 from mailme.core.models import User
 from mailme.web.forms import (
     LoginForm,
@@ -72,7 +68,6 @@ class EmailVerificationView(RedirectView):
 
 class LoginView(CompleteSocialAuthMixin, FormView):
     form_class = LoginForm
-    #template_name = 'mailme/web/login.html'
 
     def form_valid(self, form):
         return self.complete(details={'user': form.cleaned_data['user']})
@@ -88,7 +83,7 @@ class LogoutView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         auth.logout(self.request)
-        return reverse('core:index')
+        return reverse('web:index')
 
 
 class IndexView(LoginView):

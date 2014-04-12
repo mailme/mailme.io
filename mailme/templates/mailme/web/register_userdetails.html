@@ -1,10 +1,12 @@
-{% extends 'contents/base.html' %}
+{% extends "mailme/web/base.html" %}
 {% load i18n %}
 
 
 {% block content %}
         <form action="{{ request.build_absolute_uri }}" method="post">
                 {% csrf_token %}
+
+                {{ form.errors }}
 
                 {% for hidden in form.hidden_fields %}
                         {{ hidden }}

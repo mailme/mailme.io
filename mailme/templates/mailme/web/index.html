@@ -1,6 +1,6 @@
 {% extends "mailme/web/base.html" %}
 {% load i18n %}
-{% block body %}
+{% block content %}
 
 <div class="row">
   <div class="large-12 columns">
@@ -74,6 +74,13 @@
                             Google +
                         </a>
                     </li>
+                    <li>
+                        <a class="github"
+                            href="{% url 'social:begin' 'github' %}{% if request.REQUEST.next %}?next={{ request.REQUEST.next|urlencode }}{% endif %}"
+                            title="{% trans 'Join with GitHub' %}">
+                            GitHub
+                        </a>
+                    </li>
                 </ul>
             </form>
     {% else %}
@@ -85,4 +92,4 @@
     </div>
 </div>
 
-{% endblock body %}
+{% endblock content %}

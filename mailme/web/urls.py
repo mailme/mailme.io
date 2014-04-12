@@ -11,7 +11,7 @@ from mailme.web.views import (
 
 
 urlpatterns = patterns('mailme.web.views',
-    url(r'^$', IndexView.as_view(), name='home'),
+    url(r'^$', IndexView.as_view(), name='index'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/details/$', UserDetailsView.as_view(),
         name='register_userdetails'),
