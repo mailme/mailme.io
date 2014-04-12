@@ -1,0 +1,24 @@
+Signup:
+
+ -> enter email address
+ -> connect sources
+ -> connect openid
+ -> get first preview of the newsletter
+ -> optionally subscribe
+ -> or cancel (explicitly or do not respond, email address will be expired)
+
+https://github.com/tibonihoo/wateronmars
+
+save `summary`
+
+
+# TODO: write tests for them, taken from todoist
+#ev 7   every 7 day in a month
+#ev 7 may       every 7th may
+#ev 3 days      every 3 days
+#ev 13/5        every 13th may
+#Advanced recurring dates
+#You write      It will compute to
+#every last day or ev lday      every last day of the month
+#every 2nd monday       Every second monday in a month
+#ev other day starting 2. nov   every other day starting 2. nov
