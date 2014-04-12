@@ -46,6 +46,7 @@ install_requires = [
 
 dev_requires = [
     'flake8>=2.0',
+    'ipdb'
 ]
 
 

@@ -37,7 +37,7 @@ test-ci:
 	$(MAKE) test
 
 test:
-	py.test tests/ -v --cov mailme --cov-report term-missing --tb=short --pep8 --flakes
+	py.test tests/ -vs --cov mailme --cov-report term-missing --pep8 --flakes
 
 test-all:
 	tox
