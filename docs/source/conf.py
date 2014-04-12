@@ -43,16 +43,7 @@ html_static_path = ['_static']
 
 htmlhelp_basename = 'mailmedoc'
 
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #'preamble': '',
-}
+latex_elements = {}
 
 latex_documents = [
     ('index', 'mailme.tex', u'mailme Documentation',

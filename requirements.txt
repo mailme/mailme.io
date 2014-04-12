@@ -1,1 +1,1 @@
--e git+git@github.com:celery/billiard.git@4ef9874290b8df47b2e264412b6404592454f6e1#egg=billiard
+-e git+https://github.com/celery/billiard.git@4ef9874290b8df47b2e264412b6404592454f6e1#egg=billiard
