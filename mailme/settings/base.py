@@ -190,6 +190,11 @@ CELERY_DISABLE_RATE_LIMITS = True
 # overwrite it.
 CELERYD_HIJACK_ROOT_LOGGER = False
 
+# Don't log celery log-redirection as warning (default).
+# We manage our logging through `django.conf.settings.LOGGING` and
+# want that to be our first-citizen config.
+CELERY_REDIRECT_STDOUTS_LEVEL = 'INFO'
+
 # Disable South in tests as it is sending incorrect create signals
 SOUTH_TESTS_MIGRATE = True
 
