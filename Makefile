@@ -20,15 +20,17 @@ develop:
 	bower update
 	gem install -g Gemfile --no-rdoc --no-ri
 
-clean-build:
-	rm -fr build/
-	rm -fr dist/
-	rm -fr *.egg-info
+docs: clean-build
+	sphinx-apidoc --force -o docs/modules/ mailme mailme/*/migrations
+	$(MAKE) -C docs clean
+	$(MAKE) -C docs html
 
-clean-pyc:
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
+clean-build:
+	rm -fr build/ src/build
+	rm -fr dist/ src/dist
+	rm -fr *.egg-info src/*.egg-info
+	rm -fr htmlcov/
+	$(MAKE) -C docs clean
 
 lint:
 	flake8 mailme --ignore='E122,E124,E125,E126,E128,E501,F403' --exclude="**/migrations/**"
@@ -41,10 +43,3 @@ test:
 
 test-all:
 	tox
-
-docs:
-	rm -f docs/mailme.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ mailme
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
