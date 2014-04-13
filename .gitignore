@@ -9,6 +9,8 @@ docs/_build
 db.sqlite3
 mailme/settings/development.py
 mailme/collected_static
+mailme/static/css
 bower_components
 node_modules
 celerybeat-schedule
+junit-*.xml
