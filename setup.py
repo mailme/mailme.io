@@ -52,6 +52,7 @@ install_requires = [
     'textblob',
     'python-dateutil',
     'beautifulsoup4',
+    'listparser',
 ]
 
 

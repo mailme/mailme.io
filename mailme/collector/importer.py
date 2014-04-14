@@ -11,6 +11,7 @@ import logging
 import hashlib
 from datetime import datetime, timedelta
 
+import listparser
 import requests
 from requests import codes
 from django.conf import settings
@@ -209,6 +210,7 @@ class FeedImporter(object):
             feed = feedparser.parse(feed_url,
                                     etag=etag,
                                     modified=modified)
+
         finally:
             socket.setdefaulttimeout(prev_timeout)
 
@@ -244,7 +246,7 @@ class FeedImporter(object):
 
             status = feed.get("status", default_status)
             if status == codes.NOT_FOUND:
-                raise exc.FeedNotFoundError(FEED_NOT_FOUND_ERROR_TEXT)
+                raise exc.FeedNotFoundError(str(FEED_NOT_FOUND_ERROR_TEXT), feed_url)
             if status not in ACCEPTED_STATUSES:
                 raise exc.FeedCriticalError(
                     FEED_GENERIC_ERROR_TEXT,
@@ -271,6 +273,17 @@ class FeedImporter(object):
             feed_obj = self.update_feed(feed_obj, feed=feed, force=force)
 
         return feed_obj
+
+    def import_opml(self, feed_url):
+        feed = self.parse_feed(feed_url)
+        done = []
+        if 'opml' in feed['feed']:
+            opml = listparser.parse(feed_url)
+            for item in opml['feeds']:
+                done.append(self.import_feed(item['url']))
+        else:
+            done.append(self.import_feed(feed_url))
+        return done
 
     def get_categories(self, obj):
         """Get and save categories."""
