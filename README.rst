@@ -24,15 +24,13 @@ Installation
 Edit settings
 -------------
 
-Ignore development settings.
+Create a new file ``mailme/settings/local_settings.py`` with the following content::
 
-.. code-block:: bash
+.. code-block:: python
 
-    $ git update-index --assume-unchanged mailme/settings/development.py
+    from mailme.settings.development import *  # noqa
 
-This ignores all future changes to your local development settings.
-
-Edit ``mailme/settings/development.py`` and adapt to your environment.
+Edit and adapt this file to your specific environment.
 
 
 Setup the database
