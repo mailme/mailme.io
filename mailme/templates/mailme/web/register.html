@@ -1,5 +1,5 @@
 {% extends "mailme/web/base.html" %}
-
+{% load i18n %}
 
 <form action="{% url 'web:register' %}" method="post">
         {% csrf_token %}

@@ -68,6 +68,7 @@ class EmailVerificationView(RedirectView):
 
 class LoginView(CompleteSocialAuthMixin, FormView):
     form_class = LoginForm
+    template_name = 'mailme/web/login.html'
 
     def form_valid(self, form):
         return self.complete(details={'user': form.cleaned_data['user']})

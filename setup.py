@@ -14,13 +14,24 @@ with open('CHANGES') as fobj:
 
 
 test_requires = [
+    'tox',
+    'py',
+    'pyflakes',
     'coverage',
     'pytest',
+    'pytest-cache==1.0',
     'pytest-cov>=1.4',
     'pytest-flakes',
     'pytest-pep8',
     'pytest-django',
+    'factory-boy==2.3.1',
     'python-coveralls',
+    'cov-core==1.7',
+    'coverage==3.7.1',
+    'execnet==1.1',
+    'mock==1.0.1',
+    'pep8==1.4.6',
+    'httpretty==0.6.5',
 ]
 
 
@@ -45,7 +56,6 @@ install_requires = [
 
 
 dev_requires = [
-    'flake8>=2.0',
     'ipdb'
 ]
 
@@ -91,7 +101,6 @@ setup(
     cmdclass={'test': PyTest},
     extras_require={
         'docs': docs_requires,
-        'tox': ['tox'],
         'tests': test_requires,
         'dev': dev_requires,
         'postgres': install_requires + postgres_requires,

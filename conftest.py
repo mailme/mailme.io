@@ -28,5 +28,5 @@ def pytest_configure(config):
 
     # override a few things with our test specifics
     settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS) + (
-        'tests',
+        'mailme.tests',
     )
