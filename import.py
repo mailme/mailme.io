@@ -1,5 +1,5 @@
 from mailme.collector.importer import FeedImporter
-from mailme.core import exc
+from mailme.core import exceptions
 from blessings import Terminal
 from multiprocessing import Pool
 
@@ -190,7 +190,7 @@ def _import_links(*links):
     for link in links:
         try:
             feed = importer.import_feed(link)
-        except exc.FeedNotFoundError:
+        except exceptions.FeedNotFoundError:
             print('{t.red}NotFound{t.normal} {link}'.format(t=term, link=link))
         else:
             print('{t.green}Imported{t.normal} {feed}'.format(t=term, feed=feed))

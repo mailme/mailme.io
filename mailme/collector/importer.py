@@ -7,7 +7,6 @@
 """
 import time
 import socket
-import logging
 import hashlib
 from datetime import datetime, timedelta
 
@@ -20,7 +19,7 @@ from django.utils.encoding import force_text, force_bytes
 
 import feedparser
 import pytz
-from mailme.core import exc
+from mailme.core import exceptions
 from mailme.core.models import (
     Feed,
     Post,
@@ -33,8 +32,6 @@ from mailme.core.models import (
 )
 from mailme.utils.html import cleanup_html
 from mailme.utils.logging import logged
-
-logger = logging.getLogger(__name__)
 
 
 GUID_FIELDS = frozenset(("title", "link", "author"))
@@ -208,7 +205,7 @@ class FeedImporter(object):
                 headers = requests.head(feed_url).headers
                 contentlen = int(headers.get("content-length") or 0)
                 if contentlen > maxlen:
-                    raise exc.FeedCriticalError(FEED_GENERIC_ERROR_TEXT)
+                    raise exceptions.FeedCriticalError(FEED_GENERIC_ERROR_TEXT)
 
             feed = feedparser.parse(feed_url,
                                     etag=etag,
@@ -230,6 +227,7 @@ class FeedImporter(object):
         :keyword force: Force import of feed even if it's been updated
             recently.
         """
+        self.logger.debug('import feed {}'.format(feed_url))
         feed_url = feed_url.strip()
         feed = None
         try:
@@ -239,7 +237,7 @@ class FeedImporter(object):
                 feed = self.parse_feed(feed_url)
             except socket.timeout:
                 Feed.objects.create(feed_url=feed_url)
-                raise exc.TimeoutError(FEED_TIMEDOUT_ERROR_TEXT)
+                raise exceptions.TimeoutError(FEED_TIMEDOUT_ERROR_TEXT)
             except Exception:
                 feed = {"status": 500}
 
@@ -249,9 +247,9 @@ class FeedImporter(object):
 
             status = feed.get("status", default_status)
             if status == codes.NOT_FOUND:
-                raise exc.FeedNotFoundError(str(FEED_NOT_FOUND_ERROR_TEXT), feed_url)
+                raise exceptions.FeedNotFoundError(str(FEED_NOT_FOUND_ERROR_TEXT), feed_url)
             if status not in ACCEPTED_STATUSES:
-                raise exc.FeedCriticalError(
+                raise exceptions.FeedCriticalError(
                     FEED_GENERIC_ERROR_TEXT,
                     status=status)
 
@@ -279,14 +277,23 @@ class FeedImporter(object):
 
     def import_opml(self, feed_url):
         feed = self.parse_feed(feed_url)
-        done = []
+        success = []
+        errors = []
         if 'opml' in feed['feed']:
             opml = listparser.parse(feed_url)
             for item in opml['feeds']:
-                done.append(self.import_feed(item['url']))
+                try:
+                    feed = self.import_feed(item['url'])
+                    success.append(feed)
+                except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
+                    errors.append((feed_url, exc))
         else:
-            done.append(self.import_feed(feed_url))
-        return done
+            try:
+                feed = self.import_feed(feed_url)
+                success.append(feed)
+            except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
+                errors.append((feed_url, exc))
+        return success, errors
 
     def get_categories(self, obj):
         """Get and save categories."""
@@ -327,7 +334,7 @@ class FeedImporter(object):
                          settings.MAILME_MIN_REFRESH_INTERVAL)
 
         if already_fresh and not force:
-            logger.info(
+            self.logger.info(
                 "Feed %s is fresh. Skipping refresh." % feed_obj.feed_url)
             return feed_obj
 
@@ -370,7 +377,7 @@ class FeedImporter(object):
             except TypeError:
                 pass
 
-        logger.debug(
+        self.logger.debug(
             "Saving feed object... %s" % (feed_obj.feed_url)
         )
 
@@ -420,7 +427,7 @@ class FeedImporter(object):
 
     def import_entry(self, entry, feed_obj):
         """Import feed post entry."""
-        logger.debug("Importing entry... %s" % feed_obj.feed_url)
+        self.logger.debug("Importing entry... %s" % feed_obj.feed_url)
 
         fields = self.post_fields_parsed(entry, feed_obj)
         post = Post.objects.update_or_create(feed_obj, **fields)
@@ -430,7 +437,7 @@ class FeedImporter(object):
         if self.include_categories:
             post.categories.add(*(self.get_categories(entry) or []))
 
-        logger.debug("Post successfully imported... %s" % (
+        self.logger.debug("Post successfully imported... %s" % (
             feed_obj.feed_url))
 
         return post

@@ -1,10 +1,6 @@
 #-*- coding: utf-8 -*-
 import logging
 import inspect
-import os
-import traceback
-import json
-from time import strftime, gmtime
 
 
 def get_logger(obj):
@@ -27,7 +23,7 @@ def get_logger(obj):
             module=module,
             cls=obj.__name__
         )
-    elif isinstance(obj, basestring):
+    elif isinstance(obj, (str, bytes)):
         name = obj
 
     return logging.getLogger(name)
@@ -71,7 +67,7 @@ def enable_error_logging_in_debug_mode():
     If DEBUG = True then monkey patch the default DEBUG 500 response, so
     that we also log the errors. (So that we can see them retrospectively).
     """
-    from django.conf import  settings
+    from django.conf import settings
 
     if settings.DEBUG:
         from django.views import debug
