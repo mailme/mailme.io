@@ -23,6 +23,14 @@ mailme.celery module
     :undoc-members:
     :show-inheritance:
 
+mailme.testutils module
+-----------------------
+
+.. automodule:: mailme.testutils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 mailme.urls module
 ------------------
 
