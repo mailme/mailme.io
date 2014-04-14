@@ -32,6 +32,7 @@ from mailme.core.models import (
     FEED_NOT_FOUND_ERROR_TEXT
 )
 from mailme.utils.html import cleanup_html
+from mailme.utils.logging import logged
 
 logger = logging.getLogger(__name__)
 
@@ -127,6 +128,7 @@ def entries_by_date(entries, limit=None):
     return [entry for _date, entry in sorted_entries[:limit]]
 
 
+@logged
 class FeedImporter(object):
 
     """
@@ -196,6 +198,7 @@ class FeedImporter(object):
             parse (if any).
         :keyword timeout: Parser timeout in seconds.
         """
+        self.logger.debug('parsing feed {}'.format(feed_url))
         prev_timeout = socket.getdefaulttimeout()
         timeout = timeout or self.timeout
         socket.setdefaulttimeout(timeout)
