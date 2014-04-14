@@ -1,5 +1,5 @@
 pid=
-cert=extras/stunnel.pem
+cert=extras/stunnel/stunnel.pem
 foreground=yes
 debug=5
 sslVersion = SSLv3

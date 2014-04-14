@@ -1,8 +1,0 @@
-web:
-  build: .
-  links:
-   - db
-  ports:
-   - 8000:8000
-db:
-  image: orchardup/postgresql
