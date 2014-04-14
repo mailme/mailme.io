@@ -3,7 +3,7 @@
 .coverage
 *.egg*
 *~
-docs/_build
+docs/build
 .vagrant
 .sass-cache
 db.sqlite3
