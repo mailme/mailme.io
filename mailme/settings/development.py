@@ -25,3 +25,8 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_GITHUB_KEY = '087b8ad20f3d34f9989d'
 SOCIAL_AUTH_GITHUB_SECRET = '9a09a683be98023a8177980dd124dd24d5ef3588'
+
+
+LOGGING['loggers']['root']['level'] = 'DEBUG'
+LOGGING['loggers']['celery']['level'] = 'DEBUG'
+LOGGING['loggers']['mailme']['level'] = 'DEBUG'
