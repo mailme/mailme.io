@@ -23,7 +23,7 @@ def get_random_name(min=8, max=12):
         return u''.join(
             random.choice(consonants) +
             random.choice(vowels) +
-            random.choice(all) for x in xrange(length // 3)
+            random.choice(all) for x in range(length // 3)
         )[:length]
 
     name1 = _get_name()
