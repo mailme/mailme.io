@@ -93,6 +93,6 @@ To start all of them (including the runserver):
 Resources
 ---------
 
-* `Documentation <yu no url>`_
-* `Bug Tracker <https://trello.com/b/yQfpDGPx/task-board>`_
-* `Code <https://bitbucket.org/fruitywinter/mailme.io>`_
+* `Documentation <http://mailme.readthedocs.org>`_
+* `Bug Tracker <https://github.com/mailme/mailme.io>`_
+* `Code <https://github.com/mailme/mailme.io>`_
