@@ -1,4 +1,8 @@
 language: python
+# cache:
+#   bundler: true
+#   directories:
+#     - node_modules
 python: 3.3
 services:
   - memcached
