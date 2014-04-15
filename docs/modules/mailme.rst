@@ -7,8 +7,8 @@ Subpackages
 .. toctree::
 
     mailme.collector
+    mailme.conf
     mailme.core
-    mailme.settings
     mailme.utils
     mailme.web
 
@@ -19,6 +19,14 @@ mailme.celery module
 --------------------
 
 .. automodule:: mailme.celery
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mailme.settings module
+----------------------
+
+.. automodule:: mailme.settings
     :members:
     :undoc-members:
     :show-inheritance:

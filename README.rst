@@ -24,11 +24,11 @@ Installation
 Edit settings
 -------------
 
-Create a new file ``mailme/settings/local_settings.py`` with the following content::
+Create a new file ``mailme/settings.py`` with the following content::
 
 .. code-block:: python
 
-    from mailme.settings.development import *  # noqa
+    from mailme.conf.development import *
 
 Edit and adapt this file to your specific environment.
 

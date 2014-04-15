@@ -1,4 +1,4 @@
-from mailme.settings.base import *
+from mailme.conf.base import *
 
 # Uncomment and edit
 

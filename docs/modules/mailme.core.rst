@@ -12,10 +12,10 @@ mailme.core.admin module
     :undoc-members:
     :show-inheritance:
 
-mailme.core.exc module
-----------------------
+mailme.core.exceptions module
+-----------------------------
 
-.. automodule:: mailme.core.exc
+.. automodule:: mailme.core.exceptions
     :members:
     :undoc-members:
     :show-inheritance:
