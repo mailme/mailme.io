@@ -6,7 +6,7 @@
         "url": "ssh://git@github.com/mailme/mailme.io.git"
     },
     "dependencies": {
-        "bower": "1.2.x",
+        "bower": "1.2.x"
     },
     "private": true
 }
