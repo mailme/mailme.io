@@ -17,6 +17,8 @@ develop:
 	pip install "file://`pwd`#egg=mailme[tox]"
 	pip install "file://`pwd`#egg=mailme[docs]"
 	pip install "file://`pwd`#egg=mailme[tests]"
+	# for python 3.4 required right now unfortunately.
+	pip install --upgrade -r requirements.txt
 	bower update
 	gem install -g Gemfile --no-rdoc --no-ri
 

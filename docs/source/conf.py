@@ -2,7 +2,7 @@
 import os
 import pkg_resources
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.conf.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.settings")
 
 
 try:

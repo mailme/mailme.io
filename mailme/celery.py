@@ -4,7 +4,7 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.conf.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailme.settings")
 
 from django.conf import settings
 
