@@ -11,7 +11,7 @@ env:
 before_script:
   - psql -c 'create database mailme_test;' -U postgres
 script:
-  - make devinstall
+  - make develop
   - make test
 after_success:
   - pip install "coveralls==0.4.1" coverage
