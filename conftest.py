@@ -5,7 +5,7 @@ import os.path
 
 def pytest_configure(config):
     if not settings.configured:
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'mailme.settings'
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'mailme.conf.test'
 
     test_db = os.environ.get('DB', 'sqlite')
     if test_db == 'mysql':

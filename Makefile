@@ -20,7 +20,7 @@ develop:
 	# for python 3.4 required right now unfortunately.
 	pip install --upgrade -r requirements.txt
 	bower update
-	gem install -g Gemfile --no-rdoc --no-ri
+	#gem install -g Gemfile --no-rdoc --no-ri
 
 docs: clean-build
 	sphinx-apidoc --force -o docs/modules/ mailme mailme/*/migrations mailme/tests
