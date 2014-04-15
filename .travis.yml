@@ -1,0 +1,18 @@
+language: python
+python: 3.3
+services:
+  - memcached
+  - postgresql
+env:
+  matrix:
+    - DB=postgres
+  global:
+    - PIP_DOWNLOAD_CACHE=".pip_download_cache"
+before_script:
+  - psql -c 'create database mailme_test;' -U postgres
+script:
+  - make test
+after_success:
+  - pip install "coveralls==0.4.1" coverage
+  - coverage report
+  - coveralls
