@@ -1,3 +1,7 @@
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailme.settings')
+
 from mailme.collector.importer import FeedImporter
 from mailme.core import exceptions
 from blessings import Terminal
