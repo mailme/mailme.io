@@ -15,7 +15,7 @@ from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from social.apps.django_app.default.models import Code
 
 from mailme.utils.dates import naturaldate
@@ -58,11 +58,10 @@ def timedelta_seconds(delta):
     return max(delta.total_seconds(), 0)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('Username'), max_length=50, null=True, unique=True)
     email = models.EmailField(_('Email'), max_length=254, unique=True)
     name = models.CharField(_('Name'), max_length=100, blank=True, null=True)
-    is_superuser = models.BooleanField(_('Superuser'), default=False)
     is_staff = models.BooleanField(_('Staff'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
     is_organization = models.BooleanField(_('Organization'), default=False)
