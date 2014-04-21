@@ -8,7 +8,7 @@ from requests import codes
 from datetime import datetime
 from django.test import TestCase
 
-from mailme.collector.importer import FeedImporter
+from mailme.collector.backends.feed import FeedImporter
 from mailme.core.exceptions import FeedCriticalError, TimeoutError, FeedNotFoundError
 from mailme.core.models import (
     Feed,

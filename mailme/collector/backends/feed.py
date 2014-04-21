@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-    mailme.collector.importer
-    ~~~~~~~~~~~~~~~~~~~~~~~~~
+    mailme.collector.backends.feed
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Importer.
+    Add import support for:
+
+     * Opml
+     * RSS / Atom
+     * Basically everything that `feedparser` supports.
 """
 import time
 import socket
