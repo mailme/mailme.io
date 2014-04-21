@@ -24,7 +24,7 @@ develop:
 	#gem install -g Gemfile --no-rdoc --no-ri
 
 docs: clean-build
-	sphinx-apidoc --force -o docs/modules/ mailme mailme/*/migrations mailme/tests
+	sphinx-apidoc --force -o docs/source/modules/ mailme mailme/*/migrations mailme/tests
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 

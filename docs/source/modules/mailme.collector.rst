@@ -1,17 +1,12 @@
 mailme.collector package
 ========================
 
-Submodules
-----------
+Subpackages
+-----------
 
-mailme.collector.importer module
---------------------------------
+.. toctree::
 
-.. automodule:: mailme.collector.importer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+    mailme.collector.backends
 
 Module contents
 ---------------

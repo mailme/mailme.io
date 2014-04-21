@@ -20,14 +20,6 @@ mailme.conf.development module
     :undoc-members:
     :show-inheritance:
 
-mailme.conf.local_settings module
----------------------------------
-
-.. automodule:: mailme.conf.local_settings
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 mailme.conf.test module
 -----------------------
 
