@@ -3,15 +3,15 @@
 <form action="{{ request.build_absolute_uri }}" method="post">
     {% csrf_token %}
     <fieldset>
-        <label for="{{ form.username.id_for_label }}">
-            {{ form.username.label }}
+        <label for="{{ login_form.username.id_for_label }}">
+            {{ login_form.username.label }}
         </label>
-        {{ form.username }}
+        {{ login_form.username }}
 
-        <label for="{{ form.password.id_for_label }}">
-            {{ form.password.label }}
+        <label for="{{ login_form.password.id_for_label }}">
+            {{ login_form.password.label }}
         </label>
-        {{ form.password }}
+        {{ login_form.password }}
 
         <button type="submit">
             <span>{% trans 'Login' %}</span>
