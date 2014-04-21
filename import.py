@@ -2,7 +2,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailme.settings')
 
-from mailme.collector.importer import FeedImporter
+from mailme.collector.importer import FeedCollector
 from mailme.core import exceptions
 from blessings import Terminal
 from multiprocessing import Pool
@@ -193,19 +193,18 @@ links = [
 def _import_links(*links):
     for link in links:
         try:
-            feed = importer.import_feed(link)
+            feed = collector.handle(link)
         except exceptions.FeedNotFoundError:
             print('{t.red}NotFound{t.normal} {link}'.format(t=term, link=link))
         else:
             print('{t.green}Imported{t.normal} {feed}'.format(t=term, feed=feed))
 
 
-importer = FeedImporter()
+collector = FeedCollector()
 term = Terminal()
 pool = Pool(10)
 
 print('Starting import for {} feeds'.format(len(links)))
-
 
 pool.map(_import_links, links)
 pool.close()

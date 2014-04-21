@@ -8,7 +8,7 @@ from requests import codes
 from datetime import datetime
 from django.test import TestCase
 
-from mailme.collector.backends.feed import FeedImporter
+from mailme.collector.backends.feed import FeedCollector
 from mailme.core.exceptions import FeedCriticalError, TimeoutError, FeedNotFoundError
 from mailme.core.models import (
     Feed,
@@ -34,13 +34,12 @@ def get_data_file(name, mode="r"):
 class TestFeedDuplication(TestCase):
 
     def setUp(self):
-        self.importer = FeedImporter()
+        self.collector = FeedCollector()
         self.feeds = list(map(get_data_filename,
             ["t%d.xml" % i for i in reversed(list(range(1, 6)))]))
 
     def assertImportFeed(self, filename, name):
-        importer = self.importer
-        feed_obj = importer.import_feed(filename, local=True, force=True)
+        feed_obj = self.collector.handle(filename, local=True, force=True)
         self.assertEqual(feed_obj.title, name)
         return feed_obj
 
@@ -75,27 +74,27 @@ class TestFeedDuplication(TestCase):
         self.assertEqual(posts[3].title, "November 20, 2009")
 
 
-class TestFeedImporter(TestCase):
+class TestFeedCollector(TestCase):
 
     def setUp(self):
         self.feed = get_data_filename("example_feed.rss")
         self.empty_feed = get_data_filename("example_empty_feed.rss")
         self.feed_content_encoded = get_data_filename(
             "example_feed-content_encoded.rss")
-        self.importer = FeedImporter()
+        self.collector = FeedCollector()
 
     def test_import_empty_feed(self):
         feed = self.empty_feed
-        importer = self.importer
-        feed_obj = importer.import_feed(feed, local=True)
+        collector = self.collector
+        feed_obj = collector.handle(feed, local=True)
         self.assertEqual(feed_obj.title, "(no title)")
         self.assertEqual(feed_obj.get_post_count(), 0, "feed has 0 items")
         self.assertEqual(feed_obj.feed_url, feed, "feed url is filename")
 
-    def test_import_feed(self):
+    def test_handle(self):
         feed = self.feed
-        importer = self.importer
-        feed_obj = importer.import_feed(feed, local=True)
+        collector = self.collector
+        feed_obj = collector.handle(feed, local=True)
         self.assertEqual(feed_obj.title, "Lifehacker", "feed title is set")
         self.assertEqual(feed_obj.get_post_count(), 20, "feed has 20 items")
         self.assertEqual(feed_obj.feed_url, feed, "feed url is filename")
@@ -118,7 +117,7 @@ class TestFeedImporter(TestCase):
             self.assertTrue(post.link, "post has link")
             self.assertTrue(post.content)
 
-        feed_obj2 = importer.import_feed(feed)
+        feed_obj2 = collector.handle(feed)
         self.assertTrue(feed_obj2.date_last_refresh,
                         "Refresh date set")
         self.assertEqual(feed_obj2.id, feed_obj.id,
@@ -127,19 +126,19 @@ class TestFeedImporter(TestCase):
                          "Re-importing feed doesn't give duplicates")
 
     def test_404_feed_raises_ok(self):
-        importer = self.importer
+        collector = self.collector
         with self.assertRaises(FeedNotFoundError):
-            importer.import_feed(FEED_YIELDING_404)
+            collector.handle(FEED_YIELDING_404)
 
     def test_missing_date_feed(self):
         """Try to reproduce the constant date update bug."""
         feed = get_data_filename("buggy_dates.rss")
-        importer = self.importer
-        feed_obj = importer.import_feed(feed, local=True)
+        collector = self.collector
+        feed_obj = collector.handle(feed, local=True)
         last_post = feed_obj.get_posts()[0]
 
         feed2 = get_data_filename("buggy_dates.rss")
-        feed_obj2 = importer.import_feed(feed2, local=True)
+        feed_obj2 = collector.handle(feed2, local=True)
         last_post2 = feed_obj2.get_posts()[0]
 
         # if the post is updated, we should see a different datetime
@@ -148,12 +147,12 @@ class TestFeedImporter(TestCase):
     def test_missing_date_and_guid_feed(self):
         """Try to reproduce the constant date update bug."""
         feed = get_data_filename("buggy_dates_and_guid.rss")
-        importer = self.importer
-        feed_obj = importer.import_feed(feed, local=True)
+        collector = self.collector
+        feed_obj = collector.handle(feed, local=True)
         last_post = feed_obj.get_posts()[0]
 
         feed2 = get_data_filename("buggy_dates_and_guid.rss")
-        feed_obj2 = importer.import_feed(feed2, local=True)
+        feed_obj2 = collector.handle(feed2, local=True)
         last_post2 = feed_obj2.get_posts()[0]
 
         # if the post is updated, we should see a different datetime
@@ -161,80 +160,80 @@ class TestFeedImporter(TestCase):
 
     def test_socket_timeout(self):
 
-        class _TimeoutFeedImporter(FeedImporter):
+        class _TimeoutFeedCollector(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 raise socket.timeout(.1)
 
         feed2 = "foofoobar.rss"
         with self.assertRaises(TimeoutError):
-            _TimeoutFeedImporter().import_feed(feed2, local=True)
+            _TimeoutFeedCollector().handle(feed2, local=True)
         self.assertTrue(Feed.objects.get(feed_url=feed2))
 
     def test_update_feed_socket_timeout(self):
 
-        class _TimeoutFeedImporter(FeedImporter):
+        class _TimeoutFeedCollector(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 raise socket.timeout(.1)
 
-        importer = FeedImporter(update_on_import=False)
-        feed_obj = importer.import_feed(self.feed, local=True, force=True)
+        collector = FeedCollector(update_on_import=False)
+        feed_obj = collector.handle(self.feed, local=True, force=True)
 
-        simporter = _TimeoutFeedImporter()
-        feed_obj = simporter.update_feed(feed_obj=feed_obj, force=True)
+        scollector = _TimeoutFeedCollector()
+        feed_obj = scollector.update(feed_obj=feed_obj, force=True)
         self.assertEqual(feed_obj.last_error, FEED_TIMEDOUT_ERROR)
 
     def test_update_feed_parse_feed_raises(self):
 
-        class _RaisingFeedImporter(FeedImporter):
+        class _RaisingFeedCollector(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 raise KeyError("foo")
 
-        importer = FeedImporter(update_on_import=False)
-        feed_obj = importer.import_feed(self.feed, local=True, force=True)
+        collector = FeedCollector(update_on_import=False)
+        feed_obj = collector.handle(self.feed, local=True, force=True)
 
-        simporter = _RaisingFeedImporter()
-        feed_obj = simporter.update_feed(feed_obj=feed_obj, force=True)
+        scollector = _RaisingFeedCollector()
+        feed_obj = scollector.update(feed_obj=feed_obj, force=True)
         self.assertEqual(feed_obj.last_error, FEED_GENERIC_ERROR)
 
     def test_update_feed_not_modified(self):
 
-        class _Verify(FeedImporter):
+        class _Verify(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 feed = super(_Verify, self).parse_feed(*args, **kwargs)
                 feed["status"] = codes.NOT_MODIFIED
                 return feed
 
-        importer = FeedImporter(update_on_import=False)
-        feed_obj = importer.import_feed(self.feed, local=True, force=True)
-        self.assertTrue(_Verify().update_feed(feed_obj=feed_obj, force=False))
+        collector = FeedCollector(update_on_import=False)
+        feed_obj = collector.handle(self.feed, local=True, force=True)
+        self.assertTrue(_Verify().update(feed_obj=feed_obj, force=False))
 
     def test_update_feed_error_status(self):
 
-        class _Verify(FeedImporter):
+        class _Verify(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 return {"status": codes.NOT_FOUND}
 
-        importer = FeedImporter(update_on_import=False)
-        feed_obj = importer.import_feed(self.feed, local=True, force=True)
+        collector = FeedCollector(update_on_import=False)
+        feed_obj = collector.handle(self.feed, local=True, force=True)
 
-        feed_obj = _Verify().update_feed(feed_obj=feed_obj, force=True)
+        feed_obj = _Verify().update(feed_obj=feed_obj, force=True)
         self.assertEqual(feed_obj.last_error, FEED_NOT_FOUND_ERROR)
 
     def test_parse_feed_raises(self):
 
-        class _RaisingFeedImporter(FeedImporter):
+        class _RaisingFeedCollector(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 raise KeyError("foo")
 
         feed2 = "foo1foo2bar3.rss"
         with self.assertRaises(FeedCriticalError):
-            _RaisingFeedImporter().import_feed(feed2, local=True)
+            _RaisingFeedCollector().handle(feed2, local=True)
         with self.assertRaises(Feed.DoesNotExist):
             Feed.objects.get(feed_url=feed2)
 
@@ -243,7 +242,7 @@ class TestFeedImporter(TestCase):
         now_as_dt = datetime.fromtimestamp(time.mktime(
             now)).replace(tzinfo=pytz.utc)
 
-        class _Verify(FeedImporter):
+        class _Verify(FeedCollector):
 
             def parse_feed(self, *args, **kwargs):
                 feed = super(_Verify, self).parse_feed(*args, **kwargs)
@@ -251,39 +250,39 @@ class TestFeedImporter(TestCase):
                 return feed
 
         i = _Verify()
-        feed = i.import_feed(self.feed, local=True, force=True)
+        feed = i.handle(self.feed, local=True, force=True)
         self.assertEqual(feed.http_last_modified, now_as_dt)
 
     def test_update_on_import(self):
 
-        class _Verify(FeedImporter):
+        class _Verify(FeedCollector):
             updated = False
 
-            def update_feed(self, *args, **kwargs):
+            def update(self, *args, **kwargs):
                 self.updated = True
 
         imp1 = _Verify(update_on_import=False)
-        imp1.import_feed(self.feed, local=True, force=True)
+        imp1.handle(self.feed, local=True, force=True)
         self.assertFalse(imp1.updated)
 
         imp2 = _Verify(update_on_import=True)
-        imp1.import_feed(self.feed, local=True, force=True)
+        imp1.handle(self.feed, local=True, force=True)
         self.assertFalse(imp2.updated)
 
     def test_entry_limit(self):
         feed = self.feed
-        importer = FeedImporter(post_limit=10)
-        feed_obj = importer.import_feed(feed, local=True)
+        collector = FeedCollector(post_limit=10)
+        feed_obj = collector.handle(feed, local=True)
         self.assertEqual(feed_obj.title, "Lifehacker", "feed title is set")
         self.assertEqual(feed_obj.get_post_count(), 10, "feed has 10 items")
 
     def test_double_post_bug(self):
         """With some feeds, the posts seem to be imported several times."""
         feed_str = get_data_filename("lefigaro.rss")
-        imported_feed = self.importer.import_feed(feed_str, local=True,
+        imported_feed = self.collector.handle(feed_str, local=True,
                                                   force=True)
         post_count = imported_feed.post_set.count()
-        imported_feed = self.importer.import_feed(feed_str, local=True,
+        imported_feed = self.collector.handle(feed_str, local=True,
                                                   force=True)
         self.assertEqual(imported_feed.post_set.count(), post_count,
                          "Posts seems to be imported twice.")

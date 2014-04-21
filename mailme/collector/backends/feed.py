@@ -16,13 +16,14 @@ from datetime import datetime, timedelta
 
 import listparser
 import requests
+import feedparser
+import pytz
 from requests import codes
 from django.conf import settings
 from django.utils.timezone import utc
 from django.utils.encoding import force_text, force_bytes
 
-import feedparser
-import pytz
+from mailme.collector.backends.base import BaseCollector
 from mailme.core import exceptions
 from mailme.core.models import (
     Feed,
@@ -130,8 +131,7 @@ def entries_by_date(entries, limit=None):
 
 
 @logged
-class FeedImporter(object):
-
+class FeedCollector(BaseCollector):
     """
     Import/Update feeds.
 
@@ -168,7 +168,6 @@ class FeedImporter(object):
 
         The feed parser used. (Default: :mod:`feedparser`.)
     """
-    update_on_import = True
     post_field_handlers = {
         "content": find_post_content,
         "published": date_to_datetime("published_parsed"),
@@ -220,7 +219,7 @@ class FeedImporter(object):
 
         return feed
 
-    def import_feed(self, feed_url, force=None, local=False):
+    def handle(self, feed_url, **kwargs):
         """
         Import feed.
 
@@ -232,6 +231,8 @@ class FeedImporter(object):
             recently.
         """
         self.logger.debug('import feed {}'.format(feed_url))
+        force = kwargs.pop('force', None)
+        local = kwargs.pop('local', False)
         feed_url = feed_url.strip()
         feed = None
         try:
@@ -262,7 +263,7 @@ class FeedImporter(object):
 
             if status == codes.FOUND or status == codes.MOVED_PERMANENTLY:
                 if feed_url != feed.href:
-                    return self.import_feed(feed.href, force=force)
+                    return self.handle(feed.href, force=force)
 
             feed_title = feed.channel.get("title", "(no title)").strip()
 
@@ -275,50 +276,11 @@ class FeedImporter(object):
                 feed_obj.categories.add(*self.get_categories(feed.channel))
 
         if self.update_on_import:
-            feed_obj = self.update_feed(feed_obj, feed=feed, force=force)
+            feed_obj = self.update(feed_obj, feed=feed, force=force)
 
         return feed_obj
 
-    def import_opml(self, feed_url):
-        feed = self.parse_feed(feed_url)
-        success = []
-        errors = []
-        if 'opml' in feed['feed']:
-            opml = listparser.parse(feed_url)
-            for item in opml['feeds']:
-                try:
-                    feed = self.import_feed(item['url'])
-                    success.append(feed)
-                except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
-                    errors.append((feed_url, exc))
-        else:
-            try:
-                feed = self.import_feed(feed_url)
-                success.append(feed)
-            except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
-                errors.append((feed_url, exc))
-        return success, errors
-
-    def get_categories(self, obj):
-        """Get and save categories."""
-        categories = []
-        for category in getattr(obj, 'categories', []):
-            categories.append(self.create_category(*category))
-        return categories
-
-    def create_category(self, domain, title):
-        """
-        Create new category.
-
-        :param domain: The category domain.
-        :param title: The title of the category.
-        """
-        return Category.objects.update_or_create(
-            title=title.strip(),
-            domain=domain and domain.strip() or ""
-        )
-
-    def update_feed(self, feed_obj, feed=None, force=False):
+    def update(self, feed_obj, **kwargs):
         """
         Update (refresh) feed.
 
@@ -332,6 +294,8 @@ class FeedImporter(object):
         :keyword force: Force refresh of the feed even if it has been
             recently refreshed already.
         """
+        feed = kwargs.pop('feed', None)
+        force = kwargs.pop('force', False)
         now = datetime.utcnow().replace(tzinfo=utc)
         already_fresh = (feed_obj.date_last_refresh and
                          now < feed_obj.date_last_refresh +
@@ -387,6 +351,45 @@ class FeedImporter(object):
 
         feed_obj.save()
         return feed_obj
+
+    def import_opml(self, feed_url):
+        feed = self.parse_feed(feed_url)
+        success = []
+        errors = []
+        if 'opml' in feed['feed']:
+            opml = listparser.parse(feed_url)
+            for item in opml['feeds']:
+                try:
+                    feed = self.handle(item['url'])
+                    success.append(feed)
+                except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
+                    errors.append((feed_url, exc))
+        else:
+            try:
+                feed = self.handle(feed_url)
+                success.append(feed)
+            except (exceptions.FeedCriticalError, exceptions.TimeoutError) as exc:
+                errors.append((feed_url, exc))
+        return success, errors
+
+    def get_categories(self, obj):
+        """Get and save categories."""
+        categories = []
+        for category in getattr(obj, 'categories', []):
+            categories.append(self.create_category(*category))
+        return categories
+
+    def create_category(self, domain, title):
+        """
+        Create new category.
+
+        :param domain: The category domain.
+        :param title: The title of the category.
+        """
+        return Category.objects.update_or_create(
+            title=title.strip(),
+            domain=domain and domain.strip() or ""
+        )
 
     def create_enclosure(self, **kwargs):
         """Create new enclosure."""

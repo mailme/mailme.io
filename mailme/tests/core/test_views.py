@@ -1,9 +1,5 @@
-import re
-
 import pytest
-from django.core import mail
 
-from mailme.testutils import get_messages_from_cookie
 from mailme.tests.factories.core import UserFactory
 
 
