@@ -107,6 +107,7 @@ setup(
         'postgres': install_requires + postgres_requires,
     },
     zip_safe=False,
+    license='BSD',
     classifiers=[
         '__DO NOT UPLOAD__',
         'Development Status :: 2 - Pre-Alpha',
