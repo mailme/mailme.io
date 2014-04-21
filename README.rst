@@ -18,13 +18,13 @@ Installation
     $ make develop
 
     $ # run tests
-    $ python setup.py test
+    $ make test
 
 
 Edit settings
 -------------
 
-Create a new file ``mailme/settings.py`` with the following content::
+Create a new file ``mailme/settings.py`` with the following content:
 
 .. code-block:: python
 
@@ -35,6 +35,18 @@ Edit and adapt this file to your specific environment.
 
 Setup the database
 ------------------
+
+Create an empty new PostgreSQL database.
+
+.. code-block:: bash
+
+    $ createdb mailme_dev
+
+.. note::
+
+    You might need to apply a postgresql user (``createdb -U youruser``) e.g ``postgres``
+    for proper permissions.
+
 
 .. code-block:: bash
 
