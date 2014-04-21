@@ -31,9 +31,6 @@ INSTALLED_APPS = (
     'kombu.transport.django',
 
     'mailme',
-    'mailme.core',
-    'mailme.collector',
-
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,7 +48,7 @@ ROOT_URLCONF = 'mailme.urls'
 
 WSGI_APPLICATION = 'mailme.wsgi.application'
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'mailme.User'
 
 DATABASES = {
     'default': {

@@ -2,7 +2,7 @@ import factory
 from django.contrib.auth.hashers import make_password
 from social.apps.django_app.default.models import UserSocialAuth
 
-from mailme.core.models import User
+from mailme.models.user import User
 
 
 class UserFactory(factory.DjangoModelFactory):

@@ -9,6 +9,7 @@ Subpackages
     mailme.collector
     mailme.conf
     mailme.core
+    mailme.models
     mailme.utils
     mailme.web
 

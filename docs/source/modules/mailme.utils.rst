@@ -28,6 +28,14 @@ mailme.utils.html module
     :undoc-members:
     :show-inheritance:
 
+mailme.utils.imports module
+---------------------------
+
+.. automodule:: mailme.utils.imports
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 mailme.utils.logging module
 ---------------------------
 

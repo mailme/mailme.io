@@ -25,16 +25,17 @@ from django.utils.encoding import force_text, force_bytes
 
 from mailme.collector.backends.base import BaseCollector
 from mailme.core import exceptions
-from mailme.core.models import (
+from mailme.models.feed import (
     Feed,
-    Post,
-    Category,
-    Enclosure,
     ACCEPTED_STATUSES,
     FEED_GENERIC_ERROR_TEXT,
     FEED_TIMEDOUT_ERROR_TEXT,
     FEED_NOT_FOUND_ERROR_TEXT
 )
+
+from mailme.models.post import Post
+from mailme.models.category import Category
+from mailme.models.enclosure import Enclosure
 from mailme.utils.html import cleanup_html
 from mailme.utils.logging import logged
 

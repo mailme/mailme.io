@@ -20,14 +20,6 @@ mailme.web.forms module
     :undoc-members:
     :show-inheritance:
 
-mailme.web.models module
-------------------------
-
-.. automodule:: mailme.web.models
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 mailme.web.tests module
 -----------------------
 

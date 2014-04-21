@@ -6,6 +6,7 @@ from django.utils.translation import ungettext
 
 import pytz
 
+
 JUST_NOW = _("just now")
 SECONDS_AGO = (_("%(seconds)d second ago"), _("%(seconds)d seconds ago"))
 MINUTES_AGO = (_("%(minutes)d minute ago"), _("%(minutes)d minutes ago"))
@@ -22,6 +23,15 @@ OLDER_CHUNKS = (
     (1.0, OLDER_DAY),
 )
 OLDER_AGO = _("%(number)d %(type)s ago")
+
+
+def timedelta_seconds(delta):
+    """Convert :class:`datetime.timedelta` to seconds.
+
+    Doesn't account for negative values.
+
+    """
+    return max(delta.total_seconds(), 0)
 
 
 def _un(singular__plural, n=None):

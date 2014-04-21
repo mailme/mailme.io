@@ -10,7 +10,7 @@ from django.test import TestCase
 
 from mailme.collector.backends.feed import FeedCollector
 from mailme.core.exceptions import FeedCriticalError, TimeoutError, FeedNotFoundError
-from mailme.core.models import (
+from mailme.models.feed import (
     Feed,
     FEED_NOT_FOUND_ERROR,
     FEED_GENERIC_ERROR,

@@ -10,7 +10,7 @@ from social.apps.django_app.default.models import Code
 from social.apps.django_app.utils import load_strategy
 from social.apps.django_app.views import complete
 
-from mailme.core.models import User
+from mailme.models.user import User
 from mailme.web.forms import (
     LoginForm,
     RegistrationForm,

@@ -6,15 +6,15 @@ from django.test import TestCase
 from django.utils.timezone import utc
 
 import pytz
-from mailme.core.models import (
+from mailme.models.feed import (
     Feed,
-    Post,
-    Category,
-    Enclosure,
     FEED_GENERIC_ERROR,
     FEED_TIMEDOUT_ERROR,
     FEED_NOT_FOUND_ERROR
 )
+from mailme.models.post import Post
+from mailme.models.category import Category
+from mailme.models.enclosure import Enclosure
 from mailme.utils.dates import naturaldate
 
 

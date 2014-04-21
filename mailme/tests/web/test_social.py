@@ -1,13 +1,13 @@
-import mock
-import pytest
 import re
 
+import mock
+import pytest
 from django.contrib.auth import SESSION_KEY
 from django.core import mail
 from social.apps.django_app.default.models import Code, UserSocialAuth
 from social.exceptions import SocialAuthBaseException
 
-from mailme.core.models import User
+from mailme.models.user import User
 from mailme.testutils import get_messages_from_cookie
 
 from mailme.tests.factories.core import profile_complete_form_data, UserFactory

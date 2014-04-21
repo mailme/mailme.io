@@ -52,14 +52,6 @@ mailme.core.mixins module
     :undoc-members:
     :show-inheritance:
 
-mailme.core.models module
--------------------------
-
-.. automodule:: mailme.core.models
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 mailme.core.pipeline module
 ---------------------------
 
