@@ -1,6 +1,7 @@
 {% extends "mailme/web/base.html" %}
 {% load i18n %}
 
+{% block content %}
 <form action="{% url 'web:register' %}" method="post">
         {% csrf_token %}
 
@@ -20,3 +21,4 @@
                 </button>
         </div>
 </form>
+{% endblock %}
