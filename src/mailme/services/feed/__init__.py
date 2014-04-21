@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-    mailme.collector.backends.feed
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    mailme.services.feed
+    ~~~~~~~~~~~~~~~~~~~~
 
-    Add import support for:
+    Add support for:
 
      * Opml
      * RSS / Atom
@@ -23,7 +23,7 @@ from django.conf import settings
 from django.utils.timezone import utc
 from django.utils.encoding import force_text, force_bytes
 
-from mailme.collector.backends.base import BaseCollector
+from mailme.services.base import BaseService
 from mailme.core import exceptions
 from mailme.models.feed import (
     Feed,
@@ -132,7 +132,7 @@ def entries_by_date(entries, limit=None):
 
 
 @logged
-class FeedCollector(BaseCollector):
+class FeedService(BaseService):
     """
     Import/Update feeds.
 

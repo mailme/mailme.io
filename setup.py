@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 
@@ -92,10 +92,8 @@ setup(
     author='Christopher Grebs',
     author_email='cg@webshox.org',
     url='https://bitbucket.org/fruitywinter/mailme.io',
-    packages=[
-        'mailme',
-    ],
-    package_dir={'mailme': 'mailme'},
+    package_dir={'': 'src'},
+    packages=find_packages('src'),
     include_package_data=True,
     tests_require=test_requires,
     install_requires=install_requires,

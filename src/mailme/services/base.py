@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-    mailme.collector.backends.base
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    mailme.services.base
+    ~~~~~~~~~~~~~~~~~~~~
 
-    Base implementation for every collector.
+    Base implementation for every service.
 """
 
 
-class BaseCollector(object):
-    """Base class for implementing data collectors."""
+class BaseService(object):
+    """Base class for implementing services."""
 
     name = None
 
