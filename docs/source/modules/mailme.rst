@@ -6,10 +6,10 @@ Subpackages
 
 .. toctree::
 
-    mailme.collector
     mailme.conf
     mailme.core
     mailme.models
+    mailme.services
     mailme.utils
     mailme.web
 

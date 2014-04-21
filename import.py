@@ -2,7 +2,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailme.settings')
 
-from mailme.collector.importer import FeedCollector
+from mailme.services.feed import FeedService
 from mailme.core import exceptions
 from blessings import Terminal
 from multiprocessing import Pool
@@ -200,7 +200,7 @@ def _import_links(*links):
             print('{t.green}Imported{t.normal} {feed}'.format(t=term, feed=feed))
 
 
-collector = FeedCollector()
+collector = FeedService()
 term = Terminal()
 pool = Pool(10)
 

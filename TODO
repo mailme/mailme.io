@@ -12,6 +12,10 @@ https://github.com/tibonihoo/wateronmars
 save `summary`
 
 
+-> import feedbin
+-> import readability
+-> instapaper
+
 # TODO: write tests for them, taken from todoist
 #ev 7   every 7 day in a month
 #ev 7 may       every 7th may
