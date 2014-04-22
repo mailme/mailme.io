@@ -1,6 +1,6 @@
 import pytest
 
-from mailme.tests.factories.core import UserFactory
+from mailme.tests.factories.user import UserFactory
 
 
 @pytest.mark.django_db

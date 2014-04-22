@@ -10,7 +10,7 @@ from social.exceptions import SocialAuthBaseException
 from mailme.models.user import User
 from mailme.testutils import get_messages_from_cookie
 
-from mailme.tests.factories.core import profile_complete_form_data, UserFactory
+from mailme.tests.factories.user import profile_complete_form_data, UserFactory
 from mailme.tests.web.fixtures import facebook_auth, twitter_auth, google_auth  # noqa
 
 
