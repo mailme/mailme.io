@@ -63,7 +63,7 @@ class EmailVerificationView(RedirectView):
             request, *args, **kwargs)
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse('web:index')
+        return reverse('mailme-index')
 
 
 class LoginView(CompleteSocialAuthMixin, FormView):
@@ -84,7 +84,7 @@ class LogoutView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         auth.logout(self.request)
-        return reverse('web:index')
+        return reverse('mailme-index')
 
 
 class IndexView(LoginView):

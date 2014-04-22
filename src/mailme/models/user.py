@@ -65,7 +65,7 @@ class User(AbstractBaseUser):
                               **kwargs)
 
     def get_absolute_url(self):
-        return reverse('web:profile', kwargs={'email': self.email})
+        return reverse('mailme-profile', kwargs={'email': self.email})
 
     def get_full_name(self):
         return self.title
@@ -90,8 +90,8 @@ class User(AbstractBaseUser):
 
         ctx = {
             'verification_url': request.build_absolute_uri(
-                reverse('web:email_verification', kwargs={
-                    'code': code.code})),
+                reverse('mailme-email-verification',
+                        kwargs={'code': code.code})),
             'user': self
         }
 

@@ -47,7 +47,7 @@ def require_user_details(strategy, details, user=None, is_new=False, *args, **kw
         for key in required_fields:
             if strategy.session_get(key):
                 details[key] = strategy.session_pop(key)
-        return redirect('web:register_userdetails')
+        return redirect('mailme-register-userdetails')
 
 
 def email_verification(strategy, details, user=None, is_new=False, *args, **kwargs):

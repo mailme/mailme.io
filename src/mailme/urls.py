@@ -1,15 +1,29 @@
 from django.contrib import admin
-from django.conf import settings
 from django.conf.urls import url, include, patterns
-from django.conf.urls.static import static
+from mailme.web import views
+
 
 urlpatterns = patterns('',
-    url(r'^', include('mailme.web.urls', namespace='web')),
+    url(r'^$', views.IndexView.as_view(),
+        name='mailme-index'),
+
+    # Account
+    url(r'^register/$', views.RegisterView.as_view(),
+        name='mailme-register'),
+    url(r'^register/details/$', views.UserDetailsView.as_view(),
+        name='mailme-register-userdetails'),
+    url(r'^register/confirm_email/(?P<code>\w{32})/$',
+        views.EmailVerificationView.as_view(),
+        name='mailme-email-verification'),
+    url(r'^logout/$', views.LogoutView.as_view(),
+        name='mailme-logout'),
+    url(r'^login/$', views.LoginView.as_view(),
+        name='mailme-login'),
+
+    # Social auth
     url(r'', include('social.apps.django_app.urls', namespace='social')),
+
+    # Admin
     url(r'^admin/', include(admin.site.urls)),
 
 )
-
-# Only for development during DEBUG.
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
