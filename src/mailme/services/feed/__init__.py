@@ -23,8 +23,8 @@ from django.conf import settings
 from django.utils.timezone import utc
 from django.utils.encoding import force_text, force_bytes
 
+from mailme import exceptions
 from mailme.services.base import BaseService
-from mailme.core import exceptions
 from mailme.models.feed import (
     Feed,
     ACCEPTED_STATUSES,

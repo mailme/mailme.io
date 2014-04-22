@@ -14,7 +14,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from social.apps.django_app.default.models import Code
 
 from mailme.utils.gravatar import get_gravatar
-from mailme.core.managers import UserManager
+from mailme.managers import UserManager
 
 
 class User(AbstractBaseUser):
@@ -60,7 +60,7 @@ class User(AbstractBaseUser):
 
     def send_mail(self, subject, message, from_email=None, **kwargs):
         """Sends an email to this User."""
-        from mailme.core.tasks import send_mail_async
+        from mailme.tasks import send_mail_async
         send_mail_async.delay(subject, message, from_email, [self.email],
                               **kwargs)
 

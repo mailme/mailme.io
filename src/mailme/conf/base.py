@@ -40,7 +40,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mailme.core.middleware.SocialAuthExceptionMiddleware',
+    'mailme.middlewares.social.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'mailme.urls'
@@ -94,15 +94,15 @@ SOCIAL_AUTH_REQUIRED_USER_FIELDS = ('username', 'email')
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = SOCIAL_AUTH_REQUIRED_USER_FIELDS
 
 SOCIAL_AUTH_PIPELINE = (
-    'mailme.core.pipeline.unique_login',
-    'mailme.core.pipeline.conditional_social_details',
+    'mailme.pipeline.unique_login',
+    'mailme.pipeline.conditional_social_details',
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.social_user',
-    'mailme.core.pipeline.require_user_details',
+    'mailme.pipeline.require_user_details',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
-    'mailme.core.pipeline.email_verification',
+    'mailme.pipeline.email_verification',
 )
 
 SOCIAL_AUTH_USERNAME_FORM_URL = reverse_lazy('web:index')

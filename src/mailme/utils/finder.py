@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    mailme.core.finder
+    mailme.utils.finder
     ~~~~~~~~~~~~~~~~~~
 
     Simple utility to find rss/atom-ish links in a html soup.

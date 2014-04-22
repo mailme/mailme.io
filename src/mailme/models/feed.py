@@ -5,7 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from mailme.core.managers import ExtendedManager
+from mailme.managers import ExtendedManager
 from mailme.models.category import Category
 from mailme.utils.dates import timedelta_seconds, naturaldate
 

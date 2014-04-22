@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from mailme.core.managers import ExtendedManager
+from mailme.managers import ExtendedManager
 from mailme.models.feed import Feed
 from mailme.models.enclosure import Enclosure
 from mailme.models.category import Category

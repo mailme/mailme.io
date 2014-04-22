@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from mailme.core.managers import ExtendedManager
+from mailme.managers import ExtendedManager
 
 
 class Enclosure(models.Model):
