@@ -36,7 +36,7 @@ test_requires = [
 
 
 install_requires = [
-    'Django==1.7b2',
+    'Django==1.7b1',
     'south>=0.8.4',
     'celery>=3.1',
     'django-celery>=3.1',
