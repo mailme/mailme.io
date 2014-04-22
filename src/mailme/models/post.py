@@ -72,7 +72,6 @@ class Post(models.Model):
     objects = ExtendedManager()
 
     class Meta:
-        app_label = 'mailme'
         verbose_name = _("post")
         verbose_name_plural = _("posts")
 

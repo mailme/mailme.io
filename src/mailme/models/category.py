@@ -27,7 +27,6 @@ class Category(models.Model):
     objects = ExtendedManager()
 
     class Meta:
-        app_label = 'mailme'
         unique_together = ("title", "domain")
         verbose_name = _("category")
         verbose_name_plural = _("categories")

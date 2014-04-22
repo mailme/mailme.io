@@ -28,7 +28,6 @@ class Enclosure(models.Model):
     objects = ExtendedManager()
 
     class Meta:
-        app_label = 'mailme'
         verbose_name = _("enclosure")
         verbose_name_plural = _("enclosures")
 

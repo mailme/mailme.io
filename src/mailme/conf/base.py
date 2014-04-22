@@ -23,8 +23,6 @@ INSTALLED_APPS = (
 
     'mailme.apps.MailmeConfig',
 
-    # The django admin needs to be loaded after mailme.
-    # This allows for our custom module structure.
     'suit',
     'django.contrib.admin',
 

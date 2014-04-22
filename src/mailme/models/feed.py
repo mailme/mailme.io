@@ -112,7 +112,6 @@ class Feed(models.Model):
     objects = ExtendedManager()
 
     class Meta:
-        app_label = 'mailme'
         ordering = ("id",)
         verbose_name = _("syndication feed")
         verbose_name_plural = _("syndication feeds")

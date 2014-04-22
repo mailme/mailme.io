@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 from django.utils.translation import ugettext_lazy as _
-from mailme.utils.imports import import_submodules
 
 
 class MailmeConfig(AppConfig):
@@ -10,5 +9,4 @@ class MailmeConfig(AppConfig):
     def ready(self):
         # We do like our application structure more than django's
         # so we import our modules manually.
-        from mailme import models
-        import_submodules(models, models.__name__, models.__path__)
+        from mailme.models import user, category, enclosure, feed, post  # noqa
