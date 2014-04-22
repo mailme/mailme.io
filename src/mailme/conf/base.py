@@ -15,22 +15,23 @@ TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
-    'suit',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'south',
+    'mailme.apps.MailmeConfig',
+
+    # The django admin needs to be loaded after mailme.
+    # This allows for our custom module structure.
+    'suit',
+    'django.contrib.admin',
 
     'social.apps.django_app.default',
 
     'celery',
     'kombu.transport.django',
-
-    'mailme',
 )
 
 MIDDLEWARE_CLASSES = (

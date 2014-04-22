@@ -113,7 +113,6 @@ class Feed(models.Model):
 
     class Meta:
         app_label = 'mailme'
-        db_table = 'mailme_feed'
         ordering = ("id",)
         verbose_name = _("syndication feed")
         verbose_name_plural = _("syndication feeds")

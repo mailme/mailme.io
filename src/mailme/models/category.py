@@ -28,7 +28,6 @@ class Category(models.Model):
 
     class Meta:
         app_label = 'mailme'
-        db_table = 'mailme_category'
         unique_together = ("title", "domain")
         verbose_name = _("category")
         verbose_name_plural = _("categories")

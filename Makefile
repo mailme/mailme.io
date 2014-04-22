@@ -13,13 +13,13 @@ clean: clean-build clean-pyc
 
 develop:
 	npm install
+	pip install --upgrade -r requirements.txt
 	pip install -e . --allow-all-external
 	pip install "file://`pwd`#egg=mailme[tox]"
 	pip install "file://`pwd`#egg=mailme[docs]"
 	pip install "file://`pwd`#egg=mailme[tests]"
 	pip install "file://`pwd`#egg=mailme[postgres]"
 	# for python 3.4 required right now unfortunately.
-	pip install --upgrade -r requirements.txt
 	bower update
 	#gem install -g Gemfile --no-rdoc --no-ri
 

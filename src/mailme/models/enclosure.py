@@ -29,7 +29,6 @@ class Enclosure(models.Model):
 
     class Meta:
         app_label = 'mailme'
-        db_table = 'mailme_enclosure'
         verbose_name = _("enclosure")
         verbose_name_plural = _("enclosures")
 

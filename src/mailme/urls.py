@@ -3,8 +3,6 @@ from django.conf import settings
 from django.conf.urls import url, include, patterns
 from django.conf.urls.static import static
 
-admin.autodiscover()
-
 urlpatterns = patterns('',
     url(r'^', include('mailme.web.urls', namespace='web')),
     url(r'', include('social.apps.django_app.urls',
