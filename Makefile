@@ -3,7 +3,7 @@
 help:
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
-	@echo "devinstall - install all packages required for development"
+	@echo "develop - install all packages required for development"
 	@echo "lint - check style with flake8"
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-all - run tests on every Python version with tox"
@@ -23,7 +23,7 @@ deps:
 develop: deps
 	npm install
 	bower update
-	gem install -g Gemfile --no-rdoc --no-ri
+	gem install foreman compass
 
 docs: clean-build
 	sphinx-apidoc --force -o docs/source/modules/ src/mailme src/mailme/*/migrations src/mailme/tests
