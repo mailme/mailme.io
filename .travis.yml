@@ -18,7 +18,8 @@ before_script:
   - psql -c 'create database mailme_test;' -U postgres
 script:
   - psql --version
-  - make develop
+  - make deps
+  - bower update
   - make test
 after_success:
   - pip install "coveralls==0.4.1" coverage
