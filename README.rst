@@ -1,6 +1,6 @@
-=====
-DoIt!
-=====
+======
+MailMe
+======
 
 Installation
 ------------
@@ -8,13 +8,13 @@ Installation
 .. code-block:: bash
 
     $ Create your virtualenv (recommended, use virtualenvwrapper)
-    $ mkvirtualenv doit
+    $ virtualenv env
 
     $ # Clone repository
-    $ git clone git@github.com:EnTeQuAk/doit.git
+    $ git clone git@bitbucket.org:mailme/mailme.git
 
     $ # Activate Environment and install
-    $ workon doit
+    $ source env/bin/activate
     $ make develop
 
     $ # run tests
@@ -24,11 +24,11 @@ Installation
 Edit settings
 -------------
 
-Create a new file ``doit/settings.py`` with the following content:
+Create a new file ``mailme/settings.py`` with the following content:
 
 .. code-block:: python
 
-    from doit.conf.development import *
+    from mailme.conf.development import *
 
 Edit and adapt this file to your specific environment.
 
@@ -40,7 +40,7 @@ Create an empty new PostgreSQL database.
 
 .. code-block:: bash
 
-    $ createdb doit_dev
+    $ createdb mailme_dev
 
 .. note::
 
@@ -105,6 +105,6 @@ To start all of them (including the runserver):
 Resources
 ---------
 
-* `Documentation <http://doit.readthedocs.org>`_
-* `Bug Tracker <https://github.com/EnTeQuAk/doit>`_
-* `Code <https://github.com/EnTeQuAk/doit>`_
+* `Documentation <http://mailme.readthedocs.org>`_
+* `Bug Tracker <https://github.com/mailme/mailme.io>`_
+* `Code <https://github.com/mailme/mailme.io>`_

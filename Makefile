@@ -15,10 +15,10 @@ deps:
 	# for python 3.4 required right now unfortunately.
 	pip install --upgrade -r requirements.txt
 	pip install -e . --allow-all-external
-	pip install "file://`pwd`#egg=doit[tox]"
-	pip install "file://`pwd`#egg=doit[docs]"
-	pip install "file://`pwd`#egg=doit[tests]"
-	pip install "file://`pwd`#egg=doit[postgres]"
+	pip install "file://`pwd`#egg=mailme[tox]"
+	pip install "file://`pwd`#egg=mailme[docs]"
+	pip install "file://`pwd`#egg=mailme[tests]"
+	pip install "file://`pwd`#egg=mailme[postgres]"
 
 develop: deps
 	npm install
@@ -26,7 +26,7 @@ develop: deps
 	gem install foreman compass
 
 docs: clean-build
-	sphinx-apidoc --force -o docs/source/modules/ src/doit src/doit/*/migrations src/doit/tests
+	sphinx-apidoc --force -o docs/source/modules/ src/mailme src/mailme/*/migrations src/mailme/tests
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 
@@ -38,7 +38,7 @@ clean-build:
 	$(MAKE) -C docs clean
 
 lint:
-	flake8 doit --ignore='E122,E124,E125,E126,E128,E501,F403' --exclude="**/migrations/**"
+	flake8 mailme --ignore='E122,E124,E125,E126,E128,E501,F403' --exclude="**/migrations/**"
 
 test-ci:
 	$(MAKE) test
@@ -47,7 +47,7 @@ test:
 	py.test -vs --pep8 --flakes
 
 test-coverage:
-	py.test -vs --pep8 --flakes --cov doit --cov-report term-missing
+	py.test -vs --pep8 --flakes --cov mailme --cov-report term-missing
 
 test-all:
 	tox

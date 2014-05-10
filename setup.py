@@ -36,7 +36,7 @@ test_requires = [
 
 
 install_requires = [
-    'Django==1.7b3',
+    'Django==1.7b1',
     'celery>=3.1,<3.2',
     'django-celery>=3.1,<3.2',
     'feedparser>=5.1.3,<5.2',
@@ -52,7 +52,6 @@ install_requires = [
     'python-dateutil>=2.2,<2.3',
     'beautifulsoup4>=4.3.2,<4.4',
     'listparser>=0.17,<0.18',
-    'billiard==3.3.0.17',
 ]
 
 
@@ -85,13 +84,13 @@ class PyTest(TestCommand):
 
 
 setup(
-    name='doit',
+    name='mailme',
     version='0.1.0',
-    description='map your live!',
+    description='subscribe your life!',
     long_description=readme + '\n\n' + history,
     author='Christopher Grebs',
     author_email='cg@webshox.org',
-    url='https://github.com/EnTeQuAk/doit',
+    url='https://bitbucket.org/fruitywinter/mailme.io',
     package_dir={'': 'src'},
     packages=find_packages('src'),
     include_package_data=True,
@@ -113,6 +112,7 @@ setup(
         'Framework :: Django',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
 )

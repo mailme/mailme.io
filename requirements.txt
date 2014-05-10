@@ -1,2 +1,4 @@
+-e git+https://github.com/celery/billiard.git@4ef9874290b8df47b2e264412b6404592454f6e1#egg=billiard
+
 # We depend on Django 1.7
-https://www.djangoproject.com/download/1.7b3/tarball/
+-e git+https://github.com/django/django.git@b06e45bbf6988f9f8671bbc5b5b63d419d50edda#egg=django

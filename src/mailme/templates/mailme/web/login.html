@@ -1,0 +1,71 @@
+{% load i18n %}
+
+<form action="{{ request.build_absolute_uri }}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <label for="{{ login_form.username.id_for_label }}">
+            {{ login_form.username.label }}
+        </label>
+        {{ login_form.username }}
+
+        <label for="{{ login_form.password.id_for_label }}">
+            {{ login_form.password.label }}
+        </label>
+        {{ login_form.password }}
+
+        <button type="submit">
+            <span>{% trans 'Login' %}</span>
+        </button>
+    </fieldset>
+
+    <ul>
+        <li>
+            {% trans 'Need an account?' %}
+            <a href="{% url 'mailme-register' %}"
+                title="{% trans 'Create an account' %}">
+                {% trans 'Create an account' %}
+            </a>
+        </li>
+        <li>
+            <a href=""
+                title="{% trans 'Lost password?' %}">
+                {% trans 'Lost password?' %}
+            </a>
+        </li>
+    </ul>
+
+    <strong>
+        {% trans 'Or join with a social network account:' %}
+    </strong>
+
+    <ul class="social">
+        <li>
+            <a class="facebook"
+                href="{% url 'social:begin' 'facebook' %}{% if request.REQUEST.next %}?next={{ request.REQUEST.next|urlencode }}{% endif %}"
+                title="{% trans 'Join with Facebook' %}">
+                Facebook
+            </a>
+        </li>
+        <li>
+            <a class="twitter"
+                href="{% url 'social:begin' 'twitter' %}{% if request.REQUEST.next %}?next={{ request.REQUEST.next|urlencode }}{% endif %}"
+                title="{% trans 'Join with Twitter' %}">
+                Twitter
+            </a>
+        </li>
+        <li>
+            <a class="googleplus"
+                href="{% url 'social:begin' 'google-oauth2' %}{% if request.REQUEST.next %}?next={{ request.REQUEST.next|urlencode }}{% endif %}"
+                title="{% trans 'Join with Google +' %}">
+                Google +
+            </a>
+        </li>
+        <li>
+            <a class="github"
+                href="{% url 'social:begin' 'github' %}{% if request.REQUEST.next %}?next={{ request.REQUEST.next|urlencode }}{% endif %}"
+                title="{% trans 'Join with GitHub' %}">
+                GitHub
+            </a>
+        </li>
+    </ul>
+</form>

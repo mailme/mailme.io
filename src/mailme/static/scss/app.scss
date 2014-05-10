@@ -1,0 +1,6 @@
+@import "settings";
+@import "foundation";
+
+.email-register {
+  @include button(rem-calc(12), $primary-color, false, false, false, true);
+}
