@@ -1,7 +1,7 @@
 from doit.conf.development import *
 
-SOCIAL_AUTH_MOVES_KEY = '057JETq7x5VMXlhcN8ZtmT1XMs7p4731'  # noqa
-SOCIAL_AUTH_MOVES_SECRET = 'GmVWy9gERqfr54E7jFL3SNMtW9RVrlVIkW0OPFK6FE37S15qn4sr764zl9qIAn5L'
+#SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '853034293084-f8oqfjqho6n30m4jk3rmv6mk0v28h4c4.apps.googleusercontent.com'  # noqa
+#SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'Pgb6tFneGX0MLaVN6ONH5o4x'
 
 DATABASES = {
     'default': {

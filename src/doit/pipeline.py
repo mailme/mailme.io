@@ -1,4 +1,10 @@
+from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
+
 from social.exceptions import AuthException
+from social.pipeline.partial import partial
 from social.pipeline.social_auth import social_details
 
 

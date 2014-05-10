@@ -1,9 +1,16 @@
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.views.generic import RedirectView, TemplateView
+from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import RedirectView
+from django.views.generic.edit import FormView, TemplateView
 
+from social.apps.django_app.default.models import Code
 from social.apps.django_app.utils import load_strategy
 from social.apps.django_app.views import complete
+
+from doit.models.user import User
 
 
 class CompleteSocialAuthMixin(object):

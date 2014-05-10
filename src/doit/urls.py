@@ -8,6 +8,8 @@ urlpatterns = patterns('',
         name='doit-index'),
 
     # Account
+    url(r'^register/$', views.RegisterView.as_view(),
+        name='doit-register'),
     url(r'^logout/$', views.LogoutView.as_view(),
         name='doit-logout'),
     url(r'^login/$', views.LoginView.as_view(),

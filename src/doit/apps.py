@@ -9,4 +9,4 @@ class DoitConfig(AppConfig):
     def ready(self):
         # We do like our application structure more than django's
         # so we import our modules manually.
-        from doit.models import user  # noqa
+        #from doit.models import 

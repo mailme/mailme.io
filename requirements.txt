@@ -1,4 +1,2 @@
 # We depend on Django 1.7
 https://www.djangoproject.com/download/1.7b3/tarball/
-
--e git+https://github.com/EnTeQuAk/python-social-auth.git@feature/moves#egg=python-social-auth
