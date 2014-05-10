@@ -21,7 +21,7 @@ def handle_state(backend, start_url, target_url):
                 target_url += '{0}={1}'.format(name, query[name])
     except AttributeError:
         pass
-    return target_url
+    return bytes(target_url)
 
 
 @pytest.yield_fixture

@@ -10,15 +10,15 @@ from social.exceptions import SocialAuthBaseException
 from doit.models.user import User
 from doit.testutils import get_messages_from_cookie
 
-from doit.tests.factories.user import profile_complete_form_data, UserFactory
+from doit.tests.factories.user import UserFactory
 from doit.tests.web.fixtures import moves_auth
 
 
-def test_moves(client, db, google_auth):
+def test_moves(client, db, moves_auth):
     # Step 1: login
-    response = client.get('/login/google-oauth2/')
+    response = client.get('/login/moves-oauth2/')
     assert response.status_code == 302
-    assert 'accounts.google.com' in response['Location']
+    assert 'api.moves-app.com' in response['Location']
 
     # Step 2: returning from google
     state = re.search(r'state=([^&]+)', response['Location']).group(1)
@@ -27,20 +27,12 @@ def test_moves(client, db, google_auth):
         'code': 'test_code',
         'state': state,
     }
-    response = client.get('/complete/google-oauth2/', data=data)
+    response = client.get('/complete/moves-oauth2/', data=data)
     assert response.status_code == 302
-    assert response['Location'].endswith('/register/details/')
+    assert response['Location'].endswith('/complete/moves-oauth2/')
 
-    # Step 3: complete profile
-    profile_data = profile_complete_form_data(email='bar@none.none')
-    response = client.post('/register/details/', data=profile_data)
-    assert response.status_code == 302
-    assert response['Location'].endswith('/complete/google-oauth2/')
-    assert 'details' in client.session['partial_pipeline']['kwargs']
-    assert client.session['partial_pipeline']['kwargs']['details']['email'] == 'bar@none.none'
-
-    # Step 4: complete
-    response = client.get('/complete/google-oauth2/')
+    # Step 3: complete
+    response = client.get('/complete/moves-oauth2/')
     assert response.status_code == 302
     assert response['Location'] == 'http://testserver/'
 
@@ -49,19 +41,12 @@ def test_moves(client, db, google_auth):
     assert len(mail.outbox) == 1
     assert len(get_messages_from_cookie(response.cookies)) == 1
 
-    user = User.objects.get(social_auth__uid='foo@bar.com')
+    user = User.objects.get(social_auth__uid='10101010101')
     assert user.is_active
     assert not user.email_verified
 
-    # Step 5: Complete email validation
-    code = Code.objects.all().get()
-    response = client.get('/register/confirm_email/%s/' % code.code)
-    assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/'
-
     # Check data
-    user = User.objects.get(social_auth__uid='foo@bar.com')
+    user = User.objects.get(social_auth__uid='101010101001')
     assert user.is_active
-    assert user.email_verified
-    assert user.social_auth.get(provider='google-oauth2')
+    assert user.social_auth.get(provider='moves-oauth2')
     assert SESSION_KEY in client.session

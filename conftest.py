@@ -7,7 +7,7 @@ def pytest_configure(config):
     if not settings.configured:
         os.environ['DJANGO_SETTINGS_MODULE'] = 'doit.conf.test'
 
-    test_db = os.environ.get('DB', 'sqlite')
+    test_db = os.environ.get('DB', 'postgres')
     if test_db in ('mysql', 'sqlite'):
         raise RuntimeError('not supported')
     elif test_db == 'postgres':
