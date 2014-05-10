@@ -52,6 +52,7 @@ install_requires = [
     'python-dateutil>=2.2,<2.3',
     'beautifulsoup4>=4.3.2,<4.4',
     'listparser>=0.17,<0.18',
+    'billiard==3.3.0.17',
 ]
 
 
