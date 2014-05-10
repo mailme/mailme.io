@@ -3,10 +3,10 @@ add_import_path "bower_components/foundation/scss"
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "mailme/static/css"
-sass_dir = "mailme/static/scss"
-images_dir = "mailme/static/img"
-javascripts_dir = "mailme/static/js"
+css_dir = "src/mailme/static/css"
+sass_dir = "src/mailme/static/scss"
+images_dir = "src/mailme/static/img"
+javascripts_dir = "src/mailme/static/js"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # or :nested or :compact or :compressed

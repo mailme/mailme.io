@@ -4,7 +4,7 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-PROJECT_DIR = os.path.join(BASE_DIR, '..')
+PROJECT_DIR = os.path.join(BASE_DIR, '..', '..')
 
 SECRET_KEY = 'na2p&yexkp-g83$2m^&b!r+a%nv2ci1!d9vh^a_7h!hv*7&h79'
 
@@ -133,7 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, '.collected_static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 
