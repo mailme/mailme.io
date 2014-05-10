@@ -2,7 +2,7 @@ from django.apps import AppConfig
 from django.utils.translation import ugettext_lazy as _
 
 
-class MailmeConfig(AppConfig):
+class MailmeAppConfig(AppConfig):
     name = 'mailme'
     verbose_name = _('Mailme')
 

@@ -21,7 +21,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'mailme.apps.MailmeConfig',
+    'mailme',
 
     'suit',
     'django.contrib.admin',
