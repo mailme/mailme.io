@@ -1,4 +1,4 @@
-# encoding: utf8
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models, migrations
@@ -15,21 +15,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Post',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('feed', models.ForeignKey(to='mailme.Feed', to_field='id')),
                 ('title', models.TextField(verbose_name='title')),
-                ('link', models.URLField(max_length=2048, verbose_name='link')),
-                ('content', models.TextField(blank=True, verbose_name='content')),
-                ('guid', models.CharField(max_length=2048, blank=True, verbose_name='guid')),
-                ('author', models.TextField(blank=True, verbose_name='author')),
-                ('published', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date published')),
-                ('updated', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date updated')),
+                ('link', models.URLField(verbose_name='link', max_length=2048)),
+                ('content', models.TextField(verbose_name='content', blank=True)),
+                ('guid', models.CharField(verbose_name='guid', max_length=2048, blank=True)),
+                ('author', models.TextField(verbose_name='author', blank=True)),
+                ('published', models.DateTimeField(verbose_name='date published', default=django.utils.timezone.now)),
+                ('updated', models.DateTimeField(verbose_name='date updated', default=django.utils.timezone.now)),
                 ('enclosures', models.ManyToManyField(to='mailme.Enclosure', blank=True)),
                 ('categories', models.ManyToManyField(to='mailme.Category')),
             ],
             options={
-                'verbose_name_plural': 'posts',
                 'verbose_name': 'post',
+                'verbose_name_plural': 'posts',
             },
             bases=(models.Model,),
         ),

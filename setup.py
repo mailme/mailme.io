@@ -31,12 +31,12 @@ test_requires = [
     'execnet>=1.2.0,<1.3',
     'mock>=1.0.1,<1.1',
     'pep8>=1.4.6,<1.5',
-    'httpretty>=0.6.5,<0.7',
+    'httpretty>=0.8.0',
 ]
 
 
 install_requires = [
-    'Django==1.7b1',
+    'Django>=1.7b4',
     'celery>=3.1,<3.2',
     'django-celery>=3.1,<3.2',
     'feedparser>=5.1.3,<5.2',
@@ -52,6 +52,9 @@ install_requires = [
     'python-dateutil>=2.2,<2.3',
     'beautifulsoup4>=4.3.2,<4.4',
     'listparser>=0.17,<0.18',
+
+    # For Python 3.4 compatibility
+    'billiard>=3.3.0.17,<3.3.1',
 ]
 
 

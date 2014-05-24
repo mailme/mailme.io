@@ -12,7 +12,6 @@ help:
 clean: clean-build clean-pyc
 
 deps:
-	# for python 3.4 required right now unfortunately.
 	pip install --upgrade -r requirements.txt
 	pip install -e . --allow-all-external
 	pip install "file://`pwd`#egg=mailme[tox]"
