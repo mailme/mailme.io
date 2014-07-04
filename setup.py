@@ -115,7 +115,6 @@ setup(
         'Framework :: Django',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
 )
