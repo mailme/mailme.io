@@ -93,7 +93,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Christopher Grebs',
     author_email='cg@webshox.org',
-    url='https://bitbucket.org/fruitywinter/mailme.io',
+    url='https://github.com/mailme/mailme.io',
     package_dir={'': 'src'},
     packages=find_packages('src'),
     include_package_data=True,
