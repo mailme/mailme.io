@@ -1,2 +1,2 @@
 # We depend on Django 1.7
--e git+https://github.com/EnTeQuAk/django.git@24f9b94fe6fc89df531a63f6acdabc6b6e0c83f5#egg=django
+https://www.djangoproject.com/download/1.7c1/tarball/
